@@ -1,9 +1,36 @@
 [project]
 name = "prism-scanner"
 version = "0.1.0"
-description = "Agent security scanner for Skills, Plugins, and MCP Servers"
+description = "Security scanner for AI Agent skills, plugins, and MCP servers"
+readme = "README.md"
+license = {text = "Apache-2.0"}
 requires-python = ">=3.10"
+authors = [
+    {name = "Lyra", email = "249893431+aidongise-cell@users.noreply.github.com"},
+]
+keywords = ["security", "scanner", "ai-agent", "skill", "plugin", "mcp", "supply-chain", "static-analysis"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+]
 dependencies = ["pyyaml>=6.0", "rich>=13.0"]
+
+[project.urls]
+Homepage = "https://github.com/aidongise-cell/prism-scanner"
+Repository = "https://github.com/aidongise-cell/prism-scanner"
+Issues = "https://github.com/aidongise-cell/prism-scanner/issues"
+Changelog = "https://github.com/aidongise-cell/prism-scanner/blob/main/CHANGELOG.md"
 
 [project.scripts]
 prism = "prism.cli:main"
@@ -14,3 +41,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+prism = ["rules/*.yaml"]

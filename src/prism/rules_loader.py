@@ -5,18 +5,23 @@ from typing import Any
 
 import yaml  # pyyaml
 
-_RULES_DIR = Path(__file__).parent.parent.parent / "rules"
+_PACKAGE_RULES_DIR = Path(__file__).parent / "rules"
+_PROJECT_RULES_DIR = Path(__file__).parent.parent.parent / "rules"
 
 
 def get_rules_dir() -> Path:
     """Get the rules directory path."""
-    # Try relative to package first, then fall back to env var
-    if _RULES_DIR.exists():
-        return _RULES_DIR
+    # 1. Rules inside the installed package (pip install)
+    if _PACKAGE_RULES_DIR.exists():
+        return _PACKAGE_RULES_DIR
+    # 2. Rules in the project root (development mode)
+    if _PROJECT_RULES_DIR.exists():
+        return _PROJECT_RULES_DIR
+    # 3. Environment variable override
     env_dir = os.environ.get("PRISM_RULES_DIR")
     if env_dir and Path(env_dir).exists():
         return Path(env_dir)
-    return _RULES_DIR
+    return _PACKAGE_RULES_DIR
 
 
 def load_yaml_rule(filename: str) -> dict[str, Any]:
