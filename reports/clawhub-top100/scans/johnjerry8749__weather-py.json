@@ -1,0 +1,1812 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/johnjerry8749/weather-py",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "HIGH: Unexpected capability for code_runner skill: network (M1)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: SIMMER_API_KEY (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "status.py",
+      "line": 51,
+      "code_snippet": "api_key = os.environ.get(\"SIMMER_API_KEY\")\n    if not api_key:",
+      "evidence": "Hardcoded URL: SIMMER_API_KEY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SIMMER_API_KEY",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "status.py",
+      "line": 51,
+      "code_snippet": "api_key = os.environ.get(\"SIMMER_API_KEY\")\n    if not api_key:",
+      "evidence": "Reads sensitive env var: SIMMER_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "status.py",
+      "line": 61,
+      "code_snippet": "balance = portfolio.get(\"balance_usdc\", 0)\n    exposure = portfolio.get(\"total_exposure\", 0)",
+      "evidence": "Hardcoded URL: balance_usdc",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "status.py",
+      "line": 62,
+      "code_snippet": "balance = portfolio.get(\"balance_usdc\", 0)\n    exposure = portfolio.get(\"total_exposure\", 0)\n    positions_count = portfolio.get(\"positions_count\", 0)",
+      "evidence": "Hardcoded URL: total_exposure",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "status.py",
+      "line": 63,
+      "code_snippet": "exposure = portfolio.get(\"total_exposure\", 0)\n    positions_count = portfolio.get(\"positions_count\", 0)\n    pnl_total = portfolio.get(\"pnl_total\")",
+      "evidence": "Hardcoded URL: positions_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "status.py",
+      "line": 64,
+      "code_snippet": "positions_count = portfolio.get(\"positions_count\", 0)\n    pnl_total = portfolio.get(\"pnl_total\")\n    pnl_24h = portfolio.get(\"pnl_24h\")",
+      "evidence": "Hardcoded URL: pnl_total",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "status.py",
+      "line": 65,
+      "code_snippet": "pnl_total = portfolio.get(\"pnl_total\")\n    pnl_24h = portfolio.get(\"pnl_24h\")",
+      "evidence": "Hardcoded URL: pnl_24h",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "status.py",
+      "line": 84,
+      "code_snippet": "# Concentration warning\n    concentration = portfolio.get(\"concentration\", {})\n    top_market_pct = concentration.get(\"top_market_pct\", 0)",
+      "evidence": "Hardcoded URL: concentration",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via concentration.get()",
+      "file_path": "status.py",
+      "line": 85,
+      "code_snippet": "concentration = portfolio.get(\"concentration\", {})\n    top_market_pct = concentration.get(\"top_market_pct\", 0)\n    if top_market_pct > 0.5:",
+      "evidence": "Hardcoded URL: top_market_pct",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "status.py",
+      "line": 90,
+      "code_snippet": "# By source breakdown\n    by_source = portfolio.get(\"by_source\", {})\n    if by_source:",
+      "evidence": "Hardcoded URL: by_source",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "status.py",
+      "line": 94,
+      "code_snippet": "for source, data in by_source.items():\n            src_positions = data.get(\"positions\", 0)\n            src_exposure = data.get(\"exposure\", 0)",
+      "evidence": "Hardcoded URL: positions",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "status.py",
+      "line": 95,
+      "code_snippet": "src_positions = data.get(\"positions\", 0)\n            src_exposure = data.get(\"exposure\", 0)\n            print(f\"      {source}: {src_positions} positions, {format_usd(src_exposure)}\")",
+      "evidence": "Hardcoded URL: exposure",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "status.py",
+      "line": 105,
+      "code_snippet": "result = api_request(api_key, \"/api/sdk/positions\")\n        positions = result.get(\"positions\", []) if isinstance(result, dict) else result",
+      "evidence": "Hardcoded URL: positions",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "status.py",
+      "line": 111,
+      "code_snippet": "for pos in positions:\n                question = pos.get(\"question\", pos.get(\"market_id\", \"Unknown\"))\n                # Truncate long questions",
+      "evidence": "Hardcoded URL: question",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "status.py",
+      "line": 116,
+      "code_snippet": "shares_yes = pos.get(\"shares_yes\", 0)\n                shares_no = pos.get(\"shares_no\", 0)",
+      "evidence": "Hardcoded URL: shares_yes",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "status.py",
+      "line": 117,
+      "code_snippet": "shares_yes = pos.get(\"shares_yes\", 0)\n                shares_no = pos.get(\"shares_no\", 0)\n                current_price = pos.get(\"current_price\", 0)",
+      "evidence": "Hardcoded URL: shares_no",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "status.py",
+      "line": 118,
+      "code_snippet": "shares_no = pos.get(\"shares_no\", 0)\n                current_price = pos.get(\"current_price\", 0)\n                cost_basis = pos.get(\"cost_basis\", 0)",
+      "evidence": "Hardcoded URL: current_price",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "status.py",
+      "line": 119,
+      "code_snippet": "current_price = pos.get(\"current_price\", 0)\n                cost_basis = pos.get(\"cost_basis\", 0)\n                pnl = pos.get(\"pnl\", 0)",
+      "evidence": "Hardcoded URL: cost_basis",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "status.py",
+      "line": 120,
+      "code_snippet": "cost_basis = pos.get(\"cost_basis\", 0)\n                pnl = pos.get(\"pnl\", 0)",
+      "evidence": "Hardcoded URL: pnl",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "status.py",
+      "line": 111,
+      "code_snippet": "for pos in positions:\n                question = pos.get(\"question\", pos.get(\"market_id\", \"Unknown\"))\n                # Truncate long questions",
+      "evidence": "Hardcoded URL: market_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via month_map.get()",
+      "file_path": "weather_trader.py",
+      "line": 279,
+      "code_snippet": "month = month_map.get(month_name)\n    if not month:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "weather_trader.py",
+      "line": 323,
+      "code_snippet": "\"\"\"Get Simmer API key from environment.\"\"\"\n    key = os.environ.get(\"SIMMER_API_KEY\")\n    if not key:",
+      "evidence": "Hardcoded URL: SIMMER_API_KEY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SIMMER_API_KEY",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "weather_trader.py",
+      "line": 323,
+      "code_snippet": "\"\"\"Get Simmer API key from environment.\"\"\"\n    key = os.environ.get(\"SIMMER_API_KEY\")\n    if not key:",
+      "evidence": "Reads sensitive env var: SIMMER_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 440,
+      "code_snippet": "return []\n    return result.get(\"points\", [])",
+      "evidence": "Hardcoded URL: points",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via context.get()",
+      "file_path": "weather_trader.py",
+      "line": 455,
+      "code_snippet": "reasons = []\n    market = context.get(\"market\", {})\n    warnings = context.get(\"warnings\", [])",
+      "evidence": "Hardcoded URL: market",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via context.get()",
+      "file_path": "weather_trader.py",
+      "line": 456,
+      "code_snippet": "market = context.get(\"market\", {})\n    warnings = context.get(\"warnings\", [])\n    discipline = context.get(\"discipline\", {})",
+      "evidence": "Hardcoded URL: warnings",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via context.get()",
+      "file_path": "weather_trader.py",
+      "line": 457,
+      "code_snippet": "warnings = context.get(\"warnings\", [])\n    discipline = context.get(\"discipline\", {})\n    slippage = context.get(\"slippage\", {})",
+      "evidence": "Hardcoded URL: discipline",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via context.get()",
+      "file_path": "weather_trader.py",
+      "line": 458,
+      "code_snippet": "discipline = context.get(\"discipline\", {})\n    slippage = context.get(\"slippage\", {})\n    edge = context.get(\"edge\", {})",
+      "evidence": "Hardcoded URL: slippage",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via context.get()",
+      "file_path": "weather_trader.py",
+      "line": 459,
+      "code_snippet": "slippage = context.get(\"slippage\", {})\n    edge = context.get(\"edge\", {})",
+      "evidence": "Hardcoded URL: edge",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via discipline.get()",
+      "file_path": "weather_trader.py",
+      "line": 467,
+      "code_snippet": "# Check flip-flop warning\n    warning_level = discipline.get(\"warning_level\", \"none\")\n    if warning_level == \"severe\":",
+      "evidence": "Hardcoded URL: warning_level",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via market.get()",
+      "file_path": "weather_trader.py",
+      "line": 474,
+      "code_snippet": "# Check time to resolution\n    time_str = market.get(\"time_to_resolution\", \"\")\n    if time_str:",
+      "evidence": "Hardcoded URL: time_to_resolution",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 591,
+      "code_snippet": "return []\n    return result.get(\"positions\", [])",
+      "evidence": "Hardcoded URL: positions",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "weather_trader.py",
+      "line": 606,
+      "code_snippet": "balance = portfolio.get(\"balance_usdc\", 0)\n    if balance <= 0:",
+      "evidence": "Hardcoded URL: balance_usdc",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via period.get()",
+      "file_path": "weather_trader.py",
+      "line": 210,
+      "code_snippet": "for period in periods:\n        start_time = period.get(\"startTime\", \"\")\n        if not start_time:",
+      "evidence": "Hardcoded URL: startTime",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via period.get()",
+      "file_path": "weather_trader.py",
+      "line": 215,
+      "code_snippet": "date_str = start_time[:10]\n        temp = period.get(\"temperature\")\n        is_daytime = period.get(\"isDaytime\", True)",
+      "evidence": "Hardcoded URL: temperature",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via period.get()",
+      "file_path": "weather_trader.py",
+      "line": 216,
+      "code_snippet": "temp = period.get(\"temperature\")\n        is_daytime = period.get(\"isDaytime\", True)",
+      "evidence": "Hardcoded URL: isDaytime",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via slippage.get()",
+      "file_path": "weather_trader.py",
+      "line": 493,
+      "code_snippet": "# Check slippage\n    estimates = slippage.get(\"estimates\", []) if slippage else []\n    if estimates:",
+      "evidence": "Hardcoded URL: estimates",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via edge.get()",
+      "file_path": "weather_trader.py",
+      "line": 501,
+      "code_snippet": "if use_edge and edge:\n        recommendation = edge.get(\"recommendation\")\n        user_edge = edge.get(\"user_edge\")",
+      "evidence": "Hardcoded URL: recommendation",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via edge.get()",
+      "file_path": "weather_trader.py",
+      "line": 502,
+      "code_snippet": "recommendation = edge.get(\"recommendation\")\n        user_edge = edge.get(\"user_edge\")\n        threshold = edge.get(\"suggested_threshold\", 0)",
+      "evidence": "Hardcoded URL: user_edge",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via edge.get()",
+      "file_path": "weather_trader.py",
+      "line": 503,
+      "code_snippet": "user_edge = edge.get(\"user_edge\")\n        threshold = edge.get(\"suggested_threshold\", 0)",
+      "evidence": "Hardcoded URL: suggested_threshold",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 635,
+      "code_snippet": "question = pos.get(\"question\", \"\").lower()\n        sources = pos.get(\"sources\", [])\n        # Check if from weather skill OR has weather keywords",
+      "evidence": "Hardcoded URL: sources",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 649,
+      "code_snippet": "for pos in weather_positions:\n        market_id = pos.get(\"market_id\")\n        current_price = pos.get(\"current_price\") or pos.get(\"price_yes\") or 0",
+      "evidence": "Hardcoded URL: market_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via forecasts.get()",
+      "file_path": "weather_trader.py",
+      "line": 812,
+      "code_snippet": "forecasts = forecast_cache[location]\n        day_forecast = forecasts.get(date_str, {})\n        forecast_temp = day_forecast.get(metric)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via day_forecast.get()",
+      "file_path": "weather_trader.py",
+      "line": 813,
+      "code_snippet": "day_forecast = forecasts.get(date_str, {})\n        forecast_temp = day_forecast.get(metric)",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via matching_market.get()",
+      "file_path": "weather_trader.py",
+      "line": 834,
+      "code_snippet": "outcome_name = matching_market.get(\"outcome_name\", \"\")\n        price = matching_market.get(\"external_price_yes\") or 0.5",
+      "evidence": "Hardcoded URL: outcome_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via matching_market.get()",
+      "file_path": "weather_trader.py",
+      "line": 836,
+      "code_snippet": "price = matching_market.get(\"external_price_yes\") or 0.5\n        market_id = matching_market.get(\"id\")",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 650,
+      "code_snippet": "market_id = pos.get(\"market_id\")\n        current_price = pos.get(\"current_price\") or pos.get(\"price_yes\") or 0\n        shares = pos.get(\"shares_yes\") or pos.get(\"shares\") or 0",
+      "evidence": "Hardcoded URL: current_price",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 650,
+      "code_snippet": "market_id = pos.get(\"market_id\")\n        current_price = pos.get(\"current_price\") or pos.get(\"price_yes\") or 0\n        shares = pos.get(\"shares_yes\") or pos.get(\"shares\") or 0",
+      "evidence": "Hardcoded URL: price_yes",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 651,
+      "code_snippet": "current_price = pos.get(\"current_price\") or pos.get(\"price_yes\") or 0\n        shares = pos.get(\"shares_yes\") or pos.get(\"shares\") or 0\n        question = pos.get(\"question\", \"Unknown\")[:50]",
+      "evidence": "Hardcoded URL: shares_yes",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 651,
+      "code_snippet": "current_price = pos.get(\"current_price\") or pos.get(\"price_yes\") or 0\n        shares = pos.get(\"shares_yes\") or pos.get(\"shares\") or 0\n        question = pos.get(\"question\", \"Unknown\")[:50]",
+      "evidence": "Hardcoded URL: shares",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 652,
+      "code_snippet": "shares = pos.get(\"shares_yes\") or pos.get(\"shares\") or 0\n        question = pos.get(\"question\", \"Unknown\")[:50]",
+      "evidence": "Hardcoded URL: question",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "weather_trader.py",
+      "line": 754,
+      "code_snippet": "log(f\"  Positions: {portfolio.get('positions_count', 0)}\")\n            by_source = portfolio.get('by_source', {})\n            if by_source:",
+      "evidence": "Hardcoded URL: by_source",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via market.get()",
+      "file_path": "weather_trader.py",
+      "line": 780,
+      "code_snippet": "for market in markets:\n        event_id = market.get(\"event_id\") or market.get(\"event_name\", \"unknown\")\n        if event_id not in events:",
+      "evidence": "Hardcoded URL: event_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via market.get()",
+      "file_path": "weather_trader.py",
+      "line": 780,
+      "code_snippet": "for market in markets:\n        event_id = market.get(\"event_id\") or market.get(\"event_name\", \"unknown\")\n        if event_id not in events:",
+      "evidence": "Hardcoded URL: event_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via market.get()",
+      "file_path": "weather_trader.py",
+      "line": 823,
+      "code_snippet": "for market in event_markets:\n            outcome_name = market.get(\"outcome_name\", \"\")\n            bucket = parse_temperature_bucket(outcome_name)",
+      "evidence": "Hardcoded URL: outcome_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via matching_market.get()",
+      "file_path": "weather_trader.py",
+      "line": 835,
+      "code_snippet": "outcome_name = matching_market.get(\"outcome_name\", \"\")\n        price = matching_market.get(\"external_price_yes\") or 0.5\n        market_id = matching_market.get(\"id\")",
+      "evidence": "Hardcoded URL: external_price_yes",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via spec.get()",
+      "file_path": "weather_trader.py",
+      "line": 64,
+      "code_snippet": "result[key] = file_cfg[key]\n        elif spec.get(\"env\") and os.environ.get(spec[\"env\"]):\n            val = os.environ.get(spec[\"env\"])",
+      "evidence": "Hardcoded URL: env",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "weather_trader.py",
+      "line": 64,
+      "code_snippet": "result[key] = file_cfg[key]\n        elif spec.get(\"env\") and os.environ.get(spec[\"env\"]):\n            val = os.environ.get(spec[\"env\"])",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "weather_trader.py",
+      "line": 64,
+      "code_snippet": "result[key] = file_cfg[key]\n        elif spec.get(\"env\") and os.environ.get(spec[\"env\"]):\n            val = os.environ.get(spec[\"env\"])",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "weather_trader.py",
+      "line": 65,
+      "code_snippet": "elif spec.get(\"env\") and os.environ.get(spec[\"env\"]):\n            val = os.environ.get(spec[\"env\"])\n            type_fn = spec.get(\"type\", str)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "weather_trader.py",
+      "line": 65,
+      "code_snippet": "elif spec.get(\"env\") and os.environ.get(spec[\"env\"]):\n            val = os.environ.get(spec[\"env\"])\n            type_fn = spec.get(\"type\", str)",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via spec.get()",
+      "file_path": "weather_trader.py",
+      "line": 66,
+      "code_snippet": "val = os.environ.get(spec[\"env\"])\n            type_fn = spec.get(\"type\", str)\n            try:",
+      "evidence": "Hardcoded URL: type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via spec.get()",
+      "file_path": "weather_trader.py",
+      "line": 72,
+      "code_snippet": "else:\n            result[key] = spec.get(\"default\")\n    return result",
+      "evidence": "Hardcoded URL: default",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 634,
+      "code_snippet": "for pos in positions:\n        question = pos.get(\"question\", \"\").lower()\n        sources = pos.get(\"sources\", [])",
+      "evidence": "Hardcoded URL: question",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 678,
+      "code_snippet": "if result.get(\"success\"):\n                    exits_executed += 1",
+      "evidence": "Hardcoded URL: success",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 766,
+      "code_snippet": "log(f\"  • {pos.get('question', 'Unknown')[:50]}...\")\n                sources = pos.get('sources', [])\n                log(f\"    YES: {pos.get('shares_yes', 0):.1f} | NO: {pos.get('shares_no', 0):.1f} | P&L: ${pos.get('pnl', 0):.2f} | Sources: {sources}\")",
+      "evidence": "Hardcoded URL: sources",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 891,
+      "code_snippet": "if result.get(\"success\"):\n                    trades_executed += 1",
+      "evidence": "Hardcoded URL: success",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 680,
+      "code_snippet": "exits_executed += 1\n                    trade_id = result.get(\"trade_id\")\n                    print(f\"     ✅ Sold {shares:.1f} shares @ ${current_price:.2f}\")",
+      "evidence": "Hardcoded URL: trade_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 692,
+      "code_snippet": "else:\n                    error = result.get(\"error\", \"Unknown error\")\n                    print(f\"     ❌ Sell failed: {error}\")",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 894,
+      "code_snippet": "shares = result.get(\"shares_bought\") or result.get(\"shares\") or 0\n                    trade_id = result.get(\"trade_id\")\n                    log(f\"  ✅ Bought {shares:.1f} shares @ ${price:.2f}\", force=True)",
+      "evidence": "Hardcoded URL: trade_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 917,
+      "code_snippet": "else:\n                    error = result.get(\"error\", \"Unknown error\")\n                    log(f\"  ❌ Trade failed: {error}\", force=True)",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via spec.get()",
+      "file_path": "weather_trader.py",
+      "line": 70,
+      "code_snippet": "except (ValueError, TypeError):\n                result[key] = spec.get(\"default\")\n        else:",
+      "evidence": "Hardcoded URL: default",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via discipline.get()",
+      "file_path": "weather_trader.py",
+      "line": 469,
+      "code_snippet": "if warning_level == \"severe\":\n        return False, [f\"Severe flip-flop warning: {discipline.get('flip_flop_warning', '')}\"]\n    elif warning_level == \"mild\":",
+      "evidence": "Hardcoded URL: flip_flop_warning",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "weather_trader.py",
+      "line": 751,
+      "code_snippet": "if portfolio:\n            log(f\"  Balance: ${portfolio.get('balance_usdc', 0):.2f}\")\n            log(f\"  Exposure: ${portfolio.get('total_exposure', 0):.2f}\")",
+      "evidence": "Hardcoded URL: balance_usdc",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "weather_trader.py",
+      "line": 752,
+      "code_snippet": "log(f\"  Balance: ${portfolio.get('balance_usdc', 0):.2f}\")\n            log(f\"  Exposure: ${portfolio.get('total_exposure', 0):.2f}\")\n            log(f\"  Positions: {portfolio.get('positions_count', 0)}\")",
+      "evidence": "Hardcoded URL: total_exposure",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via portfolio.get()",
+      "file_path": "weather_trader.py",
+      "line": 753,
+      "code_snippet": "log(f\"  Exposure: ${portfolio.get('total_exposure', 0):.2f}\")\n            log(f\"  Positions: {portfolio.get('positions_count', 0)}\")\n            by_source = portfolio.get('by_source', {})",
+      "evidence": "Hardcoded URL: positions_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 893,
+      "code_snippet": "trades_executed += 1\n                    shares = result.get(\"shares_bought\") or result.get(\"shares\") or 0\n                    trade_id = result.get(\"trade_id\")",
+      "evidence": "Hardcoded URL: shares_bought",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "weather_trader.py",
+      "line": 893,
+      "code_snippet": "trades_executed += 1\n                    shares = result.get(\"shares_bought\") or result.get(\"shares\") or 0\n                    trade_id = result.get(\"trade_id\")",
+      "evidence": "Hardcoded URL: shares",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 767,
+      "code_snippet": "sources = pos.get('sources', [])\n                log(f\"    YES: {pos.get('shares_yes', 0):.1f} | NO: {pos.get('shares_no', 0):.1f} | P&L: ${pos.get('pnl', 0):.2f} | Sources: {sources}\")\n        return",
+      "evidence": "Hardcoded URL: shares_yes",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 767,
+      "code_snippet": "sources = pos.get('sources', [])\n                log(f\"    YES: {pos.get('shares_yes', 0):.1f} | NO: {pos.get('shares_no', 0):.1f} | P&L: ${pos.get('pnl', 0):.2f} | Sources: {sources}\")\n        return",
+      "evidence": "Hardcoded URL: shares_no",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 767,
+      "code_snippet": "sources = pos.get('sources', [])\n                log(f\"    YES: {pos.get('shares_yes', 0):.1f} | NO: {pos.get('shares_no', 0):.1f} | P&L: ${pos.get('pnl', 0):.2f} | Sources: {sources}\")\n        return",
+      "evidence": "Hardcoded URL: pnl",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pos.get()",
+      "file_path": "weather_trader.py",
+      "line": 765,
+      "code_snippet": "for pos in positions:\n                log(f\"  • {pos.get('question', 'Unknown')[:50]}...\")\n                sources = pos.get('sources', [])",
+      "evidence": "Hardcoded URL: question",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "status.py",
+      "line": 51,
+      "code_snippet": "api_key = os.environ.get(\"SIMMER_API_KEY\")",
+      "evidence": "Signature MAL-010 matched (SHA256: 76c0877a594c1c96...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "weather_trader.py",
+      "line": 64,
+      "code_snippet": "elif spec.get(\"env\") and os.environ.get(spec[\"env\"]):",
+      "evidence": "Signature MAL-010 matched (SHA256: e1e55ef3cd295303...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for code_runner skill: network",
+      "description": "A 'code_runner' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write, shell",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a code_runner skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 48,
+  "_scan_meta": {
+    "author": "johnjerry8749",
+    "skill": "weather-py",
+    "author_skill": "johnjerry8749/weather-py",
+    "scan_time_s": 0.1
+  }
+}

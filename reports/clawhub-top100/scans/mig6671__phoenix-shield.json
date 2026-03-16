@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/mig6671/phoenix-shield",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 11,
+  "_scan_meta": {
+    "author": "mig6671",
+    "skill": "phoenix-shield",
+    "author_skill": "mig6671/phoenix-shield",
+    "scan_time_s": 0.1
+  }
+}

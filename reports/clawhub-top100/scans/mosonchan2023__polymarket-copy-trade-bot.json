@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/mosonchan2023/polymarket-copy-trade-bot",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 9,
+  "_scan_meta": {
+    "author": "mosonchan2023",
+    "skill": "polymarket-copy-trade-bot",
+    "author_skill": "mosonchan2023/polymarket-copy-trade-bot",
+    "scan_time_s": 0.1
+  }
+}

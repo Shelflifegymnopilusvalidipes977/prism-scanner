@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/night556/feishu-doc-exporter",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 10,
+  "_scan_meta": {
+    "author": "night556",
+    "skill": "feishu-doc-exporter",
+    "author_skill": "night556/feishu-doc-exporter",
+    "scan_time_s": 0.1
+  }
+}

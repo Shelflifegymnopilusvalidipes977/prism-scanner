@@ -1,0 +1,971 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/youpele52/stock-fundamentals",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Unexpected capability for formatter skill: network (M1)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 95,
+      "code_snippet": "earnings_growth = normalize_ratio_percent_value(metrics.get(\"earnings_growth\"))\n    free_cash_flow = metrics.get(\"free_cash_flow\")\n    debt_to_equity = metrics.get(\"debt_to_equity\")",
+      "evidence": "Hardcoded URL: free_cash_flow",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 96,
+      "code_snippet": "free_cash_flow = metrics.get(\"free_cash_flow\")\n    debt_to_equity = metrics.get(\"debt_to_equity\")\n    current_ratio = metrics.get(\"current_ratio\")",
+      "evidence": "Hardcoded URL: debt_to_equity",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 97,
+      "code_snippet": "debt_to_equity = metrics.get(\"debt_to_equity\")\n    current_ratio = metrics.get(\"current_ratio\")\n    forward_pe = metrics.get(\"forward_pe\")",
+      "evidence": "Hardcoded URL: current_ratio",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 98,
+      "code_snippet": "current_ratio = metrics.get(\"current_ratio\")\n    forward_pe = metrics.get(\"forward_pe\")\n    return_on_equity = normalize_ratio_percent_value(metrics.get(\"return_on_equity\"))",
+      "evidence": "Hardcoded URL: forward_pe",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via calendar.get()",
+      "file_path": "src/service.py",
+      "line": 33,
+      "code_snippet": "if isinstance(calendar, dict):\n        earnings_date = calendar.get(\"Earnings Date\")\n        if isinstance(earnings_date, (list, tuple)) and earnings_date:",
+      "evidence": "Hardcoded URL: Earnings Date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "src/service.py",
+      "line": 39,
+      "code_snippet": "earnings_timestamp = info.get(\"earningsTimestamp\") or info.get(\n        \"earningsTimestampStart\"",
+      "evidence": "Hardcoded URL: earningsTimestamp",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "src/service.py",
+      "line": 39,
+      "code_snippet": "earnings_timestamp = info.get(\"earningsTimestamp\") or info.get(\n        \"earningsTimestampStart\"",
+      "evidence": "Hardcoded URL: earningsTimestampStart",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 90,
+      "code_snippet": "gross_margin = normalize_ratio_percent_value(metrics.get(\"gross_margin\"))\n    operating_margin = normalize_ratio_percent_value(metrics.get(\"operating_margin\"))",
+      "evidence": "Hardcoded URL: gross_margin",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 91,
+      "code_snippet": "gross_margin = normalize_ratio_percent_value(metrics.get(\"gross_margin\"))\n    operating_margin = normalize_ratio_percent_value(metrics.get(\"operating_margin\"))\n    profit_margin = normalize_ratio_percent_value(metrics.get(\"profit_margin\"))",
+      "evidence": "Hardcoded URL: operating_margin",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 92,
+      "code_snippet": "operating_margin = normalize_ratio_percent_value(metrics.get(\"operating_margin\"))\n    profit_margin = normalize_ratio_percent_value(metrics.get(\"profit_margin\"))\n    revenue_growth = normalize_ratio_percent_value(metrics.get(\"revenue_growth\"))",
+      "evidence": "Hardcoded URL: profit_margin",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 93,
+      "code_snippet": "profit_margin = normalize_ratio_percent_value(metrics.get(\"profit_margin\"))\n    revenue_growth = normalize_ratio_percent_value(metrics.get(\"revenue_growth\"))\n    earnings_growth = normalize_ratio_percent_value(metrics.get(\"earnings_growth\"))",
+      "evidence": "Hardcoded URL: revenue_growth",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 94,
+      "code_snippet": "revenue_growth = normalize_ratio_percent_value(metrics.get(\"revenue_growth\"))\n    earnings_growth = normalize_ratio_percent_value(metrics.get(\"earnings_growth\"))\n    free_cash_flow = metrics.get(\"free_cash_flow\")",
+      "evidence": "Hardcoded URL: earnings_growth",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 99,
+      "code_snippet": "forward_pe = metrics.get(\"forward_pe\")\n    return_on_equity = normalize_ratio_percent_value(metrics.get(\"return_on_equity\"))\n    dividend_yield = normalize_yield_percent_value(metrics.get(\"dividend_yield\"))",
+      "evidence": "Hardcoded URL: return_on_equity",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 100,
+      "code_snippet": "return_on_equity = normalize_ratio_percent_value(metrics.get(\"return_on_equity\"))\n    dividend_yield = normalize_yield_percent_value(metrics.get(\"dividend_yield\"))",
+      "evidence": "Hardcoded URL: dividend_yield",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 219,
+      "code_snippet": "metrics = data[\"metrics\"]\n    recommendation = normalize_recommendation(metrics.get(\"recommendation\"))",
+      "evidence": "Hardcoded URL: recommendation",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "src/service.py",
+      "line": 201,
+      "code_snippet": "\"company_name\": company_name,\n            \"sector\": info.get(\"sector\"),\n            \"industry\": info.get(\"industry\"),",
+      "evidence": "Hardcoded URL: sector",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "src/service.py",
+      "line": 202,
+      "code_snippet": "\"sector\": info.get(\"sector\"),\n            \"industry\": info.get(\"industry\"),\n            \"market_cap\": info.get(\"marketCap\"),",
+      "evidence": "Hardcoded URL: industry",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "src/service.py",
+      "line": 203,
+      "code_snippet": "\"industry\": info.get(\"industry\"),\n            \"market_cap\": info.get(\"marketCap\"),\n            \"metrics\": metrics,",
+      "evidence": "Hardcoded URL: marketCap",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "src/service.py",
+      "line": 258,
+      "code_snippet": "f\"Recommendation: {recommendation}\\n\"\n        f\"Next Earnings: {data.get('next_earnings', 'N/A')}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: next_earnings",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "src/service.py",
+      "line": 223,
+      "code_snippet": "f\"{data['symbol']}: {data['company_name']}\\n\"\n        f\"Sector: {data.get('sector') or 'N/A'} | Industry: {data.get('industry') or 'N/A'} | Mkt Cap: {format_large_number(data.get('market_cap'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: sector",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "src/service.py",
+      "line": 223,
+      "code_snippet": "f\"{data['symbol']}: {data['company_name']}\\n\"\n        f\"Sector: {data.get('sector') or 'N/A'} | Industry: {data.get('industry') or 'N/A'} | Mkt Cap: {format_large_number(data.get('market_cap'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: industry",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "src/service.py",
+      "line": 223,
+      "code_snippet": "f\"{data['symbol']}: {data['company_name']}\\n\"\n        f\"Sector: {data.get('sector') or 'N/A'} | Industry: {data.get('industry') or 'N/A'} | Mkt Cap: {format_large_number(data.get('market_cap'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: market_cap",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 226,
+      "code_snippet": "f\"Valuation:\\n\"\n        f\"Trailing P/E: {format_number(metrics.get('trailing_pe'))}\\n\"\n        f\"Forward P/E: {format_number(metrics.get('forward_pe'))}\\n\"",
+      "evidence": "Hardcoded URL: trailing_pe",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 227,
+      "code_snippet": "f\"Trailing P/E: {format_number(metrics.get('trailing_pe'))}\\n\"\n        f\"Forward P/E: {format_number(metrics.get('forward_pe'))}\\n\"\n        f\"PEG Ratio: {format_number(metrics.get('peg_ratio'))}\\n\"",
+      "evidence": "Hardcoded URL: forward_pe",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 228,
+      "code_snippet": "f\"Forward P/E: {format_number(metrics.get('forward_pe'))}\\n\"\n        f\"PEG Ratio: {format_number(metrics.get('peg_ratio'))}\\n\"\n        f\"Price/Sales: {format_number(metrics.get('price_to_sales'))}\\n\"",
+      "evidence": "Hardcoded URL: peg_ratio",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 229,
+      "code_snippet": "f\"PEG Ratio: {format_number(metrics.get('peg_ratio'))}\\n\"\n        f\"Price/Sales: {format_number(metrics.get('price_to_sales'))}\\n\"\n        f\"Price/Book: {format_number(metrics.get('price_to_book'))}\\n\"",
+      "evidence": "Hardcoded URL: price_to_sales",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 230,
+      "code_snippet": "f\"Price/Sales: {format_number(metrics.get('price_to_sales'))}\\n\"\n        f\"Price/Book: {format_number(metrics.get('price_to_book'))}\\n\"\n        f\"EV/EBITDA: {format_number(metrics.get('ev_to_ebitda'))}\\n\"",
+      "evidence": "Hardcoded URL: price_to_book",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 231,
+      "code_snippet": "f\"Price/Book: {format_number(metrics.get('price_to_book'))}\\n\"\n        f\"EV/EBITDA: {format_number(metrics.get('ev_to_ebitda'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: ev_to_ebitda",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 234,
+      "code_snippet": "f\"Profitability:\\n\"\n        f\"Gross Margin: {format_percent(metrics.get('gross_margin'))}\\n\"\n        f\"Operating Margin: {format_percent(metrics.get('operating_margin'))}\\n\"",
+      "evidence": "Hardcoded URL: gross_margin",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 235,
+      "code_snippet": "f\"Gross Margin: {format_percent(metrics.get('gross_margin'))}\\n\"\n        f\"Operating Margin: {format_percent(metrics.get('operating_margin'))}\\n\"\n        f\"Net Margin: {format_percent(metrics.get('profit_margin'))}\\n\"",
+      "evidence": "Hardcoded URL: operating_margin",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 236,
+      "code_snippet": "f\"Operating Margin: {format_percent(metrics.get('operating_margin'))}\\n\"\n        f\"Net Margin: {format_percent(metrics.get('profit_margin'))}\\n\"\n        f\"ROE: {format_percent(metrics.get('return_on_equity'))}\\n\"",
+      "evidence": "Hardcoded URL: profit_margin",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 237,
+      "code_snippet": "f\"Net Margin: {format_percent(metrics.get('profit_margin'))}\\n\"\n        f\"ROE: {format_percent(metrics.get('return_on_equity'))}\\n\"\n        f\"ROA: {format_percent(metrics.get('return_on_assets'))}\\n\"",
+      "evidence": "Hardcoded URL: return_on_equity",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 238,
+      "code_snippet": "f\"ROE: {format_percent(metrics.get('return_on_equity'))}\\n\"\n        f\"ROA: {format_percent(metrics.get('return_on_assets'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: return_on_assets",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 241,
+      "code_snippet": "f\"Growth:\\n\"\n        f\"Revenue Growth: {format_percent(metrics.get('revenue_growth'))}\\n\"\n        f\"Earnings Growth: {format_percent(metrics.get('earnings_growth'))}\\n\"",
+      "evidence": "Hardcoded URL: revenue_growth",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 242,
+      "code_snippet": "f\"Revenue Growth: {format_percent(metrics.get('revenue_growth'))}\\n\"\n        f\"Earnings Growth: {format_percent(metrics.get('earnings_growth'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: earnings_growth",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 245,
+      "code_snippet": "f\"Financial Health:\\n\"\n        f\"Cash: {format_large_number(metrics.get('cash'))}\\n\"\n        f\"Debt: {format_large_number(metrics.get('debt'))}\\n\"",
+      "evidence": "Hardcoded URL: cash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 246,
+      "code_snippet": "f\"Cash: {format_large_number(metrics.get('cash'))}\\n\"\n        f\"Debt: {format_large_number(metrics.get('debt'))}\\n\"\n        f\"Debt/Equity: {format_number(metrics.get('debt_to_equity'), 1)}\\n\"",
+      "evidence": "Hardcoded URL: debt",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 247,
+      "code_snippet": "f\"Debt: {format_large_number(metrics.get('debt'))}\\n\"\n        f\"Debt/Equity: {format_number(metrics.get('debt_to_equity'), 1)}\\n\"\n        f\"Current Ratio: {format_number(metrics.get('current_ratio'), 2)}\\n\"",
+      "evidence": "Hardcoded URL: debt_to_equity",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 248,
+      "code_snippet": "f\"Debt/Equity: {format_number(metrics.get('debt_to_equity'), 1)}\\n\"\n        f\"Current Ratio: {format_number(metrics.get('current_ratio'), 2)}\\n\"\n        f\"Free Cash Flow: {format_large_number(metrics.get('free_cash_flow'))}\\n\"",
+      "evidence": "Hardcoded URL: current_ratio",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 249,
+      "code_snippet": "f\"Current Ratio: {format_number(metrics.get('current_ratio'), 2)}\\n\"\n        f\"Free Cash Flow: {format_large_number(metrics.get('free_cash_flow'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: free_cash_flow",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 252,
+      "code_snippet": "f\"Shareholder Return:\\n\"\n        f\"Dividend Yield: {format_yield_percent(metrics.get('dividend_yield'))}\\n\"\n        f\"Payout Ratio: {format_percent(metrics.get('payout_ratio'))}\\n\"",
+      "evidence": "Hardcoded URL: dividend_yield",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 253,
+      "code_snippet": "f\"Dividend Yield: {format_yield_percent(metrics.get('dividend_yield'))}\\n\"\n        f\"Payout Ratio: {format_percent(metrics.get('payout_ratio'))}\\n\"\n        f\"\\n\"",
+      "evidence": "Hardcoded URL: payout_ratio",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metrics.get()",
+      "file_path": "src/service.py",
+      "line": 256,
+      "code_snippet": "f\"Forward View:\\n\"\n        f\"Analyst Target: {format_price_value(metrics.get('target_mean_price'))}\\n\"\n        f\"Recommendation: {recommendation}\\n\"",
+      "evidence": "Hardcoded URL: target_mean_price",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "src/utils.py",
+      "line": 86,
+      "code_snippet": "for key in keys:\n        value = info.get(key)\n        if value is not None and value != \"\":",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for formatter skill: network",
+      "description": "A 'formatter' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a formatter skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 25,
+  "_scan_meta": {
+    "author": "youpele52",
+    "skill": "stock-fundamentals",
+    "author_skill": "youpele52/stock-fundamentals",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/machunlin/video-merger",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 28,
+  "_scan_meta": {
+    "author": "machunlin",
+    "skill": "video-merger",
+    "author_skill": "machunlin/video-merger",
+    "scan_time_s": 0.1
+  }
+}

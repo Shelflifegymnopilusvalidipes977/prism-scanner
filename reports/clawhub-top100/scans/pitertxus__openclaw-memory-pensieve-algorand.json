@@ -1,0 +1,4503 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/pitertxus/openclaw-memory-pensieve-algorand",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Browser credential theft (P5)",
+    "HIGH: Dynamic module import with variable name (S7)",
+    "HIGH: Unexpected capability for search skill: shell (M1)",
+    "MEDIUM: Reads environment variable: ALGORAND_ALGOD_TOKEN (S5)",
+    "MEDIUM: Unsafe deserialization via path.open() (S12)"
+  ],
+  "behavior_tags": [
+    "executes_shell",
+    "network_outbound",
+    "reads_env_vars",
+    "unsafe_deserialization"
+  ],
+  "findings": [
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_ALGOD_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 24,
+      "code_snippet": "NOTE_KEY = Path('/home/molty/.openclaw/workspace/.secrets/algorand-note-key.bin')\nALGOD_URL = os.getenv('ALGORAND_ALGOD_URL', 'https://mainnet-api.algonode.cloud')\nALGOD_TOKEN = os.getenv('ALGORAND_ALGOD_TOKEN', '')",
+      "evidence": "Reads env var: ALGORAND_ALGOD_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_ALGOD_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 25,
+      "code_snippet": "ALGOD_URL = os.getenv('ALGORAND_ALGOD_URL', 'https://mainnet-api.algonode.cloud')\nALGOD_TOKEN = os.getenv('ALGORAND_ALGOD_TOKEN', '')",
+      "evidence": "Reads sensitive env var: ALGORAND_ALGOD_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 38,
+      "code_snippet": "last = None\n    with path.open('r', encoding='utf-8') as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via layer_path.open()",
+      "description": "Code uses layer_path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 55,
+      "code_snippet": "events = []\n    with layer_path.open('r', encoding='utf-8') as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via ANCHORS.open()",
+      "description": "Code uses ANCHORS.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 74,
+      "code_snippet": "return False\n    with ANCHORS.open('r', encoding='utf-8') as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via ANCHORS.open()",
+      "description": "Code uses ANCHORS.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 87,
+      "code_snippet": "\"\"\"Append anchor record to onchain-anchors.jsonl.\"\"\"\n    with ANCHORS.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(row, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 80,
+      "code_snippet": "row = json.loads(line)\n            if row.get('date') == date_key and row.get('ledger_tip') == ledger_tip:\n                return True",
+      "evidence": "Hardcoded URL: date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 80,
+      "code_snippet": "row = json.loads(line)\n            if row.get('date') == date_key and row.get('ledger_tip') == ledger_tip:\n                return True",
+      "evidence": "Hardcoded URL: ledger_tip",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "scripts/anchor_daily_algorand.py",
+      "line": 63,
+      "code_snippet": "# Match entries created on the target date\n                if entry.get('ts', '').startswith(date_key):\n                    events.append(entry)",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via LEDGER.open()",
+      "description": "Code uses LEDGER.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/auto_capture_daily.py",
+      "line": 20,
+      "code_snippet": "return 'GENESIS'\n    with LEDGER.open('r', encoding='utf-8') as f:\n        lines = [l for l in f if l.strip()]",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via EVENTS.open()",
+      "description": "Code uses EVENTS.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/auto_capture_daily.py",
+      "line": 33,
+      "code_snippet": "with EVENTS.open('r', encoding='utf-8') as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via EVENTS.open()",
+      "description": "Code uses EVENTS.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/auto_capture_daily.py",
+      "line": 74,
+      "code_snippet": "# Append to events\n    with EVENTS.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(event, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via LEDGER.open()",
+      "description": "Code uses LEDGER.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/auto_capture_daily.py",
+      "line": 85,
+      "code_snippet": "}\n    with LEDGER.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(ledger_entry, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "scripts/auto_capture_daily.py",
+      "line": 39,
+      "code_snippet": "event = json.loads(line)\n                existing = event.get('content', '').strip()\n                existing_hash = hashlib.sha256(existing.encode('utf-8')).hexdigest()",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via ledger.open()",
+      "description": "Code uses ledger.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/capture_event.py",
+      "line": 19,
+      "code_snippet": "return 'GENESIS'\n    with ledger.open('r', encoding='utf-8') as f:\n        lines = [ln.strip() for ln in f if ln.strip()]",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/capture_event.py",
+      "line": 25,
+      "code_snippet": "def append_jsonl(path: Path, row: dict):\n    with path.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(row, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via LEDGER.open()",
+      "description": "Code uses LEDGER.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/capture_from_logs.py",
+      "line": 20,
+      "code_snippet": "return 'GENESIS'\n    with LEDGER.open('r', encoding='utf-8') as f:\n        lines = [l for l in f if l.strip()]",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via EVENTS.open()",
+      "description": "Code uses EVENTS.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/capture_from_logs.py",
+      "line": 50,
+      "code_snippet": "# Append to events\n    with EVENTS.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(event, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via LEDGER.open()",
+      "description": "Code uses LEDGER.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/capture_from_logs.py",
+      "line": 61,
+      "code_snippet": "}\n    with LEDGER.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(ledger_entry, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "scripts/check_algorand_funding.py",
+      "line": 14,
+      "code_snippet": "info = client.account_info(args.address)\namount = info.get('amount', 0)\nmin_bal = info.get('min-balance', 0)",
+      "evidence": "Hardcoded URL: amount",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via info.get()",
+      "file_path": "scripts/check_algorand_funding.py",
+      "line": 15,
+      "code_snippet": "amount = info.get('amount', 0)\nmin_bal = info.get('min-balance', 0)\nspendable = max(0, amount - min_bal)",
+      "evidence": "Hardcoded URL: min-balance",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/consolidate_daily.py",
+      "line": 12,
+      "code_snippet": "out = []\n    with path.open('r', encoding='utf-8') as f:\n        for ln in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/consolidate_daily.py",
+      "line": 21,
+      "code_snippet": "def append_jsonl(path: Path, row: dict):\n    with path.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(row, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/consolidate_daily.py",
+      "line": 51,
+      "code_snippet": "promoted = []\ntag_counts = Counter(t for e in events for t in e.get('tags', []))\nfor tag, count in tag_counts.items():",
+      "evidence": "Hardcoded URL: tags",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via meta.get()",
+      "file_path": "scripts/decrypt_note_payload.py",
+      "line": 28,
+      "code_snippet": "meta = json.loads(reg.read_text(encoding='utf-8'))\n        for k in reversed(meta.get('keys', [])):\n            kp = Path(args.keyring_dir) / k['file']",
+      "evidence": "Hardcoded URL: keys",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/dream_cycle_budgeted.py",
+      "line": 22,
+      "code_snippet": "def append_jsonl(path: Path, row: dict):\n    with path.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(row, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/dream_cycle_budgeted.py",
+      "line": 60,
+      "code_snippet": "tag_counts = Counter(t for e in events for t in e.get('tags', []))\nsource_counts = Counter(e.get('source', 'unknown') for e in events)",
+      "evidence": "Hardcoded URL: source",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tag_counts.get()",
+      "file_path": "scripts/dream_cycle_budgeted.py",
+      "line": 87,
+      "code_snippet": "if tag_counts.get('memory', 0) >= 5 and prom_self < args.max_self:\n    append_jsonl(self_p, {",
+      "evidence": "Hardcoded URL: memory",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/dream_cycle_budgeted.py",
+      "line": 52,
+      "code_snippet": "try:\n        ts = datetime.fromisoformat(e.get('ts'))\n    except Exception:",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/dream_cycle_budgeted.py",
+      "line": 59,
+      "code_snippet": "events = events[-args.max_events:]\ntag_counts = Counter(t for e in events for t in e.get('tags', []))\nsource_counts = Counter(e.get('source', 'unknown') for e in events)",
+      "evidence": "Hardcoded URL: tags",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 19,
+      "code_snippet": "out = []\n    with path.open('r', encoding='utf-8') as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 28,
+      "code_snippet": "def append_jsonl(path: Path, row: dict):\n    with path.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(row, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tag_counts.get()",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 94,
+      "code_snippet": "# self-model: only very stable recurring behavioral tag\n    if tag_counts.get('memory', 0) >= 5:\n        row = {",
+      "evidence": "Hardcoded URL: memory",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 55,
+      "code_snippet": "tag_counts = Counter(t for e in events for t in e.get('tags', []))\n    source_counts = Counter(e.get('source', 'unknown') for e in events)",
+      "evidence": "Hardcoded URL: source",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 113,
+      "code_snippet": "for r in sem_rows[-500:]:\n        c = norm(r.get('content', ''))\n        if not c:",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 116,
+      "code_snippet": "continue\n        by_content[c].add(r.get('status', 'active'))\n    for c, statuses in by_content.items():",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 48,
+      "code_snippet": "try:\n            ts = datetime.fromisoformat(e.get('ts'))\n        except Exception:",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/dream_cycle_daily.py",
+      "line": 54,
+      "code_snippet": "tag_counts = Counter(t for e in events for t in e.get('tags', []))\n    source_counts = Counter(e.get('source', 'unknown') for e in events)",
+      "evidence": "Hardcoded URL: tags",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via obj.get()",
+      "file_path": "scripts/fetch_anchor_note.py",
+      "line": 13,
+      "code_snippet": "tx = obj.get('transaction', {})\nnote_b64 = tx.get('note', '')",
+      "evidence": "Hardcoded URL: transaction",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "scripts/fetch_anchor_note.py",
+      "line": 14,
+      "code_snippet": "tx = obj.get('transaction', {})\nnote_b64 = tx.get('note', '')\nout = {",
+      "evidence": "Hardcoded URL: note",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "scripts/fetch_anchor_note.py",
+      "line": 10,
+      "code_snippet": "url = args.indexer_url.rstrip('/') + '/v2/transactions/' + urllib.parse.quote(args.txid)\nwith urllib.request.urlopen(url, timeout=20) as r:\n    obj = json.load(r)",
+      "evidence": "Variable URL (taint: internal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "scripts/fetch_anchor_note.py",
+      "line": 17,
+      "code_snippet": "'ok': True,\n    'txid': tx.get('id', args.txid),\n    'sender': tx.get('sender'),",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "scripts/fetch_anchor_note.py",
+      "line": 18,
+      "code_snippet": "'txid': tx.get('id', args.txid),\n    'sender': tx.get('sender'),\n    'round_time': tx.get('round-time'),",
+      "evidence": "Hardcoded URL: sender",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "scripts/fetch_anchor_note.py",
+      "line": 19,
+      "code_snippet": "'sender': tx.get('sender'),\n    'round_time': tx.get('round-time'),\n    'note_b64': note_b64,",
+      "evidence": "Hardcoded URL: round-time",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_INDEXER_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 22,
+      "code_snippet": "NOTE_KEY = Path('/home/molty/.openclaw/workspace/.secrets/algorand-note-key.bin')\nINDEXER_URL = os.getenv('ALGORAND_INDEXER_URL', 'https://mainnet-idx.algonode.cloud')\nINDEXER_TOKEN = os.getenv('ALGORAND_INDEXER_TOKEN', '')",
+      "evidence": "Reads env var: ALGORAND_INDEXER_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_INDEXER_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 23,
+      "code_snippet": "INDEXER_URL = os.getenv('ALGORAND_INDEXER_URL', 'https://mainnet-idx.algonode.cloud')\nINDEXER_TOKEN = os.getenv('ALGORAND_INDEXER_TOKEN', '')",
+      "evidence": "Reads sensitive env var: ALGORAND_INDEXER_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 30,
+      "code_snippet": "rows = []\n    with path.open('r', encoding='utf-8') as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 87,
+      "code_snippet": "def fetch_note_b64(row: dict) -> str:\n        txid = row.get('txid')\n        if txid:",
+      "evidence": "Hardcoded URL: txid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 96,
+      "code_snippet": "pass\n        note_local = row.get('note_b64')\n        if note_local:",
+      "evidence": "Hardcoded URL: note_b64",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 114,
+      "code_snippet": "first_payload = decrypt(fetch_note_b64(latest[0]))\n    is_multi = bool(first_payload.get('multi_tx', False))",
+      "evidence": "Hardcoded URL: multi_tx",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 133,
+      "code_snippet": "pnum = int(payload.get('part', 0) or 0)\n        chunk_b64 = payload.get('chunk')\n        if not chunk_b64:",
+      "evidence": "Hardcoded URL: chunk",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 198,
+      "code_snippet": "else:\n        content = payload.get('content', payload.get('content') or {})\n        anchored_events = content.get('events', []) if isinstance(content, dict) else []",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 57,
+      "code_snippet": "expected_entry_hash = canonical_event_hash(base)\n        if e.get('entry_hash') != expected_entry_hash:\n            issues.append(f'event[{i}] entry_hash mismatch')",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 61,
+      "code_snippet": "if i == 0:\n            prev_chain = e.get('prev_hash')\n        else:",
+      "evidence": "Hardcoded URL: prev_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 67,
+      "code_snippet": "expected_chain = sha256_text(f\"{e.get('prev_hash', '')}{e.get('entry_hash', '')}\")\n        if e.get('chain_hash') != expected_chain:\n            issues.append(f'event[{i}] chain_hash mismatch')",
+      "evidence": "Hardcoded URL: chain_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 80,
+      "code_snippet": "# Select latest coherent anchor set only\n    latest_ts = max(r.get('ts', '') for r in day)\n    latest = [r for r in day if r.get('ts') == latest_ts]",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 119,
+      "code_snippet": "expected_total = int(first_payload.get('total_parts', 0) or 0)\n    if expected_total <= 0:",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 138,
+      "code_snippet": "chunk = base64.b64decode(chunk_b64)\n        if hashlib.sha256(chunk).hexdigest() != payload.get('chunk_hash'):\n            issues.append(f'chunk hash mismatch at part {pnum}')",
+      "evidence": "Hardcoded URL: chunk_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via meta.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 154,
+      "code_snippet": "full_hash = hashlib.sha256(content_bytes).hexdigest()\n    if meta and full_hash != meta.get('content_hash'):\n        issues.append('content_hash mismatch')",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via content.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 199,
+      "code_snippet": "content = payload.get('content', payload.get('content') or {})\n        anchored_events = content.get('events', []) if isinstance(content, dict) else []",
+      "evidence": "Hardcoded URL: events",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 206,
+      "code_snippet": "# Event hash parity by entry_hash\n        local_by_hash = {e.get('entry_hash'): e for e in events_day}\n        onchain_by_hash = {e.get('entry_hash'): e for e in anchored_events}",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 207,
+      "code_snippet": "local_by_hash = {e.get('entry_hash'): e for e in events_day}\n        onchain_by_hash = {e.get('entry_hash'): e for e in anchored_events}\n        if set(local_by_hash.keys()) != set(onchain_by_hash.keys()):",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 63,
+      "code_snippet": "else:\n            if e.get('prev_hash') != events_rows[i - 1].get('chain_hash'):\n                issues.append(f'event[{i}] prev_hash not linked to previous chain_hash')",
+      "evidence": "Hardcoded URL: prev_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 81,
+      "code_snippet": "latest_ts = max(r.get('ts', '') for r in day)\n    latest = [r for r in day if r.get('ts') == latest_ts]\n    latest.sort(key=lambda r: int(r.get('part', 0) or 0))",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 132,
+      "code_snippet": "payload = decrypt(fetch_note_b64(row))\n        pnum = int(payload.get('part', 0) or 0)\n        chunk_b64 = payload.get('chunk')",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 198,
+      "code_snippet": "else:\n        content = payload.get('content', payload.get('content') or {})\n        anchored_events = content.get('events', []) if isinstance(content, dict) else []",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via ev.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 214,
+      "code_snippet": "for ev in anchored_events:\n            if detect_probable_truncation(ev.get('content', '')):\n                trunc_count += 1",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 66,
+      "code_snippet": "expected_chain = sha256_text(f\"{e.get('prev_hash', '')}{e.get('entry_hash', '')}\")\n        if e.get('chain_hash') != expected_chain:",
+      "evidence": "Hardcoded URL: prev_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 66,
+      "code_snippet": "expected_chain = sha256_text(f\"{e.get('prev_hash', '')}{e.get('entry_hash', '')}\")\n        if e.get('chain_hash') != expected_chain:",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 75,
+      "code_snippet": "anchors = read_jsonl(ANCHORS)\n    day = [r for r in anchors if r.get('date') == date_key and r.get('status') == 'anchored']\n    if not day:",
+      "evidence": "Hardcoded URL: date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 75,
+      "code_snippet": "anchors = read_jsonl(ANCHORS)\n    day = [r for r in anchors if r.get('date') == date_key and r.get('status') == 'anchored']\n    if not day:",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 48,
+      "code_snippet": "def date_rows(rows, date_key: str):\n    return [r for r in rows if str(r.get('ts', '')).startswith(date_key)]",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 82,
+      "code_snippet": "latest = [r for r in day if r.get('ts') == latest_ts]\n    latest.sort(key=lambda r: int(r.get('part', 0) or 0))",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "scripts/hardening_v21_validate.py",
+      "line": 91,
+      "code_snippet": "tx = idx.transaction(txid)\n                note = tx.get('transaction', {}).get('note')\n                if note:",
+      "evidence": "Hardcoded URL: transaction",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via ledger_path.open()",
+      "description": "Code uses ledger_path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/memory_append.py",
+      "line": 25,
+      "code_snippet": "return 'GENESIS'\n    with ledger_path.open('r', encoding='utf-8') as f:\n        lines = [ln.strip() for ln in f if ln.strip()]",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/memory_append.py",
+      "line": 33,
+      "code_snippet": "def append_jsonl(path: Path, row: dict) -> None:\n    with path.open('a', encoding='utf-8') as f:\n        f.write(json.dumps(row, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S7",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "Dynamic module import with variable name",
+      "description": "Code dynamically imports a module via importlib.import_module()",
+      "file_path": "scripts/preflight_requirements.py",
+      "line": 27,
+      "code_snippet": "try:\n            importlib.import_module(mod)\n        except Exception:",
+      "evidence": "Variable module name (origin: unknown)",
+      "tags": [
+        "execution",
+        "import"
+      ],
+      "remediation": "Use an allowlist of permitted module names.",
+      "references": [
+        "MITRE T1129"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/preflight_requirements.py",
+      "line": 54,
+      "code_snippet": "for ev in OPTIONAL_ENV:\n        if not os.getenv(ev):\n            warnings.append(f'env not set: {ev}')",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 61,
+      "code_snippet": "'date': last['date'],\n        'version': payload.get('v', 1),\n        'multi_tx': False,",
+      "evidence": "Hardcoded URL: v",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 87,
+      "code_snippet": "'date': first_part['date'],\n        'version': payload.get('v', 2),\n        'multi_tx': True,",
+      "evidence": "Hardcoded URL: v",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_part.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 89,
+      "code_snippet": "'multi_tx': True,\n        'total_parts': first_part.get('total_parts'),\n        'payload': payload,",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 91,
+      "code_snippet": "'payload': payload,\n        'events_count': payload.get('events_count'),\n        'semantic_count': payload.get('semantic_count'),",
+      "evidence": "Hardcoded URL: events_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 92,
+      "code_snippet": "'events_count': payload.get('events_count'),\n        'semantic_count': payload.get('semantic_count'),\n        'procedural_count': payload.get('procedural_count'),",
+      "evidence": "Hardcoded URL: semantic_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 93,
+      "code_snippet": "'semantic_count': payload.get('semantic_count'),\n        'procedural_count': payload.get('procedural_count'),\n        'self_model_count': payload.get('self_model_count')",
+      "evidence": "Hardcoded URL: procedural_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 94,
+      "code_snippet": "'procedural_count': payload.get('procedural_count'),\n        'self_model_count': payload.get('self_model_count')\n    }",
+      "evidence": "Hardcoded URL: self_model_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/read_anchor_latest.py",
+      "line": 78,
+      "code_snippet": "# Multi TX: get first part (has full metadata)\n    parts = sorted(latest_records, key=lambda r: r.get('part', 0))\n    first_part = parts[0]",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via out.open()",
+      "description": "Code uses out.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/record_anchor_map.py",
+      "line": 23,
+      "code_snippet": "}\nwith out.open('a', encoding='utf-8') as f:\n    f.write(json.dumps(row, ensure_ascii=False) + '\\n')",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_INDEXER_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 19,
+      "code_snippet": "OUTPUT_DIR = Path('/home/molty/.openclaw/workspace/memory/recovered')\nINDEXER_URL = os.getenv('ALGORAND_INDEXER_URL', 'https://mainnet-idx.algonode.cloud')\nINDEXER_TOKEN = os.getenv('ALGORAND_INDEXER_TOKEN', '')",
+      "evidence": "Reads env var: ALGORAND_INDEXER_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_INDEXER_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 20,
+      "code_snippet": "INDEXER_URL = os.getenv('ALGORAND_INDEXER_URL', 'https://mainnet-idx.algonode.cloud')\nINDEXER_TOKEN = os.getenv('ALGORAND_INDEXER_TOKEN', '')",
+      "evidence": "Reads sensitive env var: ALGORAND_INDEXER_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 200,
+      "code_snippet": "print(f'  Multi-TX: {result.get(\"multi_tx\", False)}')\n    if result.get('total_parts'):\n        print(f'  Total parts: {result[\"total_parts\"]}')",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via ANCHORS.open()",
+      "description": "Code uses ANCHORS.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 55,
+      "code_snippet": "records = []\n    with ANCHORS.open('r', encoding='utf-8') as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 72,
+      "code_snippet": "def get_note_b64(row: dict) -> str:\n        txid = row.get('txid')\n        if txid:",
+      "evidence": "Hardcoded URL: txid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 78,
+      "code_snippet": "pass\n        note_b64 = row.get('note_b64')\n        if note_b64:",
+      "evidence": "Hardcoded URL: note_b64",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 86,
+      "code_snippet": "is_multi = bool(first_payload.get('multi_tx', False))",
+      "evidence": "Hardcoded URL: multi_tx",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via part_payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 137,
+      "code_snippet": "chunk_b64 = part_payload.get('chunk')\n        if not chunk_b64:",
+      "evidence": "Hardcoded URL: chunk",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via part_payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 142,
+      "code_snippet": "chunk_bytes = base64.b64decode(chunk_b64)\n        chunk_hash = part_payload.get('chunk_hash')\n        computed_hash = hashlib.sha256(chunk_bytes).hexdigest()",
+      "evidence": "Hardcoded URL: chunk_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metadata.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 158,
+      "code_snippet": "if full_content_hash != metadata.get('content_hash'):\n        raise ValueError(",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via output_file.open()",
+      "description": "Code uses output_file.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 236,
+      "code_snippet": "OUTPUT_DIR.mkdir(parents=True, exist_ok=True)\n    with output_file.open('w', encoding='utf-8') as f:\n        json.dump(result, f, ensure_ascii=False, indent=2)",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 36,
+      "code_snippet": "tx = idx.transaction(txid)\n    note_b64 = tx.get('transaction', {}).get('note')\n    if not note_b64:",
+      "evidence": "Hardcoded URL: transaction",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 44,
+      "code_snippet": "\"\"\"Select coherent latest anchor batch (same timestamp), sorted by part.\"\"\"\n    latest_ts = max(r.get('ts', '') for r in records)\n    latest = [r for r in records if r.get('ts') == latest_ts]",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 91,
+      "code_snippet": "if payload.get('v') == 1:\n            return {",
+      "evidence": "Hardcoded URL: v",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 117,
+      "code_snippet": "# MULTI TX coherent reconstruction from selected batch only\n    expected_total = int(first_payload.get('total_parts', 0) or 0)\n    if expected_total <= 0:",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 45,
+      "code_snippet": "latest_ts = max(r.get('ts', '') for r in records)\n    latest = [r for r in records if r.get('ts') == latest_ts]\n    latest.sort(key=lambda r: int(r.get('part', 0) or 0))",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 100,
+      "code_snippet": "if payload.get('v') == 2 and 'content' in payload:\n            content = payload['content']",
+      "evidence": "Hardcoded URL: v",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via part_payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 132,
+      "code_snippet": "part_payload = decrypt_note(note_b64, key)\n        part_num = int(part_payload.get('part', 0) or 0)",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 199,
+      "code_snippet": "print(f'  Version: {result[\"version\"]}')\n    print(f'  Multi-TX: {result.get(\"multi_tx\", False)}')\n    if result.get('total_parts'):",
+      "evidence": "Hardcoded URL: multi_tx",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 202,
+      "code_snippet": "print(f'  Total parts: {result[\"total_parts\"]}')\n    print(f'  Verified: {result.get(\"verified\", \"N/A\")}')",
+      "evidence": "Hardcoded URL: verified",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 61,
+      "code_snippet": "row = json.loads(line)\n            if row.get('date') == date_key and row.get('status') == 'anchored':\n                records.append(row)",
+      "evidence": "Hardcoded URL: date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 61,
+      "code_snippet": "row = json.loads(line)\n            if row.get('date') == date_key and row.get('status') == 'anchored':\n                records.append(row)",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 110,
+      "code_snippet": "'content': content,\n                'verified': computed_hash == payload.get('content_hash'),\n                'anchor_ts': selected[0].get('ts'),",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via metadata.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 160,
+      "code_snippet": "raise ValueError(\n            f'Full content hash mismatch: {full_content_hash} != {metadata.get(\"content_hash\")}'\n        )",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 46,
+      "code_snippet": "latest = [r for r in records if r.get('ts') == latest_ts]\n    latest.sort(key=lambda r: int(r.get('part', 0) or 0))\n    return latest",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via out_file.open()",
+      "description": "Code uses out_file.open() which can execute arbitrary code during deserialization",
+      "file_path": "scripts/recover_from_blockchain.py",
+      "line": 226,
+      "code_snippet": "out_file = OUTPUT_DIR / f'{layer_name}_recovered_{date_key}.jsonl'\n                    with out_file.open('w', encoding='utf-8') as f:\n                        for event in events:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via meta.get()",
+      "file_path": "scripts/rotate_note_key.py",
+      "line": 34,
+      "code_snippet": "meta['current_version'] = new_version\nmeta['keys'] = meta.get('keys', []) + [entry]\nregistry.write_text(json.dumps(meta, indent=2), encoding='utf-8')",
+      "evidence": "Hardcoded URL: keys",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via meta.get()",
+      "file_path": "scripts/rotate_note_key.py",
+      "line": 20,
+      "code_snippet": "new_version = int(meta.get('current_version', 0)) + 1\nfname = f'{args.prefix}-v{new_version}.bin'",
+      "evidence": "Hardcoded URL: current_version",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/verify_anchor_against_ledger.py",
+      "line": 19,
+      "code_snippet": "payload = json.loads(Path(args.payload_file).read_text(encoding='utf-8'))\nok = payload.get('ledger_tip') == ledger_tip",
+      "evidence": "Hardcoded URL: ledger_tip",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/verify_anchor_against_ledger.py",
+      "line": 24,
+      "code_snippet": "'match': ok,\n    'payload_ledger_tip': payload.get('ledger_tip'),\n    'local_ledger_tip': ledger_tip,",
+      "evidence": "Hardcoded URL: ledger_tip",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "scripts/verify_anchor_against_ledger.py",
+      "line": 27,
+      "code_snippet": "'entries_local': len(lines),\n    'entries_payload': payload.get('entries')\n}))",
+      "evidence": "Hardcoded URL: entries",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "server.py",
+      "line": 228,
+      "code_snippet": "\"\"\"Fetch note from blockchain (preferred) or local note_b64 cache (fallback).\"\"\"\n    txid = row.get(\"txid\")\n    if txid:",
+      "evidence": "Hardcoded URL: txid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "server.py",
+      "line": 238,
+      "code_snippet": "pass\n    note_local = row.get(\"note_b64\")\n    if note_local:",
+      "evidence": "Hardcoded URL: note_b64",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls mcp.run() which can execute arbitrary system commands",
+      "file_path": "server.py",
+      "line": 1019,
+      "code_snippet": "if __name__ == \"__main__\":\n    mcp.run()",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENCLAW_WORKSPACE",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 67,
+      "code_snippet": "def _ws() -> Path:\n    return Path(os.getenv(\"OPENCLAW_WORKSPACE\", str(Path.home() / \".openclaw\" / \"workspace\")))",
+      "evidence": "Reads env var: OPENCLAW_WORKSPACE",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "server.py",
+      "line": 123,
+      "code_snippet": "rows = []\n    with path.open(\"r\", encoding=\"utf-8\") as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via path.open()",
+      "description": "Code uses path.open() which can execute arbitrary code during deserialization",
+      "file_path": "server.py",
+      "line": 136,
+      "code_snippet": "path.parent.mkdir(parents=True, exist_ok=True)\n    with path.open(\"a\", encoding=\"utf-8\") as f:\n        f.write(json.dumps(row, ensure_ascii=False) + \"\\n\")",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via ledger.open()",
+      "description": "Code uses ledger.open() which can execute arbitrary code during deserialization",
+      "file_path": "server.py",
+      "line": 147,
+      "code_snippet": "last = None\n    with ledger.open(\"r\", encoding=\"utf-8\") as f:\n        for line in f:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_ALGOD_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 204,
+      "code_snippet": "return algod.AlgodClient(\n        os.getenv(\"ALGORAND_ALGOD_TOKEN\", \"\"),\n        os.getenv(\"ALGORAND_ALGOD_URL\", \"https://mainnet-api.algonode.cloud\"),",
+      "evidence": "Reads sensitive env var: ALGORAND_ALGOD_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_ALGOD_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 205,
+      "code_snippet": "os.getenv(\"ALGORAND_ALGOD_TOKEN\", \"\"),\n        os.getenv(\"ALGORAND_ALGOD_URL\", \"https://mainnet-api.algonode.cloud\"),\n    )",
+      "evidence": "Reads env var: ALGORAND_ALGOD_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_INDEXER_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 212,
+      "code_snippet": "return indexer.IndexerClient(\n        os.getenv(\"ALGORAND_INDEXER_TOKEN\", \"\"),\n        os.getenv(\"ALGORAND_INDEXER_URL\", \"https://mainnet-idx.algonode.cloud\"),",
+      "evidence": "Reads sensitive env var: ALGORAND_INDEXER_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_INDEXER_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 213,
+      "code_snippet": "os.getenv(\"ALGORAND_INDEXER_TOKEN\", \"\"),\n        os.getenv(\"ALGORAND_INDEXER_URL\", \"https://mainnet-idx.algonode.cloud\"),\n    )",
+      "evidence": "Reads env var: ALGORAND_INDEXER_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tag_counts.get()",
+      "file_path": "server.py",
+      "line": 366,
+      "code_snippet": "if tag_counts.get(\"memory\", 0) >= 5:\n        _append_jsonl(mem / \"self_model.jsonl\", {",
+      "evidence": "Hardcoded URL: memory",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via ledger_path.open()",
+      "description": "Code uses ledger_path.open() which can execute arbitrary code during deserialization",
+      "file_path": "server.py",
+      "line": 435,
+      "code_snippet": "if ledger_path.exists():\n        for line in ledger_path.open(\"r\", encoding=\"utf-8\"):\n            line = line.strip()",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 680,
+      "code_snippet": "is_multi = bool(first_payload.get(\"multi_tx\", False))\n    anchor_v = int(first_payload.get(\"v\", 2) or 2)",
+      "evidence": "Hardcoded URL: multi_tx",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 742,
+      "code_snippet": "# v4+: on-chain events have no hash fields; recompute from content for comparison\n    local_hashes = {e.get(\"entry_hash\") for e in day_events}\n    if anchor_v >= 4:",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 885,
+      "code_snippet": "first_payload = _decrypt(_get_note(selected[0], idx), note_key)\n    is_multi  = bool(first_payload.get(\"multi_tx\", False))\n    anchor_v  = int(first_payload.get(\"v\", 2) or 2)",
+      "evidence": "Hardcoded URL: multi_tx",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_WALLET_ADDRESS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 78,
+      "code_snippet": "\"\"\"Return (address, mnemonic). Env vars take priority over the .secrets file.\"\"\"\n    addr = os.getenv(\"ALGORAND_WALLET_ADDRESS\", \"\").strip()\n    mnemo = os.getenv(\"ALGORAND_WALLET_MNEMONIC\", \"\").strip()",
+      "evidence": "Reads env var: ALGORAND_WALLET_ADDRESS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_WALLET_MNEMONIC",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 79,
+      "code_snippet": "addr = os.getenv(\"ALGORAND_WALLET_ADDRESS\", \"\").strip()\n    mnemo = os.getenv(\"ALGORAND_WALLET_MNEMONIC\", \"\").strip()\n    if addr and mnemo:",
+      "evidence": "Reads env var: ALGORAND_WALLET_MNEMONIC",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ALGORAND_NOTE_KEY_HEX",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "server.py",
+      "line": 97,
+      "code_snippet": "\"\"\"Return 32-byte AES key. Env var (hex) takes priority over the .secrets file.\"\"\"\n    hex_key = os.getenv(\"ALGORAND_NOTE_KEY_HEX\", \"\").strip()\n    if hex_key:",
+      "evidence": "Reads sensitive env var: ALGORAND_NOTE_KEY_HEX",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 343,
+      "code_snippet": "tag_counts = Counter(t for e in events for t in e.get(\"tags\", []))\n    src_counts = Counter(e.get(\"source\", \"unknown\") for e in events)\n    promoted_sem, promoted_proc, promoted_self = [], [], []",
+      "evidence": "Hardcoded URL: source",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 632,
+      "code_snippet": "expected_eh = _entry_hash(e)\n        if e.get(\"entry_hash\") != expected_eh:\n            issues.append(f\"event[{i}] entry_hash mismatch\")",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 639,
+      "code_snippet": ").hexdigest()\n        if e.get(\"chain_hash\") != expected_ch:\n            issues.append(f\"event[{i}] chain_hash mismatch\")",
+      "evidence": "Hardcoded URL: chain_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 661,
+      "code_snippet": "latest_ts = max(r.get(\"ts\", \"\") for r in day_anchors)\n    latest = sorted(",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 681,
+      "code_snippet": "is_multi = bool(first_payload.get(\"multi_tx\", False))\n    anchor_v = int(first_payload.get(\"v\", 2) or 2)\n    anchored_events: list = []",
+      "evidence": "Hardcoded URL: v",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 685,
+      "code_snippet": "if not is_multi:\n        content = first_payload.get(\"content\") or {}\n        anchored_events = content.get(\"events\", []) if isinstance(content, dict) else []",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via content.get()",
+      "file_path": "server.py",
+      "line": 686,
+      "code_snippet": "content = first_payload.get(\"content\") or {}\n        anchored_events = content.get(\"events\", []) if isinstance(content, dict) else []\n        # Verify content_hash for v4+ single TX",
+      "evidence": "Hardcoded URL: events",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 746,
+      "code_snippet": "else:\n        onchain_hashes = {e.get(\"entry_hash\") for e in anchored_events}\n    if local_hashes != onchain_hashes:",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 816,
+      "code_snippet": "anchor_date  = payload.get(\"date\", \"unknown\")\n            anchor_v     = payload.get(\"v\", \"?\")",
+      "evidence": "Hardcoded URL: date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 817,
+      "code_snippet": "anchor_date  = payload.get(\"date\", \"unknown\")\n            anchor_v     = payload.get(\"v\", \"?\")\n            is_multi     = bool(payload.get(\"multi_tx\", False))",
+      "evidence": "Hardcoded URL: v",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 819,
+      "code_snippet": "is_multi     = bool(payload.get(\"multi_tx\", False))\n            events_count = payload.get(\"events_count\", 0)\n            ledger_tip   = payload.get(\"ledger_tip\", \"\")",
+      "evidence": "Hardcoded URL: events_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 820,
+      "code_snippet": "events_count = payload.get(\"events_count\", 0)\n            ledger_tip   = payload.get(\"ledger_tip\", \"\")\n            root_hash    = payload.get(\"root_hash\", \"\")",
+      "evidence": "Hardcoded URL: ledger_tip",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 821,
+      "code_snippet": "ledger_tip   = payload.get(\"ledger_tip\", \"\")\n            root_hash    = payload.get(\"root_hash\", \"\")\n            content_hash = payload.get(\"content_hash\", \"\")",
+      "evidence": "Hardcoded URL: root_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 822,
+      "code_snippet": "root_hash    = payload.get(\"root_hash\", \"\")\n            content_hash = payload.get(\"content_hash\", \"\")\n            prev_txid    = payload.get(\"prev_anchor_txid\")",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 823,
+      "code_snippet": "content_hash = payload.get(\"content_hash\", \"\")\n            prev_txid    = payload.get(\"prev_anchor_txid\")",
+      "evidence": "Hardcoded URL: prev_anchor_txid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 878,
+      "code_snippet": "latest_ts = max(r.get(\"ts\", \"\") for r in records)\n    selected  = sorted(",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 886,
+      "code_snippet": "is_multi  = bool(first_payload.get(\"multi_tx\", False))\n    anchor_v  = int(first_payload.get(\"v\", 2) or 2)",
+      "evidence": "Hardcoded URL: v",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 892,
+      "code_snippet": "\"note\": \"v1 anchor: no content stored on-chain\"}\n        content = first_payload.get(\"content\") or {}\n        content_bytes = json.dumps(",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 896,
+      "code_snippet": ").encode()\n        verified = hashlib.sha256(content_bytes).hexdigest() == first_payload.get(\"content_hash\")\n    else:",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 917,
+      "code_snippet": "# v4 multi-TX: chunks are compressed content bytes\n        content_compressed = bool(first_payload.get(\"content_compressed\", False))\n        if content_compressed:",
+      "evidence": "Hardcoded URL: content_compressed",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 923,
+      "code_snippet": "verified = hashlib.sha256(full_bytes).hexdigest() == first_payload.get(\"content_hash\")\n        if not verified:",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "server.py",
+      "line": 295,
+      "code_snippet": "if hashlib.sha256(row.get(\"content\", \"\").strip().encode()).hexdigest() == target:\n            return {\"ok\": True, \"status\": \"duplicate\", \"id\": row.get(\"id\")}",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 342,
+      "code_snippet": "tag_counts = Counter(t for e in events for t in e.get(\"tags\", []))\n    src_counts = Counter(e.get(\"source\", \"unknown\") for e in events)",
+      "evidence": "Hardcoded URL: tags",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 381,
+      "code_snippet": "if c:\n            by_content[c].add(r.get(\"status\", \"active\"))\n    for c, statuses in by_content.items():",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 448,
+      "code_snippet": "[_strip_hashes(e) for e in events_raw],\n        key=lambda e: e.get(\"importance\", 0),\n        reverse=True,",
+      "evidence": "Hardcoded URL: importance",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 634,
+      "code_snippet": "issues.append(f\"event[{i}] entry_hash mismatch\")\n        if i > 0 and e.get(\"prev_hash\") != day_events[i - 1].get(\"chain_hash\"):\n            issues.append(f\"event[{i}] prev_hash not linked to previous chain_hash\")",
+      "evidence": "Hardcoded URL: prev_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 692,
+      "code_snippet": ").encode()\n            if hashlib.sha256(content_bytes).hexdigest() != first_payload.get(\"content_hash\"):\n                issues.append(\"content_hash mismatch (single TX)\")",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 695,
+      "code_snippet": "else:\n        expected_total = int(first_payload.get(\"total_parts\", 0) or 0)\n        if len(latest) != expected_total:",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 719,
+      "code_snippet": "# v4 multi-TX: chunks are compressed content bytes; decompress to verify\n            content_compressed = bool(first_payload.get(\"content_compressed\", False))\n            if content_compressed:",
+      "evidence": "Hardcoded URL: content_compressed",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 818,
+      "code_snippet": "anchor_v     = payload.get(\"v\", \"?\")\n            is_multi     = bool(payload.get(\"multi_tx\", False))\n            events_count = payload.get(\"events_count\", 0)",
+      "evidence": "Hardcoded URL: multi_tx",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 830,
+      "code_snippet": "\"ledger_tip\": ledger_tip,\n                \"entries\": payload.get(\"entries\", 0),\n                \"root_hash\": root_hash,",
+      "evidence": "Hardcoded URL: entries",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 898,
+      "code_snippet": "else:\n        expected_total = int(first_payload.get(\"total_parts\", 0) or 0)\n        if len(selected) != expected_total:",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via p.get()",
+      "file_path": "server.py",
+      "line": 908,
+      "code_snippet": "p    = _decrypt(_get_note(row, idx), note_key)\n            pnum = int(p.get(\"part\", 0))\n            chunk = base64.b64decode(p[\"chunk\"])",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via p.get()",
+      "file_path": "server.py",
+      "line": 910,
+      "code_snippet": "chunk = base64.b64decode(p[\"chunk\"])\n            if hashlib.sha256(chunk).hexdigest() != p.get(\"chunk_hash\"):\n                return {\"ok\": False, \"error\": f\"Chunk hash mismatch at part {pnum}\"}",
+      "evidence": "Hardcoded URL: chunk_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via content.get()",
+      "file_path": "server.py",
+      "line": 934,
+      "code_snippet": "\"anchor_ts\": selected[0].get(\"ts\"),\n        \"events\": len(content.get(\"events\", [])) if isinstance(content, dict) else 0,\n        \"semantic\": len(content.get(\"semantic\", [])) if isinstance(content, dict) else 0,",
+      "evidence": "Hardcoded URL: events",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via content.get()",
+      "file_path": "server.py",
+      "line": 935,
+      "code_snippet": "\"events\": len(content.get(\"events\", [])) if isinstance(content, dict) else 0,\n        \"semantic\": len(content.get(\"semantic\", [])) if isinstance(content, dict) else 0,\n        \"procedural\": len(content.get(\"procedural\", [])) if isinstance(content, dict) else 0,",
+      "evidence": "Hardcoded URL: semantic",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via content.get()",
+      "file_path": "server.py",
+      "line": 936,
+      "code_snippet": "\"semantic\": len(content.get(\"semantic\", [])) if isinstance(content, dict) else 0,\n        \"procedural\": len(content.get(\"procedural\", [])) if isinstance(content, dict) else 0,\n        \"self_model\": len(content.get(\"self_model\", [])) if isinstance(content, dict) else 0,",
+      "evidence": "Hardcoded URL: procedural",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via content.get()",
+      "file_path": "server.py",
+      "line": 937,
+      "code_snippet": "\"procedural\": len(content.get(\"procedural\", [])) if isinstance(content, dict) else 0,\n        \"self_model\": len(content.get(\"self_model\", [])) if isinstance(content, dict) else 0,\n    }",
+      "evidence": "Hardcoded URL: self_model",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "server.py",
+      "line": 233,
+      "code_snippet": "tx = client.transaction(txid)\n            note = tx.get(\"transaction\", {}).get(\"note\")\n            if note:",
+      "evidence": "Hardcoded URL: transaction",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 253,
+      "code_snippet": "r for r in records\n        if r.get(\"status\") == \"anchored\" and int(r.get(\"part\", 1) or 1) == 1\n    ]",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 339,
+      "code_snippet": "e for e in _read_jsonl(mem / \"events.jsonl\")\n        if datetime.fromisoformat(e.get(\"ts\", \"1970-01-01T00:00:00+00:00\")) >= cutoff\n    ]",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "server.py",
+      "line": 481,
+      "code_snippet": "for row in _read_jsonl(anchors_path):\n            if row.get(\"date\") == date_key and row.get(\"ledger_tip\") == ledger_tip:\n                return {\"ok\": True, \"status\": \"noop_already_anchored\", \"date\": date_key}",
+      "evidence": "Hardcoded URL: date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "server.py",
+      "line": 481,
+      "code_snippet": "for row in _read_jsonl(anchors_path):\n            if row.get(\"date\") == date_key and row.get(\"ledger_tip\") == ledger_tip:\n                return {\"ok\": True, \"status\": \"noop_already_anchored\", \"date\": date_key}",
+      "evidence": "Hardcoded URL: ledger_tip",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 650,
+      "code_snippet": "r for r in _read_jsonl(mem / \"onchain-anchors.jsonl\")\n        if r.get(\"date\") == date_key and r.get(\"status\") == \"anchored\"\n    ]",
+      "evidence": "Hardcoded URL: date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 650,
+      "code_snippet": "r for r in _read_jsonl(mem / \"onchain-anchors.jsonl\")\n        if r.get(\"date\") == date_key and r.get(\"status\") == \"anchored\"\n    ]",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 663,
+      "code_snippet": "latest = sorted(\n        [r for r in day_anchors if r.get(\"ts\") == latest_ts],\n        key=lambda r: int(r.get(\"part\", 0) or 0),",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via p.get()",
+      "file_path": "server.py",
+      "line": 706,
+      "code_snippet": "pnum = int(p.get(\"part\", 0) or 0)\n                chunk = base64.b64decode(p.get(\"chunk\", \"\"))\n                if hashlib.sha256(chunk).hexdigest() != p.get(\"chunk_hash\"):",
+      "evidence": "Hardcoded URL: chunk",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via p.get()",
+      "file_path": "server.py",
+      "line": 707,
+      "code_snippet": "chunk = base64.b64decode(p.get(\"chunk\", \"\"))\n                if hashlib.sha256(chunk).hexdigest() != p.get(\"chunk_hash\"):\n                    issues.append(f\"chunk hash mismatch at part {pnum}\")",
+      "evidence": "Hardcoded URL: chunk_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_payload.get()",
+      "file_path": "server.py",
+      "line": 729,
+      "code_snippet": "if full_bytes:\n                if hashlib.sha256(full_bytes).hexdigest() != first_payload.get(\"content_hash\"):\n                    issues.append(\"content_hash mismatch after reassembly\")",
+      "evidence": "Hardcoded URL: content_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via ev.get()",
+      "file_path": "server.py",
+      "line": 752,
+      "code_snippet": "for ev in anchored_events:\n        c = (ev.get(\"content\") or \"\").strip()\n        if c and c[-1] not in '.!?\"\\'`\\n}]0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 873,
+      "code_snippet": "r for r in _read_jsonl(mem / \"onchain-anchors.jsonl\")\n        if r.get(\"date\") == date and r.get(\"status\") == \"anchored\"\n    ]",
+      "evidence": "Hardcoded URL: date",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 873,
+      "code_snippet": "r for r in _read_jsonl(mem / \"onchain-anchors.jsonl\")\n        if r.get(\"date\") == date and r.get(\"status\") == \"anchored\"\n    ]",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 880,
+      "code_snippet": "selected  = sorted(\n        [r for r in records if r.get(\"ts\") == latest_ts],\n        key=lambda r: int(r.get(\"part\", 0) or 0),",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via p.open()",
+      "description": "Code uses p.open() which can execute arbitrary code during deserialization",
+      "file_path": "server.py",
+      "line": 953,
+      "code_snippet": "p = out / f\"{layer}_recovered_{date}.jsonl\"\n                with p.open(\"w\", encoding=\"utf-8\") as f:\n                    for row in rows:",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 257,
+      "code_snippet": "return None\n    return max(anchored, key=lambda r: r.get(\"ts\", \"\")).get(\"txid\")",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 263,
+      "code_snippet": "def _date_rows(path: Path, date_key: str) -> list:\n    return [r for r in _read_jsonl(path) if str(r.get(\"ts\", \"\")).startswith(date_key)]",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 664,
+      "code_snippet": "[r for r in day_anchors if r.get(\"ts\") == latest_ts],\n        key=lambda r: int(r.get(\"part\", 0) or 0),\n    )",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via p.get()",
+      "file_path": "server.py",
+      "line": 705,
+      "code_snippet": "p = _decrypt(_get_note(row, idx), note_key)\n                pnum = int(p.get(\"part\", 0) or 0)\n                chunk = base64.b64decode(p.get(\"chunk\", \"\"))",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "server.py",
+      "line": 808,
+      "code_snippet": "tx = idx.transaction(current_txid)\n                note = tx.get(\"transaction\", {}).get(\"note\")\n                if not note:",
+      "evidence": "Hardcoded URL: transaction",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tx.get()",
+      "file_path": "server.py",
+      "line": 826,
+      "code_snippet": "entry = {\n                \"ts\": tx.get(\"transaction\", {}).get(\"round-time\", \"\"),\n                \"date\": anchor_date,",
+      "evidence": "Hardcoded URL: transaction",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 834,
+      "code_snippet": "\"multi_tx\": is_multi,\n                \"part\": int(payload.get(\"part\", 1) or 1),\n                \"total_parts\": int(payload.get(\"total_parts\", 1) or 1),",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 835,
+      "code_snippet": "\"part\": int(payload.get(\"part\", 1) or 1),\n                \"total_parts\": int(payload.get(\"total_parts\", 1) or 1),\n                \"note_b64\": note,",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 843,
+      "code_snippet": "already = any(\n                r.get(\"txid\") == current_txid for r in existing\n            )",
+      "evidence": "Hardcoded URL: txid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 881,
+      "code_snippet": "[r for r in records if r.get(\"ts\") == latest_ts],\n        key=lambda r: int(r.get(\"part\", 0) or 0),\n    )",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 253,
+      "code_snippet": "r for r in records\n        if r.get(\"status\") == \"anchored\" and int(r.get(\"part\", 1) or 1) == 1\n    ]",
+      "evidence": "Hardcoded URL: part",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "server.py",
+      "line": 854,
+      "code_snippet": "\"multi_tx\": is_multi,\n                \"total_parts\": int(payload.get(\"total_parts\", 1) or 1),\n            })",
+      "evidence": "Hardcoded URL: total_parts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 991,
+      "code_snippet": "last_anchor = (\n        max(anchors, key=lambda r: r.get(\"ts\", \"\")).get(\"date\")\n        if anchors else None",
+      "evidence": "Hardcoded URL: ts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via ev.get()",
+      "file_path": "server.py",
+      "line": 754,
+      "code_snippet": "if c and c[-1] not in '.!?\"\\'`\\n}]0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ':\n            warnings.append(f\"probable truncation in event {str(ev.get('id', '?'))[:12]}\")",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 637,
+      "code_snippet": "expected_ch = hashlib.sha256(\n            f\"{e.get('prev_hash', '')}{e.get('entry_hash', '')}\".encode()\n        ).hexdigest()",
+      "evidence": "Hardcoded URL: prev_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "server.py",
+      "line": 637,
+      "code_snippet": "expected_ch = hashlib.sha256(\n            f\"{e.get('prev_hash', '')}{e.get('entry_hash', '')}\".encode()\n        ).hexdigest()",
+      "evidence": "Hardcoded URL: entry_hash",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via row.get()",
+      "file_path": "server.py",
+      "line": 294,
+      "code_snippet": "for row in _read_jsonl(events_path):\n        if hashlib.sha256(row.get(\"content\", \"\").strip().encode()).hexdigest() == target:\n            return {\"ok\": True, \"status\": \"duplicate\", \"id\": row.get(\"id\")}",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "server.py",
+      "line": 379,
+      "code_snippet": "for r in _read_jsonl(mem / \"semantic.jsonl\")[-500:]:\n        c = \" \".join((r.get(\"content\") or \"\").strip().lower().split())\n        if c:",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Browser credential theft",
+      "description": "Matched known malicious signature MAL-012: Browser credential theft",
+      "file_path": "server.py",
+      "line": 787,
+      "code_snippet": "alone — no local state required. Use this after a fatal loss of the",
+      "evidence": "Signature MAL-012 matched (SHA256: d078330c88f60b1e...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1555.003"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for search skill: shell",
+      "description": "A 'search' skill would not normally require 'shell' capability. Allowed capabilities for this category: network_outbound",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a search skill needs shell access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 121,
+  "_scan_meta": {
+    "author": "pitertxus",
+    "skill": "openclaw-memory-pensieve-algorand",
+    "author_skill": "pitertxus/openclaw-memory-pensieve-algorand",
+    "scan_time_s": 0.2
+  }
+}

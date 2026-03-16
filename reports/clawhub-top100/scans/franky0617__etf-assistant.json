@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/franky0617/etf-assistant",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 12,
+  "_scan_meta": {
+    "author": "franky0617",
+    "skill": "etf-assistant",
+    "author_skill": "franky0617/etf-assistant",
+    "scan_time_s": 0.1
+  }
+}

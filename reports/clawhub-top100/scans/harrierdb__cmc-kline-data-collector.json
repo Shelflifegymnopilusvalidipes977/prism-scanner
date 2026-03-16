@@ -1,0 +1,87 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/harrierdb/cmc-kline-data-collector",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.session.get()",
+      "file_path": "src/cmc_client.py",
+      "line": 53,
+      "code_snippet": "resp = self.session.get(url, params=params, timeout=30)\n        resp.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via quote_data.get()",
+      "file_path": "src/cmc_client.py",
+      "line": 64,
+      "code_snippet": "for q in quote_data.get(\"quotes\", []):\n            quote = Quote(",
+      "evidence": "Hardcoded URL: quotes",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via SYMBOL_TO_ID.get()",
+      "file_path": "src/cmc_client.py",
+      "line": 42,
+      "code_snippet": "if currency_id is None:\n            currency_id = SYMBOL_TO_ID.get(symbol.upper())\n            if currency_id is None:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 29,
+  "_scan_meta": {
+    "author": "harrierdb",
+    "skill": "cmc-kline-data-collector",
+    "author_skill": "harrierdb/cmc-kline-data-collector",
+    "scan_time_s": 0.1
+  }
+}

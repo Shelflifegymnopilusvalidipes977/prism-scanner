@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/alti-systems/kling",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 12,
+  "_scan_meta": {
+    "author": "alti-systems",
+    "skill": "kling",
+    "author_skill": "alti-systems/kling",
+    "scan_time_s": 0.1
+  }
+}

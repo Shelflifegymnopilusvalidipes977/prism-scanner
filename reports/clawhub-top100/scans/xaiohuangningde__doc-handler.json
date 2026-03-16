@@ -1,0 +1,71 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/xaiohuangningde/doc-handler",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Unsafe deserialization via pdfplumber.open() (S12)",
+    "HIGH: File operation with externally-controlled path (S3)"
+  ],
+  "behavior_tags": [
+    "unsafe_deserialization",
+    "writes_system_files"
+  ],
+  "findings": [
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via pdfplumber.open()",
+      "description": "Code uses pdfplumber.open() which can execute arbitrary code during deserialization",
+      "file_path": "doc_handler.py",
+      "line": 16,
+      "code_snippet": "text = []\n    with pdfplumber.open(filepath) as pdf:\n        for page in pdf.pages:",
+      "evidence": "Data source taint: external",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S3",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.8,
+      "title": "File operation with externally-controlled path",
+      "description": "File path comes from external input",
+      "file_path": "doc_handler.py",
+      "line": 16,
+      "code_snippet": "text = []\n    with pdfplumber.open(filepath) as pdf:\n        for page in pdf.pages:",
+      "evidence": "Path from sys.argv",
+      "tags": [
+        "file_access",
+        "path_injection"
+      ],
+      "remediation": "Validate and sanitize file paths. Use an allowlist of permitted directories.",
+      "references": [
+        "CWE-22"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 9,
+  "_scan_meta": {
+    "author": "xaiohuangningde",
+    "skill": "doc-handler",
+    "author_skill": "xaiohuangningde/doc-handler",
+    "scan_time_s": 0.1
+  }
+}

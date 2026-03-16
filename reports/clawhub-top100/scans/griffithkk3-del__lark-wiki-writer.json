@@ -1,0 +1,610 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/griffithkk3-del/lark-wiki-writer",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "HIGH: Unexpected capability for git skill: credential_read (M1)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: LARK_APP_SECRET (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via heading_types.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 218,
+      "code_snippet": "}\n        heading_type = heading_types.get(level, \"heading1\")\n        elements = self._parse_rich_text(text)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via language_map.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 270,
+      "code_snippet": "}\n        lang_enum = language_map.get(language.lower(), 1)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 31,
+      "code_snippet": "# 优先级：参数 > 环境变量\n        self.app_id = app_id or os.environ.get('LARK_APP_ID')\n        self.app_secret = app_secret or os.environ.get('LARK_APP_SECRET')",
+      "evidence": "Hardcoded URL: LARK_APP_ID",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: LARK_APP_ID",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 31,
+      "code_snippet": "# 优先级：参数 > 环境变量\n        self.app_id = app_id or os.environ.get('LARK_APP_ID')\n        self.app_secret = app_secret or os.environ.get('LARK_APP_SECRET')",
+      "evidence": "Reads env var: LARK_APP_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 32,
+      "code_snippet": "self.app_id = app_id or os.environ.get('LARK_APP_ID')\n        self.app_secret = app_secret or os.environ.get('LARK_APP_SECRET')\n        self.space_id = space_id or os.environ.get('LARK_SPACE_ID')",
+      "evidence": "Hardcoded URL: LARK_APP_SECRET",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: LARK_APP_SECRET",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 32,
+      "code_snippet": "self.app_id = app_id or os.environ.get('LARK_APP_ID')\n        self.app_secret = app_secret or os.environ.get('LARK_APP_SECRET')\n        self.space_id = space_id or os.environ.get('LARK_SPACE_ID')",
+      "evidence": "Reads sensitive env var: LARK_APP_SECRET",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 33,
+      "code_snippet": "self.app_secret = app_secret or os.environ.get('LARK_APP_SECRET')\n        self.space_id = space_id or os.environ.get('LARK_SPACE_ID')\n        self.wiki_domain = wiki_domain or os.environ.get('LARK_WIKI_DOMAIN', 'your-domain.larksuite.com')",
+      "evidence": "Hardcoded URL: LARK_SPACE_ID",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: LARK_SPACE_ID",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 33,
+      "code_snippet": "self.app_secret = app_secret or os.environ.get('LARK_APP_SECRET')\n        self.space_id = space_id or os.environ.get('LARK_SPACE_ID')\n        self.wiki_domain = wiki_domain or os.environ.get('LARK_WIKI_DOMAIN', 'your-domain.larksuite.com')",
+      "evidence": "Reads env var: LARK_SPACE_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 34,
+      "code_snippet": "self.space_id = space_id or os.environ.get('LARK_SPACE_ID')\n        self.wiki_domain = wiki_domain or os.environ.get('LARK_WIKI_DOMAIN', 'your-domain.larksuite.com')\n        self.base_url = \"https://open.larksuite.com\"",
+      "evidence": "Hardcoded URL: LARK_WIKI_DOMAIN",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: LARK_WIKI_DOMAIN",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 34,
+      "code_snippet": "self.space_id = space_id or os.environ.get('LARK_SPACE_ID')\n        self.wiki_domain = wiki_domain or os.environ.get('LARK_WIKI_DOMAIN', 'your-domain.larksuite.com')\n        self.base_url = \"https://open.larksuite.com\"",
+      "evidence": "Reads env var: LARK_WIKI_DOMAIN",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 94,
+      "code_snippet": "if not parent_node_token:\n            parent_node_token = os.environ.get('LARK_PARENT_NODE')\n            if not parent_node_token:",
+      "evidence": "Hardcoded URL: LARK_PARENT_NODE",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: LARK_PARENT_NODE",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 94,
+      "code_snippet": "if not parent_node_token:\n            parent_node_token = os.environ.get('LARK_PARENT_NODE')\n            if not parent_node_token:",
+      "evidence": "Reads env var: LARK_PARENT_NODE",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 352,
+      "code_snippet": "with urllib.request.urlopen(get_req, timeout=10) as response:\n            get_resp = json.loads(response.read())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 57,
+      "code_snippet": "try:\n            with urllib.request.urlopen(req, timeout=10) as response:\n                result = json.loads(response.read())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 112,
+      "code_snippet": "try:\n            with urllib.request.urlopen(req, timeout=10) as response:\n                result = json.loads(response.read())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 418,
+      "code_snippet": "req = urllib.request.Request(url, headers={'Authorization': f'Bearer {self.access_token}'})\n            with urllib.request.urlopen(req, timeout=10) as response:\n                resp = json.loads(response.read())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 59,
+      "code_snippet": "result = json.loads(response.read())\n                if result.get('code') == 0:\n                    self.access_token = result['tenant_access_token']",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 64,
+      "code_snippet": "# 友好的错误提示\n                    code = result.get('code')\n                    msg = result.get('msg', '未知错误')",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 65,
+      "code_snippet": "code = result.get('code')\n                    msg = result.get('msg', '未知错误')\n                    if code == 99991663:",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 114,
+      "code_snippet": "result = json.loads(response.read())\n                if result.get('code') == 0:\n                    node = result['data']['node']",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 373,
+      "code_snippet": "try:\n                with urllib.request.urlopen(add_req, timeout=30) as response:\n                    add_resp = json.loads(response.read())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resp.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 420,
+      "code_snippet": "resp = json.loads(response.read())\n                if resp.get('code') == 0:\n                    result['space_access'] = '✅'",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via add_resp.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 375,
+      "code_snippet": "add_resp = json.loads(response.read())\n                    if add_resp.get('code') == 0:\n                        print(f\"  块 {i+1}-{min(i+batch_size, len(blocks))}: ✅\")",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resp.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 423,
+      "code_snippet": "else:\n                    result['space_access'] = f\"❌ {resp.get('msg')}\"\n        except Exception as e:",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 122,
+      "code_snippet": "else:\n                    raise Exception(f\"创建文档失败: {result.get('msg', '未知错误')}\")\n        except urllib.error.URLError as e:",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via add_resp.get()",
+      "file_path": "lark_wiki_writer.py",
+      "line": 378,
+      "code_snippet": "else:\n                        print(f\"  块 {i+1}-{min(i+batch_size, len(blocks))}: ❌ {add_resp.get('msg')}\")\n            except Exception as e:",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "lark_wiki_writer.py",
+      "line": 31,
+      "code_snippet": "self.app_id = app_id or os.environ.get('LARK_APP_ID')",
+      "evidence": "Signature MAL-010 matched (SHA256: bb0545db5b676275...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for git skill: credential_read",
+      "description": "A 'git' skill would not normally require 'credential_read' capability. Allowed capabilities for this category: file_read, file_write, shell_git",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a git skill needs credential_read access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 26,
+  "_scan_meta": {
+    "author": "griffithkk3-del",
+    "skill": "lark-wiki-writer",
+    "author_skill": "griffithkk3-del/lark-wiki-writer",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/wen-si/croskill",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Unexpected capability for code_runner skill: network (M1)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parameters.get()",
+      "file_path": "cro_skill.py",
+      "line": 32,
+      "code_snippet": "\"\"\"\n        risk_type = parameters.get(\"risk_type\", \"综合风险\")\n        company_info = parameters.get(\"company_info\", {})",
+      "evidence": "Hardcoded URL: risk_type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parameters.get()",
+      "file_path": "cro_skill.py",
+      "line": 33,
+      "code_snippet": "risk_type = parameters.get(\"risk_type\", \"综合风险\")\n        company_info = parameters.get(\"company_info\", {})\n        risk_factors = parameters.get(\"risk_factors\", [])",
+      "evidence": "Hardcoded URL: company_info",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parameters.get()",
+      "file_path": "cro_skill.py",
+      "line": 34,
+      "code_snippet": "company_info = parameters.get(\"company_info\", {})\n        risk_factors = parameters.get(\"risk_factors\", [])",
+      "evidence": "Hardcoded URL: risk_factors",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for code_runner skill: network",
+      "description": "A 'code_runner' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write, shell",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a code_runner skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 11,
+  "_scan_meta": {
+    "author": "wen-si",
+    "skill": "croskill",
+    "author_skill": "wen-si/croskill",
+    "scan_time_s": 0.1
+  }
+}

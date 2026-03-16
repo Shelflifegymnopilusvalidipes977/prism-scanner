@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/numba1ne/nft-skill",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 69,
+  "_scan_meta": {
+    "author": "numba1ne",
+    "skill": "nft-skill",
+    "author_skill": "numba1ne/nft-skill",
+    "scan_time_s": 0.1
+  }
+}

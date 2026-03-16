@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/supere989/vectorguard-nano",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 10,
+  "_scan_meta": {
+    "author": "supere989",
+    "skill": "vectorguard-nano",
+    "author_skill": "supere989/vectorguard-nano",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/georges91560/security-sentinel-skill",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 15,
+  "_scan_meta": {
+    "author": "georges91560",
+    "skill": "security-sentinel-skill",
+    "author_skill": "georges91560/security-sentinel-skill",
+    "scan_time_s": 0.1
+  }
+}

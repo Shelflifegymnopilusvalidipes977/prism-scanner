@@ -1,0 +1,44 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/ethersuite/moltmail-ethermail",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Possible typo-squatting: \"enquirer\" (similar to \"inquirer\") (M4)"
+  ],
+  "behavior_tags": [],
+  "findings": [
+    {
+      "rule_id": "M4",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "critical",
+      "confidence": 0.85,
+      "title": "Possible typo-squatting: \"enquirer\" (similar to \"inquirer\")",
+      "description": "Dependency name is 1 edit away from popular package \"inquirer\"",
+      "file_path": "package.json",
+      "line": null,
+      "code_snippet": null,
+      "evidence": "Levenshtein distance = 1",
+      "tags": [
+        "typosquatting",
+        "supply_chain"
+      ],
+      "remediation": "Verify this is the intended package. Did you mean \"inquirer\"?",
+      "references": [
+        "CWE-1357"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 23,
+  "_scan_meta": {
+    "author": "ethersuite",
+    "skill": "moltmail-ethermail",
+    "author_skill": "ethersuite/moltmail-ethermail",
+    "scan_time_s": 0.1
+  }
+}

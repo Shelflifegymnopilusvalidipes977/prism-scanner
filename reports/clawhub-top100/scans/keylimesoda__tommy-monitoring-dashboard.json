@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/keylimesoda/tommy-monitoring-dashboard",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 79,
+  "_scan_meta": {
+    "author": "keylimesoda",
+    "skill": "tommy-monitoring-dashboard",
+    "author_skill": "keylimesoda/tommy-monitoring-dashboard",
+    "scan_time_s": 0.1
+  }
+}

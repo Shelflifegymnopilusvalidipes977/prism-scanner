@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/mosonchan2023/docker-compose-manager",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 8,
+  "_scan_meta": {
+    "author": "mosonchan2023",
+    "skill": "docker-compose-manager",
+    "author_skill": "mosonchan2023/docker-compose-manager",
+    "scan_time_s": 0.1
+  }
+}

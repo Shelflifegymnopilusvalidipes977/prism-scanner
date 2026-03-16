@@ -1,0 +1,332 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/otman-ai/tikto-automation",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "HIGH: SSRF: Request URL controlled by external input (S9)",
+    "HIGH: Unsafe deserialization via Image.open() (S12)",
+    "HIGH: Unexpected capability for git skill: credential_read (M1)",
+    "MEDIUM: Reads environment variable: POSTIZ_API_KEY (S5)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars",
+    "ssrf_risk",
+    "unsafe_deserialization"
+  ],
+  "findings": [
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: POSTIZ_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "postiz_api_integration.py",
+      "line": 6,
+      "code_snippet": "POSTIZ_API_KEY = os.getenv(\"POSTIZ_API_KEY\")\nPOSTIZ_API_URL = os.getenv(\"POSTIZ_API_URL\", \"https://api.postiz.com/v1\")",
+      "evidence": "Reads sensitive env var: POSTIZ_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: POSTIZ_API_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "postiz_api_integration.py",
+      "line": 7,
+      "code_snippet": "POSTIZ_API_KEY = os.getenv(\"POSTIZ_API_KEY\")\nPOSTIZ_API_URL = os.getenv(\"POSTIZ_API_URL\", \"https://api.postiz.com/v1\")",
+      "evidence": "Reads env var: POSTIZ_API_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "postiz_api_integration.py",
+      "line": 51,
+      "code_snippet": "}\n    resp = requests.post(url, headers=headers, json=payload)\n    try:",
+      "evidence": "URL from os.getenv() → requests.post()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via p.open()",
+      "description": "Code uses p.open() which can execute arbitrary code during deserialization",
+      "file_path": "postiz_api_integration.py",
+      "line": 31,
+      "code_snippet": "headers = _auth_headers()\n    with p.open('rb') as fh:\n        files = {'file': fh}",
+      "evidence": "Data source taint: literal",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "postiz_api_integration.py",
+      "line": 33,
+      "code_snippet": "files = {'file': fh}\n        resp = requests.post(url, headers=headers, files=files)\n    try:",
+      "evidence": "URL from os.getenv() → requests.post()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "postiz_api_integration.py",
+      "line": 65,
+      "code_snippet": "# try common keys for media id\n        mid = r.get('media_id') or r.get('id') or r.get('result', {}).get('id')\n        if not mid:",
+      "evidence": "Hardcoded URL: media_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "postiz_api_integration.py",
+      "line": 65,
+      "code_snippet": "# try common keys for media id\n        mid = r.get('media_id') or r.get('id') or r.get('result', {}).get('id')\n        if not mid:",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "postiz_api_integration.py",
+      "line": 65,
+      "code_snippet": "# try common keys for media id\n        mid = r.get('media_id') or r.get('id') or r.get('result', {}).get('id')\n        if not mid:",
+      "evidence": "Hardcoded URL: result",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENAI_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tiktok_content_gen.py",
+      "line": 10,
+      "code_snippet": "# Simple utility helpers for image generation and overlay\nOPENAI_API_KEY = os.getenv(\"OPENAI_API_KEY\")\nif not OPENAI_API_KEY:",
+      "evidence": "Reads sensitive env var: OPENAI_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via response.get()",
+      "file_path": "tiktok_content_gen.py",
+      "line": 48,
+      "code_snippet": "# try known keys\n        data = response.get('data')\n        if data and isinstance(data, list) and data[0].get('url'):",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (response.get())",
+      "file_path": "tiktok_content_gen.py",
+      "line": 53,
+      "code_snippet": "if image_url:\n        image_data = requests.get(image_url).content\n        with open(out, 'wb') as f:",
+      "evidence": "URL from response.get() → requests.get()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via Image.open()",
+      "description": "Code uses Image.open() which can execute arbitrary code during deserialization",
+      "file_path": "tiktok_content_gen.py",
+      "line": 71,
+      "code_snippet": "\"\"\"\n    img = Image.open(image_path).convert('RGBA')\n    draw = ImageDraw.Draw(img)",
+      "evidence": "Data source taint: unknown",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "tiktok_content_gen.py",
+      "line": 45,
+      "code_snippet": "item = response.data[0]\n        image_url = getattr(item, 'url', None) or item.get('url') if isinstance(item, dict) else None\n    if not image_url and isinstance(response, dict):",
+      "evidence": "Hardcoded URL: url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for git skill: credential_read",
+      "description": "A 'git' skill would not normally require 'credential_read' capability. Allowed capabilities for this category: file_read, file_write, shell_git",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a git skill needs credential_read access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 19,
+  "_scan_meta": {
+    "author": "otman-ai",
+    "skill": "tikto-automation",
+    "author_skill": "otman-ai/tikto-automation",
+    "scan_time_s": 0.1
+  }
+}

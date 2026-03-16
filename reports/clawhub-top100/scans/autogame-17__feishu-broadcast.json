@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/autogame-17/feishu-broadcast",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 13,
+  "_scan_meta": {
+    "author": "autogame-17",
+    "skill": "feishu-broadcast",
+    "author_skill": "autogame-17/feishu-broadcast",
+    "scan_time_s": 0.1
+  }
+}

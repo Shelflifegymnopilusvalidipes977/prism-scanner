@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/muguozi1/evolver-1-17-1",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 440,
+  "_scan_meta": {
+    "author": "muguozi1",
+    "skill": "evolver-1-17-1",
+    "author_skill": "muguozi1/evolver-1-17-1",
+    "scan_time_s": 0.5
+  }
+}

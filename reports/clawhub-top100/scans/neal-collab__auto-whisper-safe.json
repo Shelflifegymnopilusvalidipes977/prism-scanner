@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/neal-collab/auto-whisper-safe",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 9,
+  "_scan_meta": {
+    "author": "neal-collab",
+    "skill": "auto-whisper-safe",
+    "author_skill": "neal-collab/auto-whisper-safe",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/uxbryan/spotplay",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "HIGH: Shell command execution (shell=True) (S1)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: SPOTIFY_CLIENT_SECRET (S5)"
+  ],
+  "behavior_tags": [
+    "executes_shell",
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.9,
+      "title": "Shell command execution (shell=True)",
+      "description": "Code calls subprocess.run() which can execute arbitrary system commands",
+      "file_path": "spotplay.py",
+      "line": 15,
+      "code_snippet": "def run(cmd: str) -> str:\n    p = subprocess.run(cmd, shell=True, text=True, capture_output=True)\n    out = (p.stdout or \"\").strip()",
+      "evidence": "Variable argument (origin: internal)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via j.get()",
+      "file_path": "spotplay.py",
+      "line": 60,
+      "code_snippet": ")\n    tok = j.get(\"access_token\")\n    if not tok:",
+      "evidence": "Hardcoded URL: access_token",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via t.get()",
+      "file_path": "spotplay.py",
+      "line": 74,
+      "code_snippet": "name = t.get(\"name\") or \"(unknown)\"\n    uri = t.get(\"uri\")\n    if not uri:",
+      "evidence": "Hardcoded URL: uri",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 23,
+      "code_snippet": "def load_creds():\n    cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Hardcoded URL: SPOTIFY_CLIENT_ID",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SPOTIFY_CLIENT_ID",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 23,
+      "code_snippet": "def load_creds():\n    cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Reads env var: SPOTIFY_CLIENT_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 23,
+      "code_snippet": "def load_creds():\n    cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Hardcoded URL: CLIENT_ID",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: CLIENT_ID",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 23,
+      "code_snippet": "def load_creds():\n    cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Reads env var: CLIENT_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 24,
+      "code_snippet": "cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Hardcoded URL: SPOTIFY_CLIENT_SECRET",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SPOTIFY_CLIENT_SECRET",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 24,
+      "code_snippet": "cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Reads sensitive env var: SPOTIFY_CLIENT_SECRET",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 24,
+      "code_snippet": "cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Hardcoded URL: CLIENT_SECRET",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: CLIENT_SECRET",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "spotplay.py",
+      "line": 24,
+      "code_snippet": "cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")\n    csec = os.environ.get(\"SPOTIFY_CLIENT_SECRET\") or os.environ.get(\"CLIENT_SECRET\")",
+      "evidence": "Reads sensitive env var: CLIENT_SECRET",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "spotplay.py",
+      "line": 45,
+      "code_snippet": "req = urllib.request.Request(url, data=body, headers=headers, method=\"POST\")\n    with urllib.request.urlopen(req, timeout=10) as r:\n        return json.loads(r.read().decode(\"utf-8\"))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "spotplay.py",
+      "line": 50,
+      "code_snippet": "req = urllib.request.Request(url, headers=headers, method=\"GET\")\n    with urllib.request.urlopen(req, timeout=10) as r:\n        return json.loads(r.read().decode(\"utf-8\"))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via t.get()",
+      "file_path": "spotplay.py",
+      "line": 73,
+      "code_snippet": "t = items[0]\n    name = t.get(\"name\") or \"(unknown)\"\n    uri = t.get(\"uri\")",
+      "evidence": "Hardcoded URL: name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via j.get()",
+      "file_path": "spotplay.py",
+      "line": 69,
+      "code_snippet": "j = http_get(url, {\"Authorization\": f\"Bearer {token}\"})\n    items = (((j.get(\"tracks\") or {}).get(\"items\")) or [])\n    if not items:",
+      "evidence": "Hardcoded URL: tracks",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "spotplay.py",
+      "line": 23,
+      "code_snippet": "cid = os.environ.get(\"SPOTIFY_CLIENT_ID\") or os.environ.get(\"CLIENT_ID\")",
+      "evidence": "Signature MAL-010 matched (SHA256: edfe134d6a416b8a...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 13,
+  "_scan_meta": {
+    "author": "uxbryan",
+    "skill": "spotplay",
+    "author_skill": "uxbryan/spotplay",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/lucaszh7/auto-authenticator-local",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: Shell command execution (S1)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "executes_shell",
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls platform.system() which can execute arbitrary system commands",
+      "file_path": "scripts/secret_store.py",
+      "line": 22,
+      "code_snippet": "return f\"keyring:{keyring.get_keyring().__class__.__name__}\"\n    if platform.system() == \"Darwin\":\n        return \"macos-security-cli\"",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls platform.system() which can execute arbitrary system commands",
+      "file_path": "scripts/secret_store.py",
+      "line": 119,
+      "code_snippet": "raise RuntimeError(f\"Secure storage failed via keyring: {exc}\") from exc\n    if platform.system() == \"Darwin\":\n        _store_with_macos_security(alias, seed, issuer=issuer, account=account)",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls platform.system() which can execute arbitrary system commands",
+      "file_path": "scripts/secret_store.py",
+      "line": 136,
+      "code_snippet": "raise RuntimeError(f\"Secure storage failed via keyring: {exc}\") from exc\n    if platform.system() == \"Darwin\":\n        return _fetch_with_macos_security(alias)",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls platform.system() which can execute arbitrary system commands",
+      "file_path": "scripts/secret_store.py",
+      "line": 151,
+      "code_snippet": "raise RuntimeError(f\"Secure storage failed via keyring: {exc}\") from exc\n    if platform.system() == \"Darwin\":\n        _delete_with_macos_security(alias)",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls platform.system() which can execute arbitrary system commands",
+      "file_path": "scripts/secret_store.py",
+      "line": 117,
+      "code_snippet": "except KeyringError as exc:\n            if platform.system() != \"Darwin\":\n                raise RuntimeError(f\"Secure storage failed via keyring: {exc}\") from exc",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls platform.system() which can execute arbitrary system commands",
+      "file_path": "scripts/secret_store.py",
+      "line": 134,
+      "code_snippet": "except KeyringError as exc:\n            if platform.system() != \"Darwin\":\n                raise RuntimeError(f\"Secure storage failed via keyring: {exc}\") from exc",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls platform.system() which can execute arbitrary system commands",
+      "file_path": "scripts/secret_store.py",
+      "line": 149,
+      "code_snippet": "except KeyringError as exc:\n            if platform.system() != \"Darwin\":\n                raise RuntimeError(f\"Secure storage failed via keyring: {exc}\") from exc",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via mock.patch()",
+      "file_path": "tests/test_secret_store.py",
+      "line": 16,
+      "code_snippet": "with mock.patch.object(secret_store, \"keyring\", None):\n            with mock.patch(\"platform.system\", return_value=\"Darwin\"):\n                self.assertEqual(secret_store.backend_name(), \"macos-security-cli\")",
+      "evidence": "Hardcoded URL: platform.system",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via mock.patch()",
+      "file_path": "tests/test_secret_store.py",
+      "line": 21,
+      "code_snippet": "with mock.patch.object(secret_store, \"keyring\", None):\n            with mock.patch(\"platform.system\", return_value=\"Linux\"):\n                with self.assertRaises(RuntimeError):",
+      "evidence": "Hardcoded URL: platform.system",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 19,
+  "_scan_meta": {
+    "author": "lucaszh7",
+    "skill": "auto-authenticator-local",
+    "author_skill": "lucaszh7/auto-authenticator-local",
+    "scan_time_s": 0.1
+  }
+}

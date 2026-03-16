@@ -1,0 +1,65 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/paulpreibisch/agentvibes-clawbot-tts",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: SSH key exfiltration (P5)",
+    "MEDIUM: IOC match: GitHub raw shell script download (P8)"
+  ],
+  "behavior_tags": [],
+  "findings": [
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: SSH key exfiltration",
+      "description": "Matched known malicious signature MAL-011: SSH key exfiltration",
+      "file_path": "setup.sh",
+      "line": 40,
+      "code_snippet": "echo \"   ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -N ''\"",
+      "evidence": "Signature MAL-011 matched (SHA256: 1cd3780efc091803...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "IOC match: GitHub raw shell script download",
+      "description": "URL matches known malicious infrastructure pattern",
+      "file_path": "setup.sh",
+      "line": 304,
+      "code_snippet": "echo \"   curl -sSL https://raw.githubusercontent.com/paulpreibisch/AgentVibes/main/scripts/install-ssh-receiver.sh | bas",
+      "evidence": "URL: https://raw.githubusercontent.com/paulpreibisch/AgentVibes/main/scripts/install-ssh-receiver.sh",
+      "tags": [
+        "ioc",
+        "network",
+        "c2"
+      ],
+      "remediation": "This URL matches known malicious infrastructure. Remove immediately.",
+      "references": [],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 13,
+  "_scan_meta": {
+    "author": "paulpreibisch",
+    "skill": "agentvibes-clawbot-tts",
+    "author_skill": "paulpreibisch/agentvibes-clawbot-tts",
+    "scan_time_s": 0.1
+  }
+}

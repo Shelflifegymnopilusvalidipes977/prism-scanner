@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/aadipapp/mac-power-tools",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 10,
+  "_scan_meta": {
+    "author": "aadipapp",
+    "skill": "mac-power-tools",
+    "author_skill": "aadipapp/mac-power-tools",
+    "scan_time_s": 0.1
+  }
+}

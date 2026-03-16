@@ -1,0 +1,342 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/eisimo/agentic-letters",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "MEDIUM: Outbound network request (S4)",
+    "LOW: Reads environment variable (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "agentic_letters.py",
+      "line": 239,
+      "code_snippet": "\"\"\"Load API key from environment or secrets file.\"\"\"\n    key = os.environ.get(ENV_VAR)\n    if key:",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "agentic_letters.py",
+      "line": 239,
+      "code_snippet": "\"\"\"Load API key from environment or secrets file.\"\"\"\n    key = os.environ.get(ENV_VAR)\n    if key:",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via send_result.get()",
+      "file_path": "agentic_letters.py",
+      "line": 202,
+      "code_snippet": "\"id\": letter_id,\n        \"status\": send_result.get(\"status\", \"queued\"),\n        \"type\": send_result.get(\"type\", \"standard\"),",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via send_result.get()",
+      "file_path": "agentic_letters.py",
+      "line": 203,
+      "code_snippet": "\"status\": send_result.get(\"status\", \"queued\"),\n        \"type\": send_result.get(\"type\", \"standard\"),\n        \"label\": label,",
+      "evidence": "Hardcoded URL: type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via send_result.get()",
+      "file_path": "agentic_letters.py",
+      "line": 206,
+      "code_snippet": "\"recipient\": recipient,\n        \"created_at\": send_result.get(\"created_at\", datetime.now(timezone.utc).isoformat()),\n        \"credits_remaining\": send_result.get(\"credits_remaining\"),",
+      "evidence": "Hardcoded URL: created_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via send_result.get()",
+      "file_path": "agentic_letters.py",
+      "line": 207,
+      "code_snippet": "\"created_at\": send_result.get(\"created_at\", datetime.now(timezone.utc).isoformat()),\n        \"credits_remaining\": send_result.get(\"credits_remaining\"),\n        \"last_checked\": None,",
+      "evidence": "Hardcoded URL: credits_remaining",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via status_result.get()",
+      "file_path": "agentic_letters.py",
+      "line": 227,
+      "code_snippet": "if data.get(\"id\", \"\").startswith(letter_id) or letter_id.startswith(data.get(\"id\", \"\")[:8]):\n            data[\"status\"] = status_result.get(\"status\", data[\"status\"])\n            data[\"last_checked\"] = datetime.now(timezone.utc).isoformat()",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "agentic_letters.py",
+      "line": 98,
+      "code_snippet": "try:\n            with urllib.request.urlopen(req, timeout=60) as resp:\n                return json.loads(resp.read())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "agentic_letters.py",
+      "line": 226,
+      "code_snippet": "continue\n        if data.get(\"id\", \"\").startswith(letter_id) or letter_id.startswith(data.get(\"id\", \"\")[:8]):\n            data[\"status\"] = status_result.get(\"status\", data[\"status\"])",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "agentic_letters.py",
+      "line": 226,
+      "code_snippet": "continue\n        if data.get(\"id\", \"\").startswith(letter_id) or letter_id.startswith(data.get(\"id\", \"\")[:8]):\n            data[\"status\"] = status_result.get(\"status\", data[\"status\"])",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via error_body.get()",
+      "file_path": "agentic_letters.py",
+      "line": 112,
+      "code_snippet": "origin=ErrorOrigin.SERVER,\n                message=error_body.get(\"error\", f\"HTTP {e.code}\"),\n                code=error_body.get(\"code\"),",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via error_body.get()",
+      "file_path": "agentic_letters.py",
+      "line": 113,
+      "code_snippet": "message=error_body.get(\"error\", f\"HTTP {e.code}\"),\n                code=error_body.get(\"code\"),\n                http_status=e.code,",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via error_body.get()",
+      "file_path": "agentic_letters.py",
+      "line": 115,
+      "code_snippet": "http_status=e.code,\n                detail=error_body.get(\"detail\"),\n                field=error_body.get(\"field\"),",
+      "evidence": "Hardcoded URL: detail",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via error_body.get()",
+      "file_path": "agentic_letters.py",
+      "line": 116,
+      "code_snippet": "detail=error_body.get(\"detail\"),\n                field=error_body.get(\"field\"),\n            ))",
+      "evidence": "Hardcoded URL: field",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "agentic_letters.py",
+      "line": 239,
+      "code_snippet": "key = os.environ.get(ENV_VAR)",
+      "evidence": "Signature MAL-010 matched (SHA256: 18d9a9dad3499567...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 18,
+  "_scan_meta": {
+    "author": "eisimo",
+    "skill": "agentic-letters",
+    "author_skill": "eisimo/agentic-letters",
+    "scan_time_s": 0.1
+  }
+}

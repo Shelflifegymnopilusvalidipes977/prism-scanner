@@ -1,0 +1,386 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/xqw1377-prog/musk-insider-pro",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "HIGH: Hardcoded credential: Generic Secret Assignment (P1)",
+    "HIGH: Unexpected capability for fetcher skill: shell (M1)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Shell command execution (S1)"
+  ],
+  "behavior_tags": [
+    "executes_shell",
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "bare.py",
+      "line": 4,
+      "code_snippet": "host = os.environ.get(\"HOST\") or \"0.0.0.0\"\nenv_ports = [\"PORT\",\"HTTP_PORT\",\"WEB_PORT\",\"APP_PORT\",\"SERVER_PORT\",\"LISTEN_PORT\",\"UVICORN_PORT\",\"CLAWHUB_PORT\"]",
+      "evidence": "Hardcoded URL: HOST",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: HOST",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "bare.py",
+      "line": 4,
+      "code_snippet": "host = os.environ.get(\"HOST\") or \"0.0.0.0\"\nenv_ports = [\"PORT\",\"HTTP_PORT\",\"WEB_PORT\",\"APP_PORT\",\"SERVER_PORT\",\"LISTEN_PORT\",\"UVICORN_PORT\",\"CLAWHUB_PORT\"]",
+      "evidence": "Reads env var: HOST",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "bare.py",
+      "line": 8,
+      "code_snippet": "for k in env_ports:\n    v = os.environ.get(k)\n    if v and v.isdigit():",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "bare.py",
+      "line": 8,
+      "code_snippet": "for k in env_ports:\n    v = os.environ.get(k)\n    if v and v.isdigit():",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via app.get()",
+      "file_path": "main.py",
+      "line": 18,
+      "code_snippet": "@app.get(\"/\")\n@app.get(\"/health\")",
+      "evidence": "Hardcoded URL: /",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via app.get()",
+      "file_path": "main.py",
+      "line": 19,
+      "code_snippet": "@app.get(\"/\")\n@app.get(\"/health\")\nasync def health():",
+      "evidence": "Hardcoded URL: /health",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via app.get()",
+      "file_path": "main.py",
+      "line": 23,
+      "code_snippet": "@app.get(\"/invoke\")\nasync def get_briefing():",
+      "evidence": "Hardcoded URL: /invoke",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via app.post()",
+      "file_path": "main.py",
+      "line": 34,
+      "code_snippet": "@app.post(\"/invoke\")\nasync def create_order(request: Request):",
+      "evidence": "Hardcoded URL: /invoke",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls uvicorn.run() which can execute arbitrary system commands",
+      "file_path": "main.py",
+      "line": 64,
+      "code_snippet": "port = 8000\n    uvicorn.run(app, host=host, port=port)",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "main.py",
+      "line": 45,
+      "code_snippet": "if __name__ == \"__main__\":\n    host = os.environ.get(\"HOST\") or \"0.0.0.0\"\n    port_envs = [",
+      "evidence": "Hardcoded URL: HOST",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: HOST",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "main.py",
+      "line": 45,
+      "code_snippet": "if __name__ == \"__main__\":\n    host = os.environ.get(\"HOST\") or \"0.0.0.0\"\n    port_envs = [",
+      "evidence": "Reads env var: HOST",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "main.py",
+      "line": 58,
+      "code_snippet": "for key in port_envs:\n        val = os.environ.get(key)\n        if val and val.isdigit():",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "main.py",
+      "line": 58,
+      "code_snippet": "for key in port_envs:\n        val = os.environ.get(key)\n        if val and val.isdigit():",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "bare.py",
+      "line": 4,
+      "code_snippet": "host = os.environ.get(\"HOST\") or \"0.0.0.0\"",
+      "evidence": "Signature MAL-010 matched (SHA256: ae78b7e39aef64a8...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P1",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.9,
+      "title": "Hardcoded credential: Generic Secret Assignment",
+      "description": "Found Generic Secret Assignment pattern in source code",
+      "file_path": "main.py",
+      "line": 8,
+      "code_snippet": "SKILLPAY_API_KEY = \"sk_8b36c2ca9e774eb0243752f907b086e78c8af866a4088d3e3475113ed446b71\"",
+      "evidence": null,
+      "tags": [
+        "credential",
+        "hardcoded_secret"
+      ],
+      "remediation": "Move to environment variable or secrets manager.",
+      "references": [
+        "CWE-798"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "main.py",
+      "line": 45,
+      "code_snippet": "host = os.environ.get(\"HOST\") or \"0.0.0.0\"",
+      "evidence": "Signature MAL-010 matched (SHA256: 2a5ed42e2d1f377e...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for fetcher skill: shell",
+      "description": "A 'fetcher' skill would not normally require 'shell' capability. Allowed capabilities for this category: network_outbound",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a fetcher skill needs shell access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 12,
+  "_scan_meta": {
+    "author": "xqw1377-prog",
+    "skill": "musk-insider-pro",
+    "author_skill": "xqw1377-prog/musk-insider-pro",
+    "scan_time_s": 0.1
+  }
+}

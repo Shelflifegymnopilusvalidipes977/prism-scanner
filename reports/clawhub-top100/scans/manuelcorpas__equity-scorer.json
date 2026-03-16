@@ -1,0 +1,425 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/manuelcorpas/equity-scorer",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Unexpected capability for calculator skill: network (M1)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via POP_COLOURS.get()",
+      "file_path": "equity_scorer.py",
+      "line": 427,
+      "code_snippet": "def _get_pop_colour(pop: str) -> str:\n    return POP_COLOURS.get(pop.upper(), \"#999999\")",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via sample_props.get()",
+      "file_path": "equity_scorer.py",
+      "line": 345,
+      "code_snippet": "for pop, global_prop in GLOBAL_PROPORTIONS.items():\n        sample_prop = sample_props.get(pop, 0.0)\n        deviation = abs(sample_prop - global_prop)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via obs_het.get()",
+      "file_path": "equity_scorer.py",
+      "line": 659,
+      "code_snippet": "ratio = pct / global_pct if global_pct > 0 else float(\"inf\")\n        o_het = obs_het.get(pop, 0)\n        e_het = exp_het.get(pop, 0)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via exp_het.get()",
+      "file_path": "equity_scorer.py",
+      "line": 660,
+      "code_snippet": "o_het = obs_het.get(pop, 0)\n        e_het = exp_het.get(pop, 0)\n        pop_rows.append(",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pop_map.get()",
+      "file_path": "equity_scorer.py",
+      "line": 841,
+      "code_snippet": "pop_map = load_population_map(pop_map_path, samples)\n    sample_pops = [pop_map.get(s, \"UNKNOWN\") for s in samples]\n    pop_counts = dict(Counter(sample_pops))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via het_estimates.get()",
+      "file_path": "equity_scorer.py",
+      "line": 956,
+      "code_snippet": "}\n    obs_het = {pop: het_estimates.get(pop.upper(), 0.25) for pop in pop_counts}\n    exp_het = obs_het.copy()",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via GLOBAL_PROPORTIONS.get()",
+      "file_path": "equity_scorer.py",
+      "line": 562,
+      "code_snippet": "for i, pop in enumerate(pops):\n        global_pct = GLOBAL_PROPORTIONS.get(pop.upper(), 0) * 100\n        if global_pct > 0:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via GLOBAL_PROPORTIONS.get()",
+      "file_path": "equity_scorer.py",
+      "line": 657,
+      "code_snippet": "pct = count / total * 100\n        global_pct = GLOBAL_PROPORTIONS.get(pop.upper(), 0) * 100\n        ratio = pct / global_pct if global_pct > 0 else float(\"inf\")",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via fig_refs.get()",
+      "file_path": "equity_scorer.py",
+      "line": 789,
+      "code_snippet": "\"rating\": heim_result[\"rating\"],\n        \"gauge_fig\": fig_refs.get(\"HEIM Gauge\", \"\"),\n        \"ri\": components[\"representation_index\"],",
+      "evidence": "Hardcoded URL: HEIM Gauge",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via fig_refs.get()",
+      "file_path": "equity_scorer.py",
+      "line": 808,
+      "code_snippet": "\"pop_table\": pop_table,\n        \"ancestry_fig\": fig_refs.get(\"Ancestry Distribution\", \"\"),\n        \"het_fig\": fig_refs.get(\"Heterozygosity\", \"\"),",
+      "evidence": "Hardcoded URL: Ancestry Distribution",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via fig_refs.get()",
+      "file_path": "equity_scorer.py",
+      "line": 809,
+      "code_snippet": "\"ancestry_fig\": fig_refs.get(\"Ancestry Distribution\", \"\"),\n        \"het_fig\": fig_refs.get(\"Heterozygosity\", \"\"),\n        \"fst_section\": fst_section,",
+      "evidence": "Hardcoded URL: Heterozygosity",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via fig_refs.get()",
+      "file_path": "equity_scorer.py",
+      "line": 683,
+      "code_snippet": "%s\n\"\"\" % (fst_table, fig_refs.get(\"FST Heatmap\", \"\"))",
+      "evidence": "Hardcoded URL: FST Heatmap",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via fig_refs.get()",
+      "file_path": "equity_scorer.py",
+      "line": 696,
+      "code_snippet": "\"\"\" % (\n            fig_refs.get(\"PCA\", \"\"),\n            pca_variance[0] * 100,",
+      "evidence": "Hardcoded URL: PCA",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via GLOBAL_PROPORTIONS.get()",
+      "file_path": "equity_scorer.py",
+      "line": 800,
+      "code_snippet": "\"most_pct\": most_rep[1] / total * 100,\n        \"most_ratio\": (most_rep[1] / total) / GLOBAL_PROPORTIONS.get(most_rep[0].upper(), 0.01),\n        \"least_pop\": least_rep[0],",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via GLOBAL_PROPORTIONS.get()",
+      "file_path": "equity_scorer.py",
+      "line": 803,
+      "code_snippet": "\"least_pct\": least_rep[1] / total * 100,\n        \"least_ratio\": (least_rep[1] / total) / GLOBAL_PROPORTIONS.get(least_rep[0].upper(), 0.01),\n        \"mean_het\": np.mean(list(obs_het.values())),",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via obs_het.get()",
+      "file_path": "equity_scorer.py",
+      "line": 876,
+      "code_snippet": "{\"population\": k, \"count\": v, \"proportion\": v / sum(pop_counts.values()),\n         \"obs_het\": obs_het.get(k, 0), \"exp_het\": exp_het.get(k, 0)}\n        for k, v in sorted(pop_counts.items())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via exp_het.get()",
+      "file_path": "equity_scorer.py",
+      "line": 876,
+      "code_snippet": "{\"population\": k, \"count\": v, \"proportion\": v / sum(pop_counts.values()),\n         \"obs_het\": obs_het.get(k, 0), \"exp_het\": exp_het.get(k, 0)}\n        for k, v in sorted(pop_counts.items())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pop_counts.get()",
+      "file_path": "tests/test_equity_scorer.py",
+      "line": 244,
+      "code_snippet": "pop_indices.setdefault(pop, []).append(i)\n        pop_counts[pop] = pop_counts.get(pop, 0) + 1",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for calculator skill: network",
+      "description": "A 'calculator' skill would not normally require 'network' capability. Allowed capabilities for this category: computation",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a calculator skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 51,
+  "_scan_meta": {
+    "author": "manuelcorpas",
+    "skill": "equity-scorer",
+    "author_skill": "manuelcorpas/equity-scorer",
+    "scan_time_s": 0.1
+  }
+}

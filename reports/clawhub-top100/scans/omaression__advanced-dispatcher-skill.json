@@ -1,0 +1,222 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/omaression/advanced-dispatcher-skill",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: Dynamic code execution via re.compile() (S6)"
+  ],
+  "behavior_tags": [
+    "dynamic_execution"
+  ],
+  "findings": [
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 17,
+      "code_snippet": "MODEL_ID_PATTERN = re.compile(r\"^[a-z0-9-]+/[a-z0-9.-]+$\")\nCACHE_RETENTION_VALUES = {\"long\", \"short\"}",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 49,
+      "code_snippet": "_BUILDX_PATTERN = re.compile(r\"^\\s*buildx:\\s*\", re.IGNORECASE)\n_BUILD_PATTERN = re.compile(r\"^\\s*build:\\s*\", re.IGNORECASE)",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 50,
+      "code_snippet": "_BUILDX_PATTERN = re.compile(r\"^\\s*buildx:\\s*\", re.IGNORECASE)\n_BUILD_PATTERN = re.compile(r\"^\\s*build:\\s*\", re.IGNORECASE)\n_BUILDQ_PATTERN = re.compile(r\"^\\s*buildq:\\s*\", re.IGNORECASE)",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 51,
+      "code_snippet": "_BUILD_PATTERN = re.compile(r\"^\\s*build:\\s*\", re.IGNORECASE)\n_BUILDQ_PATTERN = re.compile(r\"^\\s*buildq:\\s*\", re.IGNORECASE)",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 54,
+      "code_snippet": "_TRADEOFF_PATTERNS = (\n    re.compile(r\"\\bevaluate\\s+tradeoffs?\\b\", re.IGNORECASE),\n    re.compile(",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 55,
+      "code_snippet": "re.compile(r\"\\bevaluate\\s+tradeoffs?\\b\", re.IGNORECASE),\n    re.compile(\n        r\"\\bcompare\\s+(?:approaches?|options?|designs?|architectures?)\\b\",",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 59,
+      "code_snippet": "),\n    re.compile(r\"\\bchoose\\s+(?:between|among)\\b\", re.IGNORECASE),\n    re.compile(",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 60,
+      "code_snippet": "re.compile(r\"\\bchoose\\s+(?:between|among)\\b\", re.IGNORECASE),\n    re.compile(\n        r\"\\bwhich\\s+(?:approach|option|design|architecture)\\s+(?:is\\s+)?better\\b\",",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "dispatcher.py",
+      "line": 64,
+      "code_snippet": "),\n    re.compile(\n        r\"\\bjudge\\s+(?:these|the)\\s+(?:designs?|architectures?)\\b\",",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 16,
+  "_scan_meta": {
+    "author": "omaression",
+    "skill": "advanced-dispatcher-skill",
+    "author_skill": "omaression/advanced-dispatcher-skill",
+    "scan_time_s": 0.1
+  }
+}

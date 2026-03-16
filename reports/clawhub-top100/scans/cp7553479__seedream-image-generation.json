@@ -1,0 +1,154 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/cp7553479/seedream-image-generation",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: ARK_API_KEY (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "seedream.py",
+      "line": 65,
+      "code_snippet": "# Retrieve API key\n    key = os.environ.get(\"ARK_API_KEY\")\n    if not key:",
+      "evidence": "Hardcoded URL: ARK_API_KEY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ARK_API_KEY",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "seedream.py",
+      "line": 65,
+      "code_snippet": "# Retrieve API key\n    key = os.environ.get(\"ARK_API_KEY\")\n    if not key:",
+      "evidence": "Reads sensitive env var: ARK_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "seedream.py",
+      "line": 154,
+      "code_snippet": "try:\n        with urllib.request.urlopen(req) as response:\n            res_json = json.loads(response.read().decode(\"utf-8\"))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via input_params_for_return.get()",
+      "file_path": "seedream.py",
+      "line": 167,
+      "code_snippet": "output_format_used = input_params_for_return.get(\"output_format\", \"jpeg\")",
+      "evidence": "Hardcoded URL: output_format",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via res_json.get()",
+      "file_path": "seedream.py",
+      "line": 173,
+      "code_snippet": "file_ext = \".png\" if output_format_used == \"png\" else \".jpeg\"\n                                filename = f\"image_{int(res_json.get('created', 0))}_{res_json['data'].index(item)}{file_ext}\"\n                                local_file_path = os.path.join(save_path, filename)",
+      "evidence": "Hardcoded URL: created",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "seedream.py",
+      "line": 65,
+      "code_snippet": "key = os.environ.get(\"ARK_API_KEY\")",
+      "evidence": "Signature MAL-010 matched (SHA256: 91c01b6d5aa3a8c5...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 22,
+  "_scan_meta": {
+    "author": "cp7553479",
+    "skill": "seedream-image-generation",
+    "author_skill": "cp7553479/seedream-image-generation",
+    "scan_time_s": 0.1
+  }
+}

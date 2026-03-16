@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/yipintangzsp/weibo-trending-bot",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 11,
+  "_scan_meta": {
+    "author": "yipintangzsp",
+    "skill": "weibo-trending-bot",
+    "author_skill": "yipintangzsp/weibo-trending-bot",
+    "scan_time_s": 0.1
+  }
+}

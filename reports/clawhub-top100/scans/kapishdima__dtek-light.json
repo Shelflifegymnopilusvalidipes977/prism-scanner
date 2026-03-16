@@ -1,0 +1,42 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/kapishdima/dtek-light",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: Hardcoded public IP: 131.0.0.0 (P4)"
+  ],
+  "behavior_tags": [],
+  "findings": [
+    {
+      "rule_id": "P4",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Hardcoded public IP: 131.0.0.0",
+      "description": "Public IP address found in source code",
+      "file_path": "check-light.js",
+      "line": 35,
+      "code_snippet": "\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36\",",
+      "evidence": null,
+      "tags": [
+        "network",
+        "hardcoded_ip"
+      ],
+      "remediation": "Use domain names with verified ownership instead of bare IPs.",
+      "references": [],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 11,
+  "_scan_meta": {
+    "author": "kapishdima",
+    "skill": "dtek-light",
+    "author_skill": "kapishdima/dtek-light",
+    "scan_time_s": 0.1
+  }
+}

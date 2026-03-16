@@ -1,0 +1,68 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/sakurako-irs/clawreceipt",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: Shell command execution (S1)"
+  ],
+  "behavior_tags": [
+    "executes_shell"
+  ],
+  "findings": [
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls app.run() which can execute arbitrary system commands",
+      "file_path": "src/cli.py",
+      "line": 65,
+      "code_snippet": "app = ClawReceiptTUI()\n        app.run()",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls app.run() which can execute arbitrary system commands",
+      "file_path": "src/tui.py",
+      "line": 114,
+      "code_snippet": "app = ClawReceiptTUI()\n    app.run()",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 22,
+  "_scan_meta": {
+    "author": "sakurako-irs",
+    "skill": "clawreceipt",
+    "author_skill": "sakurako-irs/clawreceipt",
+    "scan_time_s": 0.1
+  }
+}

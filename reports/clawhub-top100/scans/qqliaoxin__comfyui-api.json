@@ -1,0 +1,932 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/qqliaoxin/comfyui-api",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Unexpected capability for code_runner skill: network (M1)",
+    "MEDIUM: Dynamic code execution via re.compile() (S6)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "dynamic_execution",
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "comfyui.py",
+      "line": 521,
+      "code_snippet": "# URL detection patterns\nURL_PATTERN = re.compile(r'https?://[^\\s<>\"{}|\\\\^`\\[\\]]+:\\d+')\nCHN_KEYWORDS = [\"设置\", \"连接\", \"地址\", \"url\", \"server\", \"链接\"]",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "comfyui.py",
+      "line": 560,
+      "code_snippet": "# If we have images in the result, return them directly\n    if result.get(\"images\"):\n        # Format the result to include image URLs for display",
+      "evidence": "Hardcoded URL: images",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via handlers.get()",
+      "file_path": "comfyui.py",
+      "line": 755,
+      "code_snippet": "}\n    handler = handlers.get(command.lower())\n    if handler:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "comfyui.py",
+      "line": 164,
+      "code_snippet": "# Extract images immediately if available\n        if result.get(\"status\") == \"success\" and result.get(\"outputs\"):\n            images = []",
+      "evidence": "Hardcoded URL: outputs",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.get()",
+      "file_path": "comfyui.py",
+      "line": 70,
+      "code_snippet": "session = await self._get_session()\n            async with session.get(f\"{self.server_url}/queue\") as resp:\n                if resp.status == 200:",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.post()",
+      "file_path": "comfyui.py",
+      "line": 91,
+      "code_snippet": "async with session.post(f\"{self.server_url}/api/prompt\", json=payload) as resp:\n                if resp.status != 200:",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via queue_result.get()",
+      "file_path": "comfyui.py",
+      "line": 95,
+      "code_snippet": "queue_result = await resp.json()\n                prompt_id = queue_result.get(\"prompt_id\")\n                if not prompt_id:",
+      "evidence": "Hardcoded URL: prompt_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "comfyui.py",
+      "line": 164,
+      "code_snippet": "# Extract images immediately if available\n        if result.get(\"status\") == \"success\" and result.get(\"outputs\"):\n            images = []",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "comfyui.py",
+      "line": 175,
+      "code_snippet": "result[\"images\"] = images\n        elif result.get(\"status\") == \"success\" and result.get(\"prompt_id\"):\n            # If we have a prompt ID but no immediate images, monitor for completion",
+      "evidence": "Hardcoded URL: prompt_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.get()",
+      "file_path": "comfyui.py",
+      "line": 186,
+      "code_snippet": "session = await self._get_session()\n            async with session.get(f\"{self.server_url}/system_stats\") as resp:\n                return await resp.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.get()",
+      "file_path": "comfyui.py",
+      "line": 195,
+      "code_snippet": "session = await self._get_session()\n            async with session.get(f\"{self.server_url}/queue\") as resp:\n                return await resp.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.get()",
+      "file_path": "comfyui.py",
+      "line": 205,
+      "code_snippet": "url = f\"{self.server_url}/history\" + (f\"/{prompt_id}\" if prompt_id else \"\")\n            async with session.get(url) as resp:\n                return await resp.json()",
+      "evidence": "Variable URL (taint: internal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.post()",
+      "file_path": "comfyui.py",
+      "line": 217,
+      "code_snippet": "}\n            async with session.post(f\"{self.server_url}/prompt\", json=data) as resp:\n                return await resp.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.post()",
+      "file_path": "comfyui.py",
+      "line": 229,
+      "code_snippet": "data[\"prompt_id\"] = task_id\n            async with session.post(f\"{self.server_url}/queue\", json=data) as resp:\n                return await resp.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.post()",
+      "file_path": "comfyui.py",
+      "line": 238,
+      "code_snippet": "session = await self._get_session()\n            async with session.post(f\"{self.server_url}/interrupt\") as resp:\n                return await resp.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.get()",
+      "file_path": "comfyui.py",
+      "line": 262,
+      "code_snippet": "session = await self._get_session()\n            async with session.get(f\"{self.server_url}/object_info\") as resp:\n                return await resp.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "comfyui.py",
+      "line": 562,
+      "code_snippet": "# Format the result to include image URLs for display\n        image_urls = [img[\"url\"] for img in result.get(\"images\", [])]\n        if image_urls:",
+      "evidence": "Hardcoded URL: images",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.get()",
+      "file_path": "comfyui.py",
+      "line": 103,
+      "code_snippet": "await asyncio.sleep(1)\n                async with session.get(f\"{self.server_url}/history/{prompt_id}\") as hist_resp:\n                    if hist_resp.status == 200:",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via ws.send()",
+      "file_path": "comfyui.py",
+      "line": 126,
+      "code_snippet": "async with websockets.connect(self._get_ws_url()) as ws:\n                await ws.send(json.dumps({\"prompt\": prompt_data, \"client_id\": self.client_id}))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "comfyui.py",
+      "line": 166,
+      "code_snippet": "images = []\n            for node_output in result.get(\"outputs\", {}).values():\n                if isinstance(node_output, list):",
+      "evidence": "Hardcoded URL: outputs",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "comfyui.py",
+      "line": 175,
+      "code_snippet": "result[\"images\"] = images\n        elif result.get(\"status\") == \"success\" and result.get(\"prompt_id\"):\n            # If we have a prompt ID but no immediate images, monitor for completion",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via session.post()",
+      "file_path": "comfyui.py",
+      "line": 253,
+      "code_snippet": "async with session.post(f\"{self.server_url}/upload/image\", data=data) as resp:\n                    return await resp.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via prompt_data.get()",
+      "file_path": "comfyui.py",
+      "line": 463,
+      "code_snippet": "prompt_data = history[prompt_id]\n                    outputs = prompt_data.get(\"outputs\", {})",
+      "evidence": "Hardcoded URL: outputs",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via prompt_data.get()",
+      "file_path": "comfyui.py",
+      "line": 486,
+      "code_snippet": "# Check if the task has completed\n                    status_info = prompt_data.get(\"status\", {})\n                    if status_info.get(\"completed\", False):",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via status_info.get()",
+      "file_path": "comfyui.py",
+      "line": 487,
+      "code_snippet": "status_info = prompt_data.get(\"status\", {})\n                    if status_info.get(\"completed\", False):\n                        # Even if no images found in outputs, return completion status",
+      "evidence": "Hardcoded URL: completed",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "comfyui.py",
+      "line": 75,
+      "code_snippet": "\"status\": \"online\",\n                        \"queue_remaining\": data.get(\"queue_remaining\", 0),\n                        \"server_url\": self.server_url,",
+      "evidence": "Hardcoded URL: queue_remaining",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via history.get()",
+      "file_path": "comfyui.py",
+      "line": 106,
+      "code_snippet": "history = await hist_resp.json()\n                        prompt_data_result = history.get(prompt_id, {})\n                        if prompt_data_result.get(\"outputs\"):",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via prompt_data_result.get()",
+      "file_path": "comfyui.py",
+      "line": 107,
+      "code_snippet": "prompt_data_result = history.get(prompt_id, {})\n                        if prompt_data_result.get(\"outputs\"):\n                            return {",
+      "evidence": "Hardcoded URL: outputs",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "comfyui.py",
+      "line": 132,
+      "code_snippet": "data = json.loads(response)\n                        msg_type = data.get(\"type\")\n                        msg_data = data.get(\"data\", {})",
+      "evidence": "Hardcoded URL: type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "comfyui.py",
+      "line": 133,
+      "code_snippet": "msg_type = data.get(\"type\")\n                        msg_data = data.get(\"data\", {})",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "comfyui.py",
+      "line": 169,
+      "code_snippet": "for item in node_output:\n                        if item.get(\"type\") == \"image\":\n                            images.append({",
+      "evidence": "Hardcoded URL: type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via prompt_data_result.get()",
+      "file_path": "comfyui.py",
+      "line": 111,
+      "code_snippet": "\"prompt_id\": prompt_id,\n                                \"outputs\": prompt_data_result.get(\"outputs\")\n                            }",
+      "evidence": "Hardcoded URL: outputs",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via msg_data.get()",
+      "file_path": "comfyui.py",
+      "line": 136,
+      "code_snippet": "if msg_type == \"executing\":\n                            if msg_data.get(\"node\") is None:\n                                break",
+      "evidence": "Hardcoded URL: node",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via msg_data.get()",
+      "file_path": "comfyui.py",
+      "line": 140,
+      "code_snippet": "outputs = {\n                                \"prompt_id\": msg_data.get(\"prompt_id\"),\n                                \"outputs\": msg_data.get(\"output\"),",
+      "evidence": "Hardcoded URL: prompt_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via msg_data.get()",
+      "file_path": "comfyui.py",
+      "line": 141,
+      "code_snippet": "\"prompt_id\": msg_data.get(\"prompt_id\"),\n                                \"outputs\": msg_data.get(\"output\"),\n                                \"status\": \"success\"",
+      "evidence": "Hardcoded URL: output",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "comfyui.py",
+      "line": 171,
+      "code_snippet": "images.append({\n                                \"filename\": item.get(\"filename\"),\n                                \"url\": f\"{self.server_url}/view?filename={item.get('filename')}&type=output\"",
+      "evidence": "Hardcoded URL: filename",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via obj_info.get()",
+      "file_path": "comfyui.py",
+      "line": 274,
+      "code_snippet": "# Extract checkpoint models\n            checkpoints = obj_info.get('CheckpointLoader', {}).get('input', {}).get('required', {}).get('ckpt_name', [])",
+      "evidence": "Hardcoded URL: CheckpointLoader",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "comfyui.py",
+      "line": 172,
+      "code_snippet": "\"filename\": item.get(\"filename\"),\n                                \"url\": f\"{self.server_url}/view?filename={item.get('filename')}&type=output\"\n                            })",
+      "evidence": "Hardcoded URL: filename",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "comfyui.py",
+      "line": 471,
+      "code_snippet": "for item in node_output:\n                                    if isinstance(item, dict) and item.get(\"type\") == \"image\":\n                                        images.append({",
+      "evidence": "Hardcoded URL: type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "comfyui.py",
+      "line": 473,
+      "code_snippet": "images.append({\n                                            \"filename\": item.get(\"filename\"),\n                                            \"url\": f\"{self.server_url}/view?filename={item.get('filename')}&subfolder=&type={item.get('type', 'output')}\"",
+      "evidence": "Hardcoded URL: filename",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "comfyui.py",
+      "line": 474,
+      "code_snippet": "\"filename\": item.get(\"filename\"),\n                                            \"url\": f\"{self.server_url}/view?filename={item.get('filename')}&subfolder=&type={item.get('type', 'output')}\"\n                                        })",
+      "evidence": "Hardcoded URL: filename",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "comfyui.py",
+      "line": 474,
+      "code_snippet": "\"filename\": item.get(\"filename\"),\n                                            \"url\": f\"{self.server_url}/view?filename={item.get('filename')}&subfolder=&type={item.get('type', 'output')}\"\n                                        })",
+      "evidence": "Hardcoded URL: type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for code_runner skill: network",
+      "description": "A 'code_runner' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write, shell",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a code_runner skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 37,
+  "_scan_meta": {
+    "author": "qqliaoxin",
+    "skill": "comfyui-api",
+    "author_skill": "qqliaoxin/comfyui-api",
+    "scan_time_s": 0.1
+  }
+}

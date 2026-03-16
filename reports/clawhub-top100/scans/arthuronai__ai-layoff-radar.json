@@ -1,0 +1,1237 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/arthuronai/ai-layoff-radar",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: OPENAI_API_KEY (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 41,
+      "code_snippet": "def compute_risk_score(event: Dict) -> int:\n    layoffs = event.get(\"layoffs\")\n    if layoffs is None:",
+      "evidence": "Hardcoded URL: layoffs",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENAI_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "ai_classifier.py",
+      "line": 67,
+      "code_snippet": "\"\"\"\n    api_key = os.getenv(\"OPENAI_API_KEY\")\n    if not api_key:",
+      "evidence": "Reads sensitive env var: OPENAI_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parsed.get()",
+      "file_path": "ai_classifier.py",
+      "line": 109,
+      "code_snippet": "parsed = json.loads(content)\n        value = parsed.get(\"ai_related\", False)\n        return bool(value)",
+      "evidence": "Hardcoded URL: ai_related",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 43,
+      "code_snippet": "if layoffs is None:\n        layoffs = event.get(\"layoff_count\") or 0\n    reason = (event.get(\"reason\") or \"\").lower()",
+      "evidence": "Hardcoded URL: layoff_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 44,
+      "code_snippet": "layoffs = event.get(\"layoff_count\") or 0\n    reason = (event.get(\"reason\") or \"\").lower()",
+      "evidence": "Hardcoded URL: reason",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 86,
+      "code_snippet": "{json.dumps({\n    \"title\": event.get(\"title\"),\n    \"summary\": event.get(\"summary\"),",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 87,
+      "code_snippet": "\"title\": event.get(\"title\"),\n    \"summary\": event.get(\"summary\"),\n    \"reason\": event.get(\"reason\"),",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 88,
+      "code_snippet": "\"summary\": event.get(\"summary\"),\n    \"reason\": event.get(\"reason\"),\n    \"text_excerpt\": (event.get(\"text\") or \"\")[:2000]",
+      "evidence": "Hardcoded URL: reason",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 22,
+      "code_snippet": "[\n            (event.get(\"title\") or \"\"),\n            (event.get(\"summary\") or \"\"),",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 23,
+      "code_snippet": "(event.get(\"title\") or \"\"),\n            (event.get(\"summary\") or \"\"),\n            (event.get(\"reason\") or \"\"),",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 24,
+      "code_snippet": "(event.get(\"summary\") or \"\"),\n            (event.get(\"reason\") or \"\"),\n            (event.get(\"text\") or \"\"),",
+      "evidence": "Hardcoded URL: reason",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 25,
+      "code_snippet": "(event.get(\"reason\") or \"\"),\n            (event.get(\"text\") or \"\"),\n        ]",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "ai_classifier.py",
+      "line": 89,
+      "code_snippet": "\"reason\": event.get(\"reason\"),\n    \"text_excerpt\": (event.get(\"text\") or \"\")[:2000]\n}, ensure_ascii=True)}",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SKILLPAY_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "billing.py",
+      "line": 12,
+      "code_snippet": "BILLING_API_URL = \"https://skillpay.me\"\nBILLING_API_KEY = os.getenv(\"SKILLPAY_API_KEY\")\nSKILL_ID = \"d81a694a-f0bd-4119-a07a-926927d75631\"",
+      "evidence": "Reads sensitive env var: SKILLPAY_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "billing.py",
+      "line": 35,
+      "code_snippet": "try:\n        response = requests.get(\n            url,",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "billing.py",
+      "line": 43,
+      "code_snippet": "data = response.json()\n        balance = data.get(\"balance\", 0)\n        return {\"ok\": True, \"balance\": balance, \"raw\": data}",
+      "evidence": "Hardcoded URL: balance",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "billing.py",
+      "line": 65,
+      "code_snippet": "try:\n        response = requests.post(\n            url,",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "billing.py",
+      "line": 101,
+      "code_snippet": "try:\n        response = requests.post(\n            url,",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SKILLPAY_DEV_MODE",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "billing.py",
+      "line": 14,
+      "code_snippet": "SKILL_ID = \"d81a694a-f0bd-4119-a07a-926927d75631\"\nDEV_MODE = os.getenv(\"SKILLPAY_DEV_MODE\", \"false\").lower() in {\"1\", \"true\", \"yes\"}",
+      "evidence": "Reads env var: SKILLPAY_DEV_MODE",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "billing.py",
+      "line": 76,
+      "code_snippet": "\"error\": \"insufficient_balance\",\n                \"balance\": data.get(\"balance\"),\n                \"raw\": data,",
+      "evidence": "Hardcoded URL: balance",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "billing.py",
+      "line": 111,
+      "code_snippet": "\"ok\": True,\n            \"payment_url\": data.get(\"payment_url\") or data.get(\"url\"),\n            \"raw\": data,",
+      "evidence": "Hardcoded URL: payment_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "billing.py",
+      "line": 111,
+      "code_snippet": "\"ok\": True,\n            \"payment_url\": data.get(\"payment_url\") or data.get(\"url\"),\n            \"raw\": data,",
+      "evidence": "Hardcoded URL: url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 124,
+      "code_snippet": "\"company_name\": _extract_company_name(article),\n            \"date\": article.get(\"published_at\"),\n            \"country\": _extract_country(article),",
+      "evidence": "Hardcoded URL: published_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 129,
+      "code_snippet": "\"reason\": _extract_reason(article),\n            \"source_url\": article.get(\"url\"),\n            \"title\": article.get(\"title\"),",
+      "evidence": "Hardcoded URL: url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 130,
+      "code_snippet": "\"source_url\": article.get(\"url\"),\n            \"title\": article.get(\"title\"),\n            \"summary\": article.get(\"summary\"),",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 131,
+      "code_snippet": "\"title\": article.get(\"title\"),\n            \"summary\": article.get(\"summary\"),\n            \"text\": article.get(\"text\"),",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 132,
+      "code_snippet": "\"summary\": article.get(\"summary\"),\n            \"text\": article.get(\"text\"),\n        }",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 47,
+      "code_snippet": "def _extract_company_name(article: Dict) -> str:\n    title = (article.get(\"title\") or \"\").strip()\n    if not title:",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 39,
+      "code_snippet": "[\n            (article.get(\"title\") or \"\").strip(),\n            (article.get(\"summary\") or \"\").strip(),",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 40,
+      "code_snippet": "(article.get(\"title\") or \"\").strip(),\n            (article.get(\"summary\") or \"\").strip(),\n            (article.get(\"text\") or \"\").strip(),",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via article.get()",
+      "file_path": "layoff_detector.py",
+      "line": 41,
+      "code_snippet": "(article.get(\"summary\") or \"\").strip(),\n            (article.get(\"text\") or \"\").strip(),\n        ]",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENAI_MODEL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "main.py",
+      "line": 55,
+      "code_snippet": "def run_skill(user_id: str) -> Dict:\n    classifier_model = os.getenv(\"OPENAI_MODEL\", \"gpt-4o-mini\")",
+      "evidence": "Reads sensitive env var: OPENAI_MODEL",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: LOG_LEVEL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "main.py",
+      "line": 15,
+      "code_snippet": "logging.basicConfig(\n    level=os.getenv(\"LOG_LEVEL\", \"INFO\"),\n    format=\"%(asctime)s | %(levelname)s | %(name)s | %(message)s\",",
+      "evidence": "Reads env var: LOG_LEVEL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via balance_result.get()",
+      "file_path": "main.py",
+      "line": 61,
+      "code_snippet": "balance_result = check_balance(user_id=user_id)\n    if not balance_result.get(\"ok\"):\n        logger.error(\"Failed to check balance\")",
+      "evidence": "Hardcoded URL: ok",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via charge_result.get()",
+      "file_path": "main.py",
+      "line": 70,
+      "code_snippet": "charge_result = charge_user(user_id=user_id)\n    if not charge_result.get(\"ok\"):\n        if charge_result.get(\"error\") == \"insufficient_balance\":",
+      "evidence": "Hardcoded URL: ok",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via e.get()",
+      "file_path": "main.py",
+      "line": 45,
+      "code_snippet": "top_companies = [e[\"company\"] for e in normalized_events[:5] if e.get(\"company\")]\n    total_events = len(normalized_events)",
+      "evidence": "Hardcoded URL: company",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via balance_result.get()",
+      "file_path": "main.py",
+      "line": 65,
+      "code_snippet": "\"error\": \"billing_error\",\n            \"details\": balance_result.get(\"message\", \"unable to check balance\"),\n        }",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via charge_result.get()",
+      "file_path": "main.py",
+      "line": 71,
+      "code_snippet": "if not charge_result.get(\"ok\"):\n        if charge_result.get(\"error\") == \"insufficient_balance\":\n            logger.info(\"Insufficient balance\")",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via charge_result.get()",
+      "file_path": "main.py",
+      "line": 82,
+      "code_snippet": "\"error\": \"billing_error\",\n            \"details\": charge_result.get(\"message\", \"unable to charge user\"),\n        }",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 36,
+      "code_snippet": "{\n                \"company\": event.get(\"company_name\", \"Unknown\"),\n                \"country\": event.get(\"country\", \"Unknown\"),",
+      "evidence": "Hardcoded URL: company_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 37,
+      "code_snippet": "\"company\": event.get(\"company_name\", \"Unknown\"),\n                \"country\": event.get(\"country\", \"Unknown\"),\n                \"layoffs\": event.get(\"layoffs\", event.get(\"layoff_count\")),",
+      "evidence": "Hardcoded URL: country",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 38,
+      "code_snippet": "\"country\": event.get(\"country\", \"Unknown\"),\n                \"layoffs\": event.get(\"layoffs\", event.get(\"layoff_count\")),\n                \"risk_score\": event.get(\"risk_score\", 0),",
+      "evidence": "Hardcoded URL: layoffs",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 39,
+      "code_snippet": "\"layoffs\": event.get(\"layoffs\", event.get(\"layoff_count\")),\n                \"risk_score\": event.get(\"risk_score\", 0),\n                \"reason\": event.get(\"reason\", \"\"),",
+      "evidence": "Hardcoded URL: risk_score",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 40,
+      "code_snippet": "\"risk_score\": event.get(\"risk_score\", 0),\n                \"reason\": event.get(\"reason\", \"\"),\n                \"source\": event.get(\"source_url\", \"\"),",
+      "evidence": "Hardcoded URL: reason",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 41,
+      "code_snippet": "\"reason\": event.get(\"reason\", \"\"),\n                \"source\": event.get(\"source_url\", \"\"),\n            }",
+      "evidence": "Hardcoded URL: source_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment_result.get()",
+      "file_path": "main.py",
+      "line": 76,
+      "code_snippet": "\"error\": \"payment_required\",\n                \"payment_url\": payment_result.get(\"payment_url\"),\n                \"balance\": charge_result.get(\"balance\", balance_result.get(\"balance\")),",
+      "evidence": "Hardcoded URL: payment_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via charge_result.get()",
+      "file_path": "main.py",
+      "line": 77,
+      "code_snippet": "\"payment_url\": payment_result.get(\"payment_url\"),\n                \"balance\": charge_result.get(\"balance\", balance_result.get(\"balance\")),\n            }",
+      "evidence": "Hardcoded URL: balance",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 38,
+      "code_snippet": "\"country\": event.get(\"country\", \"Unknown\"),\n                \"layoffs\": event.get(\"layoffs\", event.get(\"layoff_count\")),\n                \"risk_score\": event.get(\"risk_score\", 0),",
+      "evidence": "Hardcoded URL: layoff_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via balance_result.get()",
+      "file_path": "main.py",
+      "line": 77,
+      "code_snippet": "\"payment_url\": payment_result.get(\"payment_url\"),\n                \"balance\": charge_result.get(\"balance\", balance_result.get(\"balance\")),\n            }",
+      "evidence": "Hardcoded URL: balance",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via event.get()",
+      "file_path": "main.py",
+      "line": 96,
+      "code_snippet": "except Exception:\n            logger.exception(\"Classification error for source_url=%s\", event.get(\"source_url\"))",
+      "evidence": "Hardcoded URL: source_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "news_fetcher.py",
+      "line": 108,
+      "code_snippet": "source = \"\"\n            if isinstance(entry.get(\"source\"), dict):\n                source = (entry.get(\"source\", {}).get(\"title\") or \"\").strip()",
+      "evidence": "Hardcoded URL: source",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "news_fetcher.py",
+      "line": 99,
+      "code_snippet": "for entry in parsed.entries[:max_items_per_feed]:\n            url = entry.get(\"link\", \"\").strip()\n            if not url or url in seen_urls:",
+      "evidence": "Hardcoded URL: link",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "news_fetcher.py",
+      "line": 106,
+      "code_snippet": "summary = clean_html((entry.get(\"summary\") or \"\").strip())\n            published = _parse_date(entry.get(\"published\") or entry.get(\"updated\") or \"\")\n            source = \"\"",
+      "evidence": "Hardcoded URL: published",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "news_fetcher.py",
+      "line": 106,
+      "code_snippet": "summary = clean_html((entry.get(\"summary\") or \"\").strip())\n            published = _parse_date(entry.get(\"published\") or entry.get(\"updated\") or \"\")\n            source = \"\"",
+      "evidence": "Hardcoded URL: updated",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "news_fetcher.py",
+      "line": 104,
+      "code_snippet": "title = clean_html((entry.get(\"title\") or \"\").strip())\n            summary = clean_html((entry.get(\"summary\") or \"\").strip())",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "news_fetcher.py",
+      "line": 105,
+      "code_snippet": "title = clean_html((entry.get(\"title\") or \"\").strip())\n            summary = clean_html((entry.get(\"summary\") or \"\").strip())\n            published = _parse_date(entry.get(\"published\") or entry.get(\"updated\") or \"\")",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parsed.feed.get()",
+      "file_path": "news_fetcher.py",
+      "line": 111,
+      "code_snippet": "if not source:\n                source = (parsed.feed.get(\"title\") or \"Unknown\").strip()",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via entry.get()",
+      "file_path": "news_fetcher.py",
+      "line": 109,
+      "code_snippet": "if isinstance(entry.get(\"source\"), dict):\n                source = (entry.get(\"source\", {}).get(\"title\") or \"\").strip()\n            if not source:",
+      "evidence": "Hardcoded URL: source",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 26,
+  "_scan_meta": {
+    "author": "arthuronai",
+    "skill": "ai-layoff-radar",
+    "author_skill": "arthuronai/ai-layoff-radar",
+    "scan_time_s": 0.1
+  }
+}

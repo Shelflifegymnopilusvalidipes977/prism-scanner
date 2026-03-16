@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/riffvibe/vibemate",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 14,
+  "_scan_meta": {
+    "author": "riffvibe",
+    "skill": "vibemate",
+    "author_skill": "riffvibe/vibemate",
+    "scan_time_s": 0.1
+  }
+}

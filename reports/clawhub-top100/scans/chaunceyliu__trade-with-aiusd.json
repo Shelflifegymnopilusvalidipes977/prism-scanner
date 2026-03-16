@@ -1,0 +1,62 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/chaunceyliu/trade-with-aiusd",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: Extremely long line (possible minified/obfuscated code) (P9)"
+  ],
+  "behavior_tags": [
+    "uses_obfuscation"
+  ],
+  "findings": [
+    {
+      "rule_id": "P9",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.6,
+      "title": "Extremely long line (possible minified/obfuscated code)",
+      "description": "Line is 45760 characters long",
+      "file_path": "aiusd-skill-installer.js",
+      "line": 91,
+      "code_snippet": "const PACKAGE_DATA = `H4sIAEq2hWkAA+y9XW8cSZIg2LvA4XB5z3vPXixhMqnOTH6TUqpVNckPldhFiSqSqppaSUMGM4NkSJ...",
+      "evidence": null,
+      "tags": [
+        "obfuscation"
+      ],
+      "remediation": "Review if code minification is expected.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P9",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.6,
+      "title": "Extremely long line (possible minified/obfuscated code)",
+      "description": "Line is 45744 characters long",
+      "file_path": "aiusd-skill-installer.sh",
+      "line": 112,
+      "code_snippet": "H4sIAEu2hWkAA+y9XW8cSZIg2LvA4XB5z3vPXixhMqnOTH6TUqpVNckPldhFiSqSqppaSUMGM4NkSJkZ2RGRpFgqDnqAmQP2pmdn...",
+      "evidence": null,
+      "tags": [
+        "obfuscation"
+      ],
+      "remediation": "Review if code minification is expected.",
+      "references": [],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 63,
+  "_scan_meta": {
+    "author": "chaunceyliu",
+    "skill": "trade-with-aiusd",
+    "author_skill": "chaunceyliu/trade-with-aiusd",
+    "scan_time_s": 0.1
+  }
+}

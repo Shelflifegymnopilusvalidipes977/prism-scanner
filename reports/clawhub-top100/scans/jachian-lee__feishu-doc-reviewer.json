@@ -1,0 +1,2588 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/jachian-lee/feishu-doc-reviewer",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Unexpected capability for fetcher skill: shell (M1)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: FEISHU_APP_SECRET (S5)",
+    "MEDIUM: Shell command execution (S1)"
+  ],
+  "behavior_tags": [
+    "executes_shell",
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "process_comment.py",
+      "line": 34,
+      "code_snippet": "response = requests.get(url, headers=headers, params=params)\n    comments_data = response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "process_comment.py",
+      "line": 62,
+      "code_snippet": "# 获取 quote 内容（批注选中的文本）\n    quote = comment.get(\"quote\", \"\")\n    if not quote:",
+      "evidence": "Hardcoded URL: quote",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 96,
+      "code_snippet": "\"\"\"提取块的文本内容\"\"\"\n    block_type = block.get(\"block_type\")\n    content = \"\"",
+      "evidence": "Hardcoded URL: block_type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "process_comment.py",
+      "line": 37,
+      "code_snippet": "if comments_data.get('code') != 0:\n        return None, f\"获取评论失败：{comments_data.get('msg')}\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 78,
+      "code_snippet": "for block in blocks:\n        block_type = block.get(\"block_type\")\n        content = get_block_content(block)",
+      "evidence": "Hardcoded URL: block_type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "process_comment.py",
+      "line": 149,
+      "code_snippet": "result[\"comment_quote\"] = comment.get(\"quote\", \"\")[:100]\n    result[\"steps\"][\"get_comment\"] = \"success\"",
+      "evidence": "Hardcoded URL: quote",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 159,
+      "code_snippet": "update_result = api.delete_block(document_token, block_id)\n        if update_result.get(\"ok\"):\n            result[\"steps\"][\"delete_block\"] = \"success\"",
+      "evidence": "Hardcoded URL: ok",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment.py",
+      "line": 216,
+      "code_snippet": "if reply_result.get(\"code\") == 0:\n        result[\"steps\"][\"reply\"] = \"success\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "process_comment.py",
+      "line": 41,
+      "code_snippet": "# 找到目标评论\n    for item in comments_data.get(\"data\", {}).get(\"items\", []):\n        if item.get(\"comment_id\") == comment_id:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "process_comment.py",
+      "line": 42,
+      "code_snippet": "for item in comments_data.get(\"data\", {}).get(\"items\", []):\n        if item.get(\"comment_id\") == comment_id:\n            return item, None",
+      "evidence": "Hardcoded URL: comment_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via blocks_data.get()",
+      "file_path": "process_comment.py",
+      "line": 74,
+      "code_snippet": "blocks = blocks_data.get(\"data\", {}).get(\"blocks\", [])",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 82,
+      "code_snippet": "if quote_prefix in content:\n            return block.get(\"block_id\")",
+      "evidence": "Hardcoded URL: block_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 89,
+      "code_snippet": "if keywords.strip() in content:\n            return block.get(\"block_id\")",
+      "evidence": "Hardcoded URL: block_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "process_comment.py",
+      "line": 169,
+      "code_snippet": "# 只删除选中的文本（从 quote 中获取）\n        text_to_delete = comment.get(\"quote\", \"\")\n        if not text_to_delete:",
+      "evidence": "Hardcoded URL: quote",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 177,
+      "code_snippet": "update_result = api.delete_text_from_block(document_token, block_id, text_to_delete)\n        if update_result.get(\"ok\"):\n            result[\"steps\"][\"delete_selected\"] = \"success\"",
+      "evidence": "Hardcoded URL: ok",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment.py",
+      "line": 218,
+      "code_snippet": "result[\"steps\"][\"reply\"] = \"success\"\n        result[\"reply_id\"] = reply_result.get(\"data\", {}).get(\"reply_id\")\n        print(f\"  ✅ 回复成功：{result['reply_id']}\")",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment.py",
+      "line": 221,
+      "code_snippet": "else:\n        result[\"steps\"][\"reply\"] = f\"failed: {reply_result.get('msg')}\"\n        print(f\"  ❌ 回复失败：{reply_result.get('msg')}\")",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "process_comment.py",
+      "line": 230,
+      "code_snippet": "if resolve_result and resolve_result.get(\"code\") == 0:\n            result[\"steps\"][\"resolve\"] = \"success\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "process_comment.py",
+      "line": 38,
+      "code_snippet": "if comments_data.get('code') != 0:\n        return None, f\"获取评论失败：{comments_data.get('msg')}\"",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 102,
+      "code_snippet": "elif block_type == 2:  # text\n        elements = block.get(\"text\", {}).get(\"elements\", [])\n        content = \"\".join(elem.get(\"text_run\", {}).get(\"content\", \"\") for elem in elements)",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 163,
+      "code_snippet": "else:\n            result[\"steps\"][\"delete_block\"] = f\"failed: {update_result.get('error')}\"\n            print(f\"  ❌ 删除失败：{update_result.get('error')}\")",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 179,
+      "code_snippet": "result[\"steps\"][\"delete_selected\"] = \"success\"\n            result[\"new_content\"] = update_result.get(\"new_content\", \"\")[:100]\n            print(f\"  ✅ 选中文本已删除\")",
+      "evidence": "Hardcoded URL: new_content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 195,
+      "code_snippet": "update_result = api.update_block(document_token, block_id, new_content)\n        if update_result.get(\"code\") == 0:\n            result[\"steps\"][\"update_block\"] = \"success\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment.py",
+      "line": 222,
+      "code_snippet": "result[\"steps\"][\"reply\"] = f\"failed: {reply_result.get('msg')}\"\n        print(f\"  ❌ 回复失败：{reply_result.get('msg')}\")\n        result[\"ok\"] = False",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "process_comment.py",
+      "line": 267,
+      "code_snippet": "print(f\"批注内容：{comment.get('quote', '')[:100]}...\")\n    print(f\"批注要求：{comment.get('reply_list', {}).get('replies', [{}])[0].get('content', {}).get('elements', [{}])[0].get('text_run', {}).get('text', '未知')}\")",
+      "evidence": "Hardcoded URL: quote",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "process_comment.py",
+      "line": 299,
+      "code_snippet": "else:\n        print(f\"\\n❌ 处理失败：{result.get('error', 'unknown')}\")\n        sys.exit(1)",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 164,
+      "code_snippet": "result[\"steps\"][\"delete_block\"] = f\"failed: {update_result.get('error')}\"\n            print(f\"  ❌ 删除失败：{update_result.get('error')}\")\n            result[\"ok\"] = False",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 182,
+      "code_snippet": "else:\n            result[\"steps\"][\"delete_selected\"] = f\"failed: {update_result.get('error')}\"\n            print(f\"  ❌ 删除失败：{update_result.get('error')}\")",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "process_comment.py",
+      "line": 235,
+      "code_snippet": "else:\n            result[\"steps\"][\"resolve\"] = f\"failed: {resolve_result.get('msg') if resolve_result else 'unknown'}\"\n            print(f\"  ❌ 标记失败：{resolve_result.get('msg') if resolve_result else 'unknown error'}\")",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via elem.get()",
+      "file_path": "process_comment.py",
+      "line": 103,
+      "code_snippet": "elements = block.get(\"text\", {}).get(\"elements\", [])\n        content = \"\".join(elem.get(\"text_run\", {}).get(\"content\", \"\") for elem in elements)\n    elif block_type == 3:  # heading2",
+      "evidence": "Hardcoded URL: text_run",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 183,
+      "code_snippet": "result[\"steps\"][\"delete_selected\"] = f\"failed: {update_result.get('error')}\"\n            print(f\"  ❌ 删除失败：{update_result.get('error')}\")\n            result[\"ok\"] = False",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 199,
+      "code_snippet": "else:\n            result[\"steps\"][\"update_block\"] = f\"failed: {update_result.get('msg')}\"\n            print(f\"  ❌ 更新失败：{update_result.get('msg')}\")",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "process_comment.py",
+      "line": 236,
+      "code_snippet": "result[\"steps\"][\"resolve\"] = f\"failed: {resolve_result.get('msg') if resolve_result else 'unknown'}\"\n            print(f\"  ❌ 标记失败：{resolve_result.get('msg') if resolve_result else 'unknown error'}\")\n            # 标记失败不影响整体结果",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_result.get()",
+      "file_path": "process_comment.py",
+      "line": 200,
+      "code_snippet": "result[\"steps\"][\"update_block\"] = f\"failed: {update_result.get('msg')}\"\n            print(f\"  ❌ 更新失败：{update_result.get('msg')}\")\n            result[\"ok\"] = False",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 100,
+      "code_snippet": "if block_type == 1:  # heading1\n        content = block.get(\"heading1\", {}).get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")\n    elif block_type == 2:  # text",
+      "evidence": "Hardcoded URL: heading1",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 105,
+      "code_snippet": "elif block_type == 3:  # heading2\n        content = block.get(\"heading2\", {}).get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")\n    elif block_type == 4:  # heading3",
+      "evidence": "Hardcoded URL: heading2",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "process_comment.py",
+      "line": 107,
+      "code_snippet": "elif block_type == 4:  # heading3\n        content = block.get(\"heading3\", {}).get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")",
+      "evidence": "Hardcoded URL: heading3",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "process_comment.py",
+      "line": 268,
+      "code_snippet": "print(f\"批注内容：{comment.get('quote', '')[:100]}...\")\n    print(f\"批注要求：{comment.get('reply_list', {}).get('replies', [{}])[0].get('content', {}).get('elements', [{}])[0].get('text_run', {}).get('text', '未知')}\")",
+      "evidence": "Hardcoded URL: reply_list",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 37,
+      "code_snippet": "response = requests.get(url, headers=headers, params=params)\n    comments_data = response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "process_comment_fix.py",
+      "line": 79,
+      "code_snippet": "reply_response = requests.post(reply_url, headers=headers, json=reply_payload, params=params)\n    reply_result = reply_response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 40,
+      "code_snippet": "if comments_data.get('code') != 0:\n        result[\"ok\"] = False",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 57,
+      "code_snippet": "result[\"comment_quote\"] = comment.get(\"quote\", \"\")[:100]\n    result[\"steps\"][\"get_comment\"] = \"success\"",
+      "evidence": "Hardcoded URL: quote",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 82,
+      "code_snippet": "if reply_result.get('code') == 0:\n        result[\"steps\"][\"reply\"] = \"success\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.patch()",
+      "file_path": "process_comment_fix.py",
+      "line": 96,
+      "code_snippet": "resolve_response = requests.patch(resolve_url, headers=headers, json=resolve_payload, params=params)\n        resolve_result = resolve_response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 47,
+      "code_snippet": "comment = None\n    for item in comments_data.get(\"data\", {}).get(\"items\", []):\n        if item.get(\"comment_id\") == comment_id:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 48,
+      "code_snippet": "for item in comments_data.get(\"data\", {}).get(\"items\", []):\n        if item.get(\"comment_id\") == comment_id:\n            comment = item",
+      "evidence": "Hardcoded URL: comment_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 99,
+      "code_snippet": "if resolve_result.get('code') == 0:\n            result[\"steps\"][\"resolve\"] = \"success\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 42,
+      "code_snippet": "result[\"ok\"] = False\n        result[\"error\"] = f\"获取评论失败：{comments_data.get('msg')}\"\n        return result",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 84,
+      "code_snippet": "result[\"steps\"][\"reply\"] = \"success\"\n        result[\"reply_id\"] = reply_result.get(\"data\", {}).get(\"reply_id\")\n        print(f\"✅ 回复成功：{reply_result.get('data', {}).get('reply_id')}\")",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 87,
+      "code_snippet": "else:\n        result[\"steps\"][\"reply\"] = f\"failed: {reply_result.get('msg')}\"\n        print(f\"❌ 回复失败：{reply_result.get('msg')}\")",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 88,
+      "code_snippet": "result[\"steps\"][\"reply\"] = f\"failed: {reply_result.get('msg')}\"\n        print(f\"❌ 回复失败：{reply_result.get('msg')}\")",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 104,
+      "code_snippet": "else:\n            result[\"steps\"][\"resolve\"] = f\"failed: {resolve_result.get('msg')}\"\n            print(f\"❌ 标记失败：{resolve_result.get('msg')}\")",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 105,
+      "code_snippet": "result[\"steps\"][\"resolve\"] = f\"failed: {resolve_result.get('msg')}\"\n            print(f\"❌ 标记失败：{resolve_result.get('msg')}\")",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "process_comment_fix.py",
+      "line": 85,
+      "code_snippet": "result[\"reply_id\"] = reply_result.get(\"data\", {}).get(\"reply_id\")\n        print(f\"✅ 回复成功：{reply_result.get('data', {}).get('reply_id')}\")\n    else:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: FEISHU_APP_ID",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "src/config.py",
+      "line": 8,
+      "code_snippet": "FEISHU_APP_ID = os.getenv(\"FEISHU_APP_ID\")\nFEISHU_APP_SECRET = os.getenv(\"FEISHU_APP_SECRET\")",
+      "evidence": "Reads env var: FEISHU_APP_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: FEISHU_APP_SECRET",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "src/config.py",
+      "line": 9,
+      "code_snippet": "FEISHU_APP_ID = os.getenv(\"FEISHU_APP_ID\")\nFEISHU_APP_SECRET = os.getenv(\"FEISHU_APP_SECRET\")\nFEISHU_BASE_URL = os.getenv(\"FEISHU_BASE_URL\", \"https://open.feishu.cn/open-apis\")",
+      "evidence": "Reads sensitive env var: FEISHU_APP_SECRET",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: FEISHU_BASE_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "src/config.py",
+      "line": 10,
+      "code_snippet": "FEISHU_APP_SECRET = os.getenv(\"FEISHU_APP_SECRET\")\nFEISHU_BASE_URL = os.getenv(\"FEISHU_BASE_URL\", \"https://open.feishu.cn/open-apis\")",
+      "evidence": "Reads env var: FEISHU_BASE_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "src/feishu_api.py",
+      "line": 27,
+      "code_snippet": "try:\n            response = requests.post(url, json=payload)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 32,
+      "code_snippet": "raise Exception(f\"Failed to get token: {data}\")\n            self.token = data.get(\"tenant_access_token\")\n            return self.token",
+      "evidence": "Hardcoded URL: tenant_access_token",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 62,
+      "code_snippet": "try:\n            response = requests.get(url, headers=self._get_headers(), params=params)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 76,
+      "code_snippet": "try:\n            response = requests.get(url, headers=self._get_headers())\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.patch()",
+      "file_path": "src/feishu_api.py",
+      "line": 112,
+      "code_snippet": "try:\n            response = requests.patch(url, headers=self._get_headers(), json=payload)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.patch()",
+      "file_path": "src/feishu_api.py",
+      "line": 149,
+      "code_snippet": "try:\n            response = requests.patch(url, headers=self._get_headers(), json=payload)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.patch()",
+      "file_path": "src/feishu_api.py",
+      "line": 212,
+      "code_snippet": "try:\n            response = requests.patch(url, headers=self._get_headers(), json=payload)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "src/feishu_api.py",
+      "line": 250,
+      "code_snippet": "try:\n            response = requests.post(url, headers=self._get_headers(), json=payload, params=params)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.patch()",
+      "file_path": "src/feishu_api.py",
+      "line": 277,
+      "code_snippet": "try:\n            response = requests.patch(url, headers=self._get_headers(), json=payload, params=params)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 293,
+      "code_snippet": "try:\n            response = requests.get(url, headers=self._get_headers())\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "src/feishu_api.py",
+      "line": 322,
+      "code_snippet": "try:\n            response = requests.post(url, headers=self._get_headers(), json=payload)\n            print(f\"Insert blocks status: {response.status_code}\")",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 405,
+      "code_snippet": "try:\n            response = requests.get(url, headers=self._get_headers(), params=params)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.patch()",
+      "file_path": "src/feishu_api.py",
+      "line": 471,
+      "code_snippet": "try:\n            response = requests.patch(url, headers=self._get_headers(), json=payload)\n            response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 30,
+      "code_snippet": "data = response.json()\n            if data.get(\"code\") != 0:\n                raise Exception(f\"Failed to get token: {data}\")",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 152,
+      "code_snippet": "result = response.json()\n            if result.get(\"code\") == 0:\n                return {\"ok\": True, \"block_id\": block_id, \"message\": \"块内容已清空\"}",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block_data.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 173,
+      "code_snippet": "block_data = self.get_block(document_id, block_id)\n        if not block_data or block_data.get(\"code\") != 0:\n            return {\"ok\": False, \"error\": \"无法获取块内容\"}",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block_data.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 176,
+      "code_snippet": "block = block_data.get(\"data\", {}).get(\"block\", {})\n        text_elements = block.get(\"text\", {}).get(\"elements\", [])",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 177,
+      "code_snippet": "block = block_data.get(\"data\", {}).get(\"block\", {})\n        text_elements = block.get(\"text\", {}).get(\"elements\", [])",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 215,
+      "code_snippet": "result = response.json()\n            if result.get(\"code\") == 0:\n                return {\"ok\": True, \"new_content\": new_content, \"message\": \"文本已删除\"}",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via blocks_data.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 346,
+      "code_snippet": "blocks = blocks_data.get(\"data\", {}).get(\"blocks\", [])\n        if not blocks:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 354,
+      "code_snippet": "for block in blocks:\n            if block.get(\"parent_id\") == document_id:\n                anchor_block = block",
+      "evidence": "Hardcoded URL: parent_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via blocks_data.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 432,
+      "code_snippet": "blocks = blocks_data.get(\"data\", {}).get(\"blocks\", [])\n        if not blocks:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 474,
+      "code_snippet": "result = response.json()\n            if result.get(\"code\") == 0:\n                return {\"ok\": True, \"block_id\": first_block_id, \"message\": \"摘要已成功添加到文档开头\"}",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 155,
+      "code_snippet": "else:\n                return {\"ok\": False, \"error\": result.get(\"msg\", \"unknown_error\")}\n        except Exception as e:",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via elem.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 182,
+      "code_snippet": "for elem in text_elements:\n            current_content += elem.get(\"text_run\", {}).get(\"content\", \"\")",
+      "evidence": "Hardcoded URL: text_run",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 218,
+      "code_snippet": "else:\n                return {\"ok\": False, \"error\": result.get(\"msg\", \"unknown_error\")}\n        except Exception as e:",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 477,
+      "code_snippet": "else:\n                return {\"ok\": False, \"error\": result.get(\"msg\", \"unknown_error\")}\n        except Exception as e:",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_block.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 444,
+      "code_snippet": "if block_type == 1:  # heading1\n            original_content = first_block.get(\"heading1\", {}).get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")\n        elif block_type == 3:  # heading2",
+      "evidence": "Hardcoded URL: heading1",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_block.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 446,
+      "code_snippet": "elif block_type == 3:  # heading2\n            original_content = first_block.get(\"heading2\", {}).get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")\n        elif block_type == 4:  # heading3",
+      "evidence": "Hardcoded URL: heading2",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_block.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 448,
+      "code_snippet": "elif block_type == 4:  # heading3\n            original_content = first_block.get(\"heading3\", {}).get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")\n        elif block_type == 2:  # text",
+      "evidence": "Hardcoded URL: heading3",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via first_block.get()",
+      "file_path": "src/feishu_api.py",
+      "line": 450,
+      "code_snippet": "elif block_type == 2:  # text\n            original_content = first_block.get(\"text\", {}).get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 19,
+      "code_snippet": "def _extract_comment_text(comment: dict) -> str:\n    comment_content = comment.get(\"content\", \"\")\n    try:",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 237,
+      "code_snippet": "response = requests.get(url, headers=headers, params=params)\n    comments_data = response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "src/mcp_server.py",
+      "line": 273,
+      "code_snippet": "reply_response = requests.post(reply_url, headers=headers, json=reply_payload, params=params)\n    reply_result = reply_response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls mcp.run() which can execute arbitrary system commands",
+      "file_path": "src/mcp_server.py",
+      "line": 352,
+      "code_snippet": "# 运行 MCP Server\n    mcp.run()",
+      "evidence": "No arguments detected",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 32,
+      "code_snippet": "def _extract_block_text(block: dict) -> str:\n    if block.get(\"block_type\") != 2:\n        return \"\"",
+      "evidence": "Hardcoded URL: block_type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 69,
+      "code_snippet": "target = comment.get(\"target\", {})\n        block_id = target.get(\"block_id\")",
+      "evidence": "Hardcoded URL: target",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via target.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 70,
+      "code_snippet": "target = comment.get(\"target\", {})\n        block_id = target.get(\"block_id\")\n        if not block_id:",
+      "evidence": "Hardcoded URL: block_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 240,
+      "code_snippet": "if comments_data.get('code') != 0:\n        return json.dumps({\"ok\": False, \"error\": f\"获取评论失败：{comments_data.get('msg')}\"}, ensure_ascii=False)",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 252,
+      "code_snippet": "result[\"comment_quote\"] = comment.get(\"quote\", \"\")[:200]\n    result[\"steps\"][\"get_comment\"] = \"success\"",
+      "evidence": "Hardcoded URL: quote",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 276,
+      "code_snippet": "if reply_result.get('code') == 0:\n        result[\"steps\"][\"reply\"] = \"success\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.patch()",
+      "file_path": "src/mcp_server.py",
+      "line": 288,
+      "code_snippet": "resolve_response = requests.patch(resolve_url, headers=headers, json=resolve_payload, params=params)\n        resolve_result = resolve_response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via content_obj.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 23,
+      "code_snippet": "content_obj = json.loads(comment_content)\n            return content_obj.get(\"text\", \"\")\n        if isinstance(comment_content, dict):",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment_content.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 25,
+      "code_snippet": "if isinstance(comment_content, dict):\n            return comment_content.get(\"text\", \"\")\n    except Exception:",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 35,
+      "code_snippet": "original_text = \"\"\n    text_elements = block.get(\"text\", {}).get(\"elements\", [])\n    for elem in text_elements:",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 56,
+      "code_snippet": "for comment in items:\n        if not include_solved and comment.get(\"solved\"):\n            continue",
+      "evidence": "Hardcoded URL: solved",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 101,
+      "code_snippet": "\"block_id\": block_id,\n            \"block_type\": block.get(\"block_type\"),\n            \"text\": _extract_block_text(block),",
+      "evidence": "Hardcoded URL: block_type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 244,
+      "code_snippet": "comment = None\n    for item in comments_data.get(\"data\", {}).get(\"items\", []):\n        if item.get(\"comment_id\") == comment_id:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 245,
+      "code_snippet": "for item in comments_data.get(\"data\", {}).get(\"items\", []):\n        if item.get(\"comment_id\") == comment_id:\n            comment = item",
+      "evidence": "Hardcoded URL: comment_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 291,
+      "code_snippet": "if resolve_result.get('code') == 0:\n            result[\"steps\"][\"resolve\"] = \"success\"",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via elem.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 37,
+      "code_snippet": "for elem in text_elements:\n        original_text += elem.get(\"text_run\", {}).get(\"content\", \"\")\n    return original_text",
+      "evidence": "Hardcoded URL: text_run",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comment.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 80,
+      "code_snippet": "{\n                \"comment_id\": comment.get(\"comment_id\"),\n                \"block_id\": block_id,",
+      "evidence": "Hardcoded URL: comment_id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via update_res.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 136,
+      "code_snippet": "update_res = feishu.update_block(document_token, block_id, new_text)\n    ok = bool(update_res and update_res.get(\"code\") == 0)\n    response = {\"ok\": ok, \"block_id\": block_id, \"before\": before, \"after\": new_text, \"update_res\": update_res}",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_res.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 153,
+      "code_snippet": "# 标记评论为已解决\n        if mark_as_done and reply_res and reply_res.get(\"code\") == 0:\n            resolve_res = feishu.resolve_comment(document_token, reply_comment_id)",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 278,
+      "code_snippet": "result[\"steps\"][\"reply\"] = \"success\"\n        result[\"reply_id\"] = reply_result.get(\"data\", {}).get(\"reply_id\")\n    else:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply_result.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 280,
+      "code_snippet": "else:\n        result[\"steps\"][\"reply\"] = f\"failed: {reply_result.get('msg')}\"\n        result[\"ok\"] = False",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via blocks_data.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 321,
+      "code_snippet": "blocks = blocks_data.get(\"data\", {}).get(\"blocks\", [])\n        if not blocks:",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 331,
+      "code_snippet": "for block in blocks[:50]:  # 只看前 50 个块\n            if block.get(\"block_type\") in [4, 5]:  # heading2, heading3\n                content = \"\"",
+      "evidence": "Hardcoded URL: block_type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 333,
+      "code_snippet": "content = \"\"\n                if block.get(\"heading2\"):\n                    content = block[\"heading2\"].get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")",
+      "evidence": "Hardcoded URL: heading2",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_res.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 156,
+      "code_snippet": "response[\"resolve_res\"] = resolve_res\n            if resolve_res and resolve_res.get(\"code\") == 0:\n                response[\"comment_solved\"] = True",
+      "evidence": "Hardcoded URL: code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resolve_result.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 295,
+      "code_snippet": "else:\n            result[\"steps\"][\"resolve\"] = f\"failed: {resolve_result.get('msg')}\"",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via block.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 335,
+      "code_snippet": "content = block[\"heading2\"].get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")\n                elif block.get(\"heading3\"):\n                    content = block[\"heading3\"].get(\"elements\", [{}])[0].get(\"text_run\", {}).get(\"content\", \"\")",
+      "evidence": "Hardcoded URL: heading3",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via reply.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 62,
+      "code_snippet": "for reply in comment[\"reply_list\"]:\n                content = reply.get(\"content\", {}).get(\"text\", \"\")\n                if \"[AI-DONE]\" in content:",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via comments_data.get()",
+      "file_path": "src/mcp_server.py",
+      "line": 241,
+      "code_snippet": "if comments_data.get('code') != 0:\n        return json.dumps({\"ok\": False, \"error\": f\"获取评论失败：{comments_data.get('msg')}\"}, ensure_ascii=False)",
+      "evidence": "Hardcoded URL: msg",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for fetcher skill: shell",
+      "description": "A 'fetcher' skill would not normally require 'shell' capability. Allowed capabilities for this category: network_outbound",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a fetcher skill needs shell access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 49,
+  "_scan_meta": {
+    "author": "jachian-lee",
+    "skill": "feishu-doc-reviewer",
+    "author_skill": "jachian-lee/feishu-doc-reviewer",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/dongsheng123132/mac-ai-optimizer",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 21,
+  "_scan_meta": {
+    "author": "dongsheng123132",
+    "skill": "mac-ai-optimizer",
+    "author_skill": "dongsheng123132/mac-ai-optimizer",
+    "scan_time_s": 0.1
+  }
+}

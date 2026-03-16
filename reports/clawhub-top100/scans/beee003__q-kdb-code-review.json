@@ -1,0 +1,403 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/beee003/q-kdb-code-review",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: SSRF: Request URL controlled by external input (S9)",
+    "HIGH: Unexpected capability for code_runner skill: network (M1)",
+    "MEDIUM: Reads environment variable: ASTRAI_API_KEY (S5)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars",
+    "ssrf_risk"
+  ],
+  "findings": [
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ASTRAI_BASE_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "plugin.py",
+      "line": 21,
+      "code_snippet": "ASTRAI_BASE_URL = os.getenv(\"ASTRAI_BASE_URL\", \"https://as-trai.com/v1\")",
+      "evidence": "Reads env var: ASTRAI_BASE_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "plugin.py",
+      "line": 120,
+      "code_snippet": "for provider, env_var in PROVIDER_KEY_MAP.items():\n        val = os.getenv(env_var, \"\")\n        if val:",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ASTRAI_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "plugin.py",
+      "line": 143,
+      "code_snippet": "def __init__(self) -> None:\n        self.api_key = os.getenv(\"ASTRAI_API_KEY\", \"\")\n        self.provider_keys = _collect_provider_keys()",
+      "evidence": "Reads sensitive env var: ASTRAI_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resp_headers.get()",
+      "file_path": "plugin.py",
+      "line": 212,
+      "code_snippet": "model_used = resp_headers.get(\"X-Astrai-Model\", \"unknown\")\n        cost = float(resp_headers.get(\"X-Astrai-Cost\", \"0\") or 0)",
+      "evidence": "Hardcoded URL: X-Astrai-Model",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via review_data.get()",
+      "file_path": "plugin.py",
+      "line": 246,
+      "code_snippet": "issues = review_data.get(\"issues\", [])\n        summary = review_data.get(\"summary\", \"Review completed.\")",
+      "evidence": "Hardcoded URL: issues",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via review_data.get()",
+      "file_path": "plugin.py",
+      "line": 247,
+      "code_snippet": "issues = review_data.get(\"issues\", [])\n        summary = review_data.get(\"summary\", \"Review completed.\")",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (resp_headers.get())",
+      "file_path": "plugin.py",
+      "line": 219,
+      "code_snippet": "self._total_savings += savings\n        self._models_used[model_used] = self._models_used.get(model_used, 0) + 1",
+      "evidence": "URL from resp_headers.get() → self._models_used.get()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via message.get()",
+      "file_path": "plugin.py",
+      "line": 234,
+      "code_snippet": "message = body[\"choices\"][0].get(\"message\", {})\n            content_str = message.get(\"content\", \"\")\n        elif \"content\" in body:",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: REVIEW_STRICTNESS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "plugin.py",
+      "line": 145,
+      "code_snippet": "self.provider_keys = _collect_provider_keys()\n        self.strictness = os.getenv(\"REVIEW_STRICTNESS\", \"standard\").lower()\n        self.local_only = len(self.provider_keys) == 0",
+      "evidence": "Reads env var: REVIEW_STRICTNESS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "plugin.py",
+      "line": 199,
+      "code_snippet": "try:\n            with urllib.request.urlopen(req, timeout=120) as resp:\n                resp_headers = {k: v for k, v in resp.getheaders()}",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resp_headers.get()",
+      "file_path": "plugin.py",
+      "line": 213,
+      "code_snippet": "model_used = resp_headers.get(\"X-Astrai-Model\", \"unknown\")\n        cost = float(resp_headers.get(\"X-Astrai-Cost\", \"0\") or 0)\n        savings = float(resp_headers.get(\"X-Astrai-Savings\", \"0\") or 0)",
+      "evidence": "Hardcoded URL: X-Astrai-Cost",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via resp_headers.get()",
+      "file_path": "plugin.py",
+      "line": 214,
+      "code_snippet": "cost = float(resp_headers.get(\"X-Astrai-Cost\", \"0\") or 0)\n        savings = float(resp_headers.get(\"X-Astrai-Savings\", \"0\") or 0)",
+      "evidence": "Hardcoded URL: X-Astrai-Savings",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via issue.get()",
+      "file_path": "plugin.py",
+      "line": 252,
+      "code_snippet": "validated_issues.append({\n                \"file\": issue.get(\"file\", \"unknown\"),\n                \"line\": issue.get(\"line\", 0),",
+      "evidence": "Hardcoded URL: file",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via issue.get()",
+      "file_path": "plugin.py",
+      "line": 253,
+      "code_snippet": "\"file\": issue.get(\"file\", \"unknown\"),\n                \"line\": issue.get(\"line\", 0),\n                \"severity\": issue.get(\"severity\", \"info\"),",
+      "evidence": "Hardcoded URL: line",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via issue.get()",
+      "file_path": "plugin.py",
+      "line": 254,
+      "code_snippet": "\"line\": issue.get(\"line\", 0),\n                \"severity\": issue.get(\"severity\", \"info\"),\n                \"message\": issue.get(\"message\", \"\"),",
+      "evidence": "Hardcoded URL: severity",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via issue.get()",
+      "file_path": "plugin.py",
+      "line": 255,
+      "code_snippet": "\"severity\": issue.get(\"severity\", \"info\"),\n                \"message\": issue.get(\"message\", \"\"),\n                \"suggestion\": issue.get(\"suggestion\", \"\"),",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via issue.get()",
+      "file_path": "plugin.py",
+      "line": 256,
+      "code_snippet": "\"message\": issue.get(\"message\", \"\"),\n                \"suggestion\": issue.get(\"suggestion\", \"\"),\n            })",
+      "evidence": "Hardcoded URL: suggestion",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for code_runner skill: network",
+      "description": "A 'code_runner' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write, shell",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a code_runner skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 18,
+  "_scan_meta": {
+    "author": "beee003",
+    "skill": "q-kdb-code-review",
+    "author_skill": "beee003/q-kdb-code-review",
+    "scan_time_s": 0.1
+  }
+}

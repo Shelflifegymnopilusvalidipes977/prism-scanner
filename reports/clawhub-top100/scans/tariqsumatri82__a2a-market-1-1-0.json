@@ -1,0 +1,607 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/tariqsumatri82/a2a-market-1-1-0",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: Reads environment variable: A2A_MARKET_PRIVATE_KEY (S5)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: A2A_MARKET_API_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 31,
+      "code_snippet": "API_URL = os.getenv(\"A2A_MARKET_API_URL\", \"https://api.a2amarket.live\")",
+      "evidence": "Reads env var: A2A_MARKET_API_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: WALLET_ADDRESS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 484,
+      "code_snippet": "wallet = os.getenv(\"WALLET_ADDRESS\")\n    key = os.getenv(\"A2A_MARKET_PRIVATE_KEY\")",
+      "evidence": "Reads env var: WALLET_ADDRESS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: A2A_MARKET_PRIVATE_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 485,
+      "code_snippet": "wallet = os.getenv(\"WALLET_ADDRESS\")\n    key = os.getenv(\"A2A_MARKET_PRIVATE_KEY\")",
+      "evidence": "Reads sensitive env var: A2A_MARKET_PRIVATE_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: A2A_AGENT_ID",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 75,
+      "code_snippet": "\"\"\"Load agent_id from environment or file.\"\"\"\n        agent_id = os.getenv(\"A2A_AGENT_ID\")\n        if agent_id:",
+      "evidence": "Reads env var: A2A_AGENT_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 138,
+      "code_snippet": "response = requests.get(f\"{self.api_url}/v1/listings/search\", params=params)\n        response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 158,
+      "code_snippet": "\"\"\"Get detailed information about a skill.\"\"\"\n        response = requests.get(f\"{self.api_url}/v1/listings/{skill_id}\")\n        response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 208,
+      "code_snippet": "# Step 1: Request content, expect 402\n        response = requests.get(f\"{self.api_url}/v1/listings/{skill_id}/content\")",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 227,
+      "code_snippet": "response = requests.post(\n            f\"{self.api_url}/v1/listings/{skill_id}/content\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 284,
+      "code_snippet": "response = requests.post(\n            f\"{self.api_url}/v1/listings\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 295,
+      "code_snippet": "\"\"\"Get account earnings summary.\"\"\"\n        response = requests.get(f\"{self.api_url}/v1/account/{self.wallet_address}/earnings\")\n        response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 301,
+      "code_snippet": "\"\"\"Get list of purchased skills.\"\"\"\n        response = requests.get(f\"{self.api_url}/v1/account/{self.wallet_address}/purchases\")\n        response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 320,
+      "code_snippet": "response = requests.post(\n            f\"{self.api_url}/v1/agents/register\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 344,
+      "code_snippet": "\"\"\"\n        response = requests.get(\n            f\"{self.api_url}/v1/credits/balance\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 358,
+      "code_snippet": "\"\"\"\n        response = requests.get(\n            f\"{self.api_url}/v1/rewards/daily/status\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 372,
+      "code_snippet": "\"\"\"\n        response = requests.post(\n            f\"{self.api_url}/v1/rewards/daily/claim\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 392,
+      "code_snippet": "response = requests.post(\n            f\"{self.api_url}/v1/listings/{skill_id}/pay\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 428,
+      "code_snippet": "response = requests.post(\n            f\"{self.api_url}/v1/pricing/suggest\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via response.headers.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 217,
+      "code_snippet": "# Step 2: Parse payment requirements\n        payment_info = json.loads(response.headers.get(\"X-Payment-Required\", \"{}\"))",
+      "evidence": "Hardcoded URL: X-Payment-Required",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 153,
+      "code_snippet": ")\n            for r in data.get(\"results\", [])\n        ]",
+      "evidence": "Hardcoded URL: results",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via skill.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 190,
+      "code_snippet": "# Check seller reputation\n        seller_rep = skill.get(\"seller\", {}).get(\"reputation\", 0)\n        if seller_rep < self.rules.min_seller_reputation:",
+      "evidence": "Hardcoded URL: seller",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 333,
+      "code_snippet": "with open(REFERRAL_CODE_FILE, \"w\") as f:\n            f.write(data.get(\"referral_code\", \"\"))",
+      "evidence": "Hardcoded URL: referral_code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via earnings.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 525,
+      "code_snippet": "earnings = client.get_earnings()\n    print(f\"  Total: ${earnings.get('total_earnings', 0)}\")\n    print(f\"  Available: ${earnings.get('available', 0)}\")",
+      "evidence": "Hardcoded URL: total_earnings",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via earnings.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 526,
+      "code_snippet": "print(f\"  Total: ${earnings.get('total_earnings', 0)}\")\n    print(f\"  Available: ${earnings.get('available', 0)}\")",
+      "evidence": "Hardcoded URL: available",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 146,
+      "code_snippet": "name=r[\"name\"],\n                description=r.get(\"description\", \"\"),\n                price=r[\"price\"],",
+      "evidence": "Hardcoded URL: description",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 149,
+      "code_snippet": "seller=r[\"seller\"],\n                reputation=r.get(\"reputation\", 0),\n                rating=r.get(\"rating\", 0),",
+      "evidence": "Hardcoded URL: reputation",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 150,
+      "code_snippet": "reputation=r.get(\"reputation\", 0),\n                rating=r.get(\"rating\", 0),\n                sales=r.get(\"sales\", 0)",
+      "evidence": "Hardcoded URL: rating",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via r.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 151,
+      "code_snippet": "rating=r.get(\"rating\", 0),\n                sales=r.get(\"sales\", 0)\n            )",
+      "evidence": "Hardcoded URL: sales",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment_info.get()",
+      "file_path": "scripts/a2a_client.py",
+      "line": 248,
+      "code_snippet": "\"from\": self.wallet_address,\n            \"to\": payment_info.get(\"accepts\", [{}])[0].get(\"resource\", \"\"),\n            \"amount\": int(price * 1_000_000),  # USDC has 6 decimals",
+      "evidence": "Hardcoded URL: accepts",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 33,
+  "_scan_meta": {
+    "author": "tariqsumatri82",
+    "skill": "a2a-market-1-1-0",
+    "author_skill": "tariqsumatri82/a2a-market-1-1-0",
+    "scan_time_s": 0.1
+  }
+}

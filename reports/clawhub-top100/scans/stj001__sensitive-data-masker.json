@@ -1,0 +1,722 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/stj001/sensitive-data-masker",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Dynamic code execution via re.compile() (S6)",
+    "HIGH: Unexpected capability for search skill: shell (M1)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "dynamic_execution",
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.mapping.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 130,
+      "code_snippet": "\"\"\"\n        data = self.mapping.get(mask_id)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 145,
+      "code_snippet": "return data.get('original')",
+      "evidence": "Hardcoded URL: original",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 62,
+      "code_snippet": "# 清理过期数据\n            if self.config.get('auto_cleanup'):\n                self._cleanup_expired()",
+      "evidence": "Hardcoded URL: auto_cleanup",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 136,
+      "code_snippet": "# 检查是否过期\n        if data.get('expires_at', '') < datetime.now().isoformat():\n            del self.mapping[mask_id]",
+      "evidence": "Hardcoded URL: expires_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 142,
+      "code_snippet": "# 增加使用计数\n        data['usage_count'] = data.get('usage_count', 0) + 1\n        self._save_mapping()",
+      "evidence": "Hardcoded URL: usage_count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 172,
+      "code_snippet": "# 按类型统计\n            data_type = data.get('data_type', 'unknown')\n            by_type[data_type] = by_type.get(data_type, 0) + 1",
+      "evidence": "Hardcoded URL: data_type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 81,
+      "code_snippet": "for mask_id, data in self.mapping.items():\n            if data.get('expires_at', '') < now:\n                expired.append(mask_id)",
+      "evidence": "Hardcoded URL: expires_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via by_type.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 173,
+      "code_snippet": "data_type = data.get('data_type', 'unknown')\n            by_type[data_type] = by_type.get(data_type, 0) + 1",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "sensitive-channel-masker.py",
+      "line": 176,
+      "code_snippet": "# 即将过期（24 小时内）\n            expires_at = datetime.fromisoformat(data.get('expires_at', ''))\n            if (expires_at - now).total_seconds() < 86400:",
+      "evidence": "Hardcoded URL: expires_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 318,
+      "code_snippet": "print(f\"{BLUE}启用的脱敏规则:{NC}\")\n    for pattern in config.get('patterns', []):\n        if pattern.get('enabled'):",
+      "evidence": "Hardcoded URL: patterns",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 351,
+      "code_snippet": "mode = config.get('mode', 'rag_and_api')\n    if mode not in ['rag_only', 'rag_and_api']:",
+      "evidence": "Hardcoded URL: mode",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 359,
+      "code_snippet": "# 记录日志\n    if config.get('log_enabled'):\n        log_detection(text, masker.get_detected_items())",
+      "evidence": "Hardcoded URL: log_enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 371,
+      "code_snippet": "mode = config.get('mode', 'rag_and_api')\n    if mode not in ['api_only', 'rag_and_api']:",
+      "evidence": "Hardcoded URL: mode",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 379,
+      "code_snippet": "# 记录日志\n    if config.get('log_enabled'):\n        log_detection(text, masker.get_detected_items())",
+      "evidence": "Hardcoded URL: log_enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 145,
+      "code_snippet": "for pattern in self.config.get('patterns', []):\n            if not pattern.get('enabled', True):",
+      "evidence": "Hardcoded URL: patterns",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 161,
+      "code_snippet": "\"\"\"检查是否在白名单中。\"\"\"\n        whitelist = self.config.get('whitelist', [])\n        return any(word in text for word in whitelist)",
+      "evidence": "Hardcoded URL: whitelist",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 233,
+      "code_snippet": "if not config.get('log_enabled', True):\n        return",
+      "evidence": "Hardcoded URL: log_enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pattern.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 319,
+      "code_snippet": "for pattern in config.get('patterns', []):\n        if pattern.get('enabled'):\n            print(f\"  ✅ {pattern['name']}: {pattern['replacement']}\")",
+      "evidence": "Hardcoded URL: enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 348,
+      "code_snippet": "if not config.get('enabled'):\n        return text",
+      "evidence": "Hardcoded URL: enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 368,
+      "code_snippet": "if not config.get('enabled'):\n        return text",
+      "evidence": "Hardcoded URL: enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 166,
+      "code_snippet": "\"\"\"脱敏文本。\"\"\"\n        if not self.config.get('enabled', True):\n            return text",
+      "evidence": "Hardcoded URL: enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 197,
+      "code_snippet": "\"\"\"脱敏字典（递归处理）。\"\"\"\n        if not self.config.get('enabled', True):\n            return data",
+      "evidence": "Hardcoded URL: enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via pattern.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 146,
+      "code_snippet": "for pattern in self.config.get('patterns', []):\n            if not pattern.get('enabled', True):\n                continue",
+      "evidence": "Hardcoded URL: enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.7,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "sensitive-data-masker.py",
+      "line": 150,
+      "code_snippet": "try:\n                compiled = re.compile(pattern['regex'])\n                self.compiled_patterns.append({",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 312,
+      "code_snippet": "print(f\"  启用：{'✅' if config.get('enabled') else '❌'}\")\n    print(f\"  模式：{config.get('mode', 'rag_and_api')}\")\n    print(f\"  日志：{'✅' if config.get('log_enabled') else '❌'}\")",
+      "evidence": "Hardcoded URL: mode",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 314,
+      "code_snippet": "print(f\"  日志：{'✅' if config.get('log_enabled') else '❌'}\")\n    print(f\"  白名单：{config.get('whitelist', [])}\")\n    print()",
+      "evidence": "Hardcoded URL: whitelist",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 311,
+      "code_snippet": "print(f\"\\n{BLUE}敏感信息脱敏配置:{NC}\")\n    print(f\"  启用：{'✅' if config.get('enabled') else '❌'}\")\n    print(f\"  模式：{config.get('mode', 'rag_and_api')}\")",
+      "evidence": "Hardcoded URL: enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "sensitive-data-masker.py",
+      "line": 313,
+      "code_snippet": "print(f\"  模式：{config.get('mode', 'rag_and_api')}\")\n    print(f\"  日志：{'✅' if config.get('log_enabled') else '❌'}\")\n    print(f\"  白名单：{config.get('whitelist', [])}\")",
+      "evidence": "Hardcoded URL: log_enabled",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.store.get()",
+      "file_path": "sensitive-masker.en.py",
+      "line": 474,
+      "code_snippet": "mask_id = parts[1].rstrip(']')\n                original = self.store.get(mask_id)\n                if original:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via stats.get()",
+      "file_path": "sensitive-masker.en.py",
+      "line": 528,
+      "code_snippet": "print(f\"  Expiring soon (24h): {stats['expiring_soon']}\")\n    print(f\"  Encrypted: {'✅ Yes (REQUIRED)' if stats.get('encrypted') else '❌ No'}\")",
+      "evidence": "Hardcoded URL: encrypted",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.store.get()",
+      "file_path": "sensitive-masker.py",
+      "line": 474,
+      "code_snippet": "mask_id = parts[1].rstrip(']')\n                original = self.store.get(mask_id)\n                if original:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via stats.get()",
+      "file_path": "sensitive-masker.py",
+      "line": 528,
+      "code_snippet": "print(f\"  Expiring soon (24h): {stats['expiring_soon']}\")\n    print(f\"  Encrypted: {'✅ Yes (REQUIRED)' if stats.get('encrypted') else '❌ No'}\")",
+      "evidence": "Hardcoded URL: encrypted",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for search skill: shell",
+      "description": "A 'search' skill would not normally require 'shell' capability. Allowed capabilities for this category: network_outbound",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a search skill needs shell access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 75,
+  "_scan_meta": {
+    "author": "stj001",
+    "skill": "sensitive-data-masker",
+    "author_skill": "stj001/sensitive-data-masker",
+    "scan_time_s": 0.1
+  }
+}

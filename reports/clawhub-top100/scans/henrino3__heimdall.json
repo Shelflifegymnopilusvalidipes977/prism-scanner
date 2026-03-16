@@ -1,0 +1,572 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/henrino3/heimdall",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Download-and-execute pattern in string (S10)",
+    "CRITICAL: Persistence mechanism reference (S13)",
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "HIGH: Dynamic code execution via re.compile() (S6)",
+    "HIGH: Unexpected capability for fetcher skill: shell (M1)"
+  ],
+  "behavior_tags": [
+    "downloads_and_executes",
+    "dynamic_execution",
+    "installs_persistence",
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via FILE_CONTEXTS.get()",
+      "file_path": "scripts/skill-scan.py",
+      "line": 137,
+      "code_snippet": "return Context.DOCS\n    return FILE_CONTEXTS.get(suffix, Context.CODE)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "scripts/skill-scan.py",
+      "line": 486,
+      "code_snippet": "# Fallback: try curl to OpenRouter\n    api_key = os.environ.get('OPENROUTER_API_KEY', '')\n    if not api_key:",
+      "evidence": "Hardcoded URL: OPENROUTER_API_KEY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENROUTER_API_KEY",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "scripts/skill-scan.py",
+      "line": 486,
+      "code_snippet": "# Fallback: try curl to OpenRouter\n    api_key = os.environ.get('OPENROUTER_API_KEY', '')\n    if not api_key:",
+      "evidence": "Reads sensitive env var: OPENROUTER_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.7,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "scripts/skill-scan.py",
+      "line": 323,
+      "code_snippet": "for pattern, severity, category, description in PATTERNS:\n        regex = re.compile(pattern, re.IGNORECASE)",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "scripts/skill-scan.py",
+      "line": 520,
+      "code_snippet": "with urllib.request.urlopen(req, timeout=120) as resp:\n                result_json = json.loads(resp.read().decode('utf-8'))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S10",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.95,
+      "title": "Download-and-execute pattern in string",
+      "description": "String contains a pipe-to-shell pattern",
+      "file_path": "scripts/skill-scan.py",
+      "line": 2,
+      "code_snippet": "#!/usr/bin/env python3\n\"\"\"\nSkill Scanner v4.0 - Context-Aware Security Scanner for OpenClaw Skills",
+      "evidence": "Pattern: \nSkill Scanner v4.0 - Context-Aware Security Scanner for OpenClaw Skills\nwith AI-Powered Analysis Mo",
+      "tags": [
+        "execution",
+        "network",
+        "supply_chain"
+      ],
+      "remediation": "Never execute downloaded content. Pin dependencies and verify checksums.",
+      "references": [
+        "MITRE T1105",
+        "MITRE T1059"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S13",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.75,
+      "title": "Persistence mechanism reference",
+      "description": "Code references persistence path: crontab\\s+-[el]",
+      "file_path": "scripts/skill-scan.py",
+      "line": 239,
+      "code_snippet": "# Persistence\n    (r\"crontab\\s+-[el]\", Severity.MEDIUM, \"persistence\", \"Cron listing\"),\n    (r\"crontab\\s+<<\", Severity.CRITICAL, \"persistence\", \"Cron injection\"),",
+      "evidence": "String contains persistence indicator: crontab",
+      "tags": [
+        "persistence"
+      ],
+      "remediation": "Skills should not install system services or modify startup configuration.",
+      "references": [
+        "MITRE T1543.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S13",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.75,
+      "title": "Persistence mechanism reference",
+      "description": "Code references persistence path: crontab\\s+<<",
+      "file_path": "scripts/skill-scan.py",
+      "line": 240,
+      "code_snippet": "(r\"crontab\\s+-[el]\", Severity.MEDIUM, \"persistence\", \"Cron listing\"),\n    (r\"crontab\\s+<<\", Severity.CRITICAL, \"persistence\", \"Cron injection\"),\n    (r\"echo\\s+.*>>\\s*~/\\.(bashrc|zshrc|profile)\", Severity.HIGH, \"persistence\", \"Shell config injection\"),",
+      "evidence": "String contains persistence indicator: crontab",
+      "tags": [
+        "persistence"
+      ],
+      "remediation": "Skills should not install system services or modify startup configuration.",
+      "references": [
+        "MITRE T1543.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via FILE_CONTEXTS.get()",
+      "file_path": "skill-scan.py",
+      "line": 137,
+      "code_snippet": "return Context.DOCS\n    return FILE_CONTEXTS.get(suffix, Context.CODE)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "skill-scan.py",
+      "line": 486,
+      "code_snippet": "# Fallback: try curl to OpenRouter\n    api_key = os.environ.get('OPENROUTER_API_KEY', '')\n    if not api_key:",
+      "evidence": "Hardcoded URL: OPENROUTER_API_KEY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENROUTER_API_KEY",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "skill-scan.py",
+      "line": 486,
+      "code_snippet": "# Fallback: try curl to OpenRouter\n    api_key = os.environ.get('OPENROUTER_API_KEY', '')\n    if not api_key:",
+      "evidence": "Reads sensitive env var: OPENROUTER_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.7,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "skill-scan.py",
+      "line": 323,
+      "code_snippet": "for pattern, severity, category, description in PATTERNS:\n        regex = re.compile(pattern, re.IGNORECASE)",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "skill-scan.py",
+      "line": 520,
+      "code_snippet": "with urllib.request.urlopen(req, timeout=120) as resp:\n                result_json = json.loads(resp.read().decode('utf-8'))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S10",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.95,
+      "title": "Download-and-execute pattern in string",
+      "description": "String contains a pipe-to-shell pattern",
+      "file_path": "skill-scan.py",
+      "line": 2,
+      "code_snippet": "#!/usr/bin/env python3\n\"\"\"\nSkill Scanner v4.0 - Context-Aware Security Scanner for OpenClaw Skills",
+      "evidence": "Pattern: \nSkill Scanner v4.0 - Context-Aware Security Scanner for OpenClaw Skills\nwith AI-Powered Analysis Mo",
+      "tags": [
+        "execution",
+        "network",
+        "supply_chain"
+      ],
+      "remediation": "Never execute downloaded content. Pin dependencies and verify checksums.",
+      "references": [
+        "MITRE T1105",
+        "MITRE T1059"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S13",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.75,
+      "title": "Persistence mechanism reference",
+      "description": "Code references persistence path: crontab\\s+-[el]",
+      "file_path": "skill-scan.py",
+      "line": 239,
+      "code_snippet": "# Persistence\n    (r\"crontab\\s+-[el]\", Severity.MEDIUM, \"persistence\", \"Cron listing\"),\n    (r\"crontab\\s+<<\", Severity.CRITICAL, \"persistence\", \"Cron injection\"),",
+      "evidence": "String contains persistence indicator: crontab",
+      "tags": [
+        "persistence"
+      ],
+      "remediation": "Skills should not install system services or modify startup configuration.",
+      "references": [
+        "MITRE T1543.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S13",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.75,
+      "title": "Persistence mechanism reference",
+      "description": "Code references persistence path: crontab\\s+<<",
+      "file_path": "skill-scan.py",
+      "line": 240,
+      "code_snippet": "(r\"crontab\\s+-[el]\", Severity.MEDIUM, \"persistence\", \"Cron listing\"),\n    (r\"crontab\\s+<<\", Severity.CRITICAL, \"persistence\", \"Cron injection\"),\n    (r\"echo\\s+.*>>\\s*~/\\.(bashrc|zshrc|profile)\", Severity.HIGH, \"persistence\", \"Shell config injection\"),",
+      "evidence": "String contains persistence indicator: crontab",
+      "tags": [
+        "persistence"
+      ],
+      "remediation": "Skills should not install system services or modify startup configuration.",
+      "references": [
+        "MITRE T1543.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "scripts/skill-scan.py",
+      "line": 486,
+      "code_snippet": "api_key = os.environ.get('OPENROUTER_API_KEY', '')",
+      "evidence": "Signature MAL-010 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: SSH key exfiltration",
+      "description": "Matched known malicious signature MAL-011: SSH key exfiltration",
+      "file_path": "scripts/skill-scan.py",
+      "line": 220,
+      "code_snippet": "(r\"~/.ssh/(?:id_|authorized)\", Severity.CRITICAL, \"filesystem\", \"SSH key access\"),",
+      "evidence": "Signature MAL-011 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.9,
+      "title": "Malicious signature: Crontab modification",
+      "description": "Matched known malicious signature MAL-020: Crontab modification",
+      "file_path": "scripts/skill-scan.py",
+      "line": 239,
+      "code_snippet": "(r\"crontab\\s+-[el]\", Severity.MEDIUM, \"persistence\", \"Cron listing\"),",
+      "evidence": "Signature MAL-020 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "persistence"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1053.003"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Cryptocurrency miner indicators",
+      "description": "Matched known malicious signature MAL-030: Cryptocurrency miner indicators",
+      "file_path": "scripts/skill-scan.py",
+      "line": 245,
+      "code_snippet": "(r\"xmrig\", Severity.CRITICAL, \"crypto\", \"Crypto miner detected\"),",
+      "evidence": "Signature MAL-030 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "cryptominer"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1496"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "skill-scan.py",
+      "line": 486,
+      "code_snippet": "api_key = os.environ.get('OPENROUTER_API_KEY', '')",
+      "evidence": "Signature MAL-010 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: SSH key exfiltration",
+      "description": "Matched known malicious signature MAL-011: SSH key exfiltration",
+      "file_path": "skill-scan.py",
+      "line": 220,
+      "code_snippet": "(r\"~/.ssh/(?:id_|authorized)\", Severity.CRITICAL, \"filesystem\", \"SSH key access\"),",
+      "evidence": "Signature MAL-011 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.9,
+      "title": "Malicious signature: Crontab modification",
+      "description": "Matched known malicious signature MAL-020: Crontab modification",
+      "file_path": "skill-scan.py",
+      "line": 239,
+      "code_snippet": "(r\"crontab\\s+-[el]\", Severity.MEDIUM, \"persistence\", \"Cron listing\"),",
+      "evidence": "Signature MAL-020 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "persistence"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1053.003"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Cryptocurrency miner indicators",
+      "description": "Matched known malicious signature MAL-030: Cryptocurrency miner indicators",
+      "file_path": "skill-scan.py",
+      "line": 245,
+      "code_snippet": "(r\"xmrig\", Severity.CRITICAL, \"crypto\", \"Crypto miner detected\"),",
+      "evidence": "Signature MAL-030 matched (SHA256: 1531063339c5230f...)",
+      "tags": [
+        "malicious_signature",
+        "cryptominer"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1496"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for fetcher skill: shell",
+      "description": "A 'fetcher' skill would not normally require 'shell' capability. Allowed capabilities for this category: network_outbound",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a fetcher skill needs shell access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 59,
+  "_scan_meta": {
+    "author": "henrino3",
+    "skill": "heimdall",
+    "author_skill": "henrino3/heimdall",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/thesethrose/apple-docs",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 19,
+  "_scan_meta": {
+    "author": "thesethrose",
+    "skill": "apple-docs",
+    "author_skill": "thesethrose/apple-docs",
+    "scan_time_s": 0.1
+  }
+}

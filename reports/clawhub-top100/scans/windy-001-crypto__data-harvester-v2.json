@@ -1,0 +1,66 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/windy-001-crypto/data-harvester-v2",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via stock_map.get()",
+      "file_path": "data_harvester.py",
+      "line": 22,
+      "code_snippet": "}\n    return stock_map.get(code, None)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via news_db.get()",
+      "file_path": "data_harvester.py",
+      "line": 75,
+      "code_snippet": "results = news_db.get(keyword, [\n        f\"{keyword}相关新闻1\",",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 18,
+  "_scan_meta": {
+    "author": "windy-001-crypto",
+    "skill": "data-harvester-v2",
+    "author_skill": "windy-001-crypto/data-harvester-v2",
+    "scan_time_s": 0.1
+  }
+}

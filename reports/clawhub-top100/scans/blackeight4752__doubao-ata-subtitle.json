@@ -1,0 +1,488 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/blackeight4752/doubao-ata-subtitle",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "HIGH: Unexpected capability for formatter skill: network (M1)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: VOLC_ATA_TOKEN (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "volc_ata.py",
+      "line": 49,
+      "code_snippet": "self.submit_path = self.config.get('api', 'submit_path', fallback='/api/v1/vc/ata/submit')\n        self.query_path = self.config.get('api', 'query_path', fallback='/api/v1/vc/ata/query')",
+      "evidence": "Hardcoded URL: api",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "volc_ata.py",
+      "line": 50,
+      "code_snippet": "self.submit_path = self.config.get('api', 'submit_path', fallback='/api/v1/vc/ata/submit')\n        self.query_path = self.config.get('api', 'query_path', fallback='/api/v1/vc/ata/query')",
+      "evidence": "Hardcoded URL: api",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "volc_ata.py",
+      "line": 169,
+      "code_snippet": "response = requests.post(url, json=payload, headers=headers)\n        response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "volc_ata.py",
+      "line": 173,
+      "code_snippet": "result = response.json()\n        return result.get('id')",
+      "evidence": "Hardcoded URL: id",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "volc_ata.py",
+      "line": 224,
+      "code_snippet": "response = requests.post(url, json=payload, headers=headers)\n        response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "volc_ata.py",
+      "line": 45,
+      "code_snippet": "# Override with parameters or environment variables\n        self.app_id = app_id or os.environ.get('VOLC_ATA_APP_ID') or self.config.get('credentials', 'appid', fallback=None)\n        self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)",
+      "evidence": "Hardcoded URL: VOLC_ATA_APP_ID",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: VOLC_ATA_APP_ID",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "volc_ata.py",
+      "line": 45,
+      "code_snippet": "# Override with parameters or environment variables\n        self.app_id = app_id or os.environ.get('VOLC_ATA_APP_ID') or self.config.get('credentials', 'appid', fallback=None)\n        self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)",
+      "evidence": "Reads env var: VOLC_ATA_APP_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "volc_ata.py",
+      "line": 45,
+      "code_snippet": "# Override with parameters or environment variables\n        self.app_id = app_id or os.environ.get('VOLC_ATA_APP_ID') or self.config.get('credentials', 'appid', fallback=None)\n        self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)",
+      "evidence": "Hardcoded URL: credentials",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "volc_ata.py",
+      "line": 46,
+      "code_snippet": "self.app_id = app_id or os.environ.get('VOLC_ATA_APP_ID') or self.config.get('credentials', 'appid', fallback=None)\n        self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)\n        self.api_base = api_base or os.environ.get('VOLC_ATA_API_BASE') or self.config.get('api', 'base_url', fallback='https://openspeech.bytedance.com')",
+      "evidence": "Hardcoded URL: VOLC_ATA_TOKEN",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: VOLC_ATA_TOKEN",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "volc_ata.py",
+      "line": 46,
+      "code_snippet": "self.app_id = app_id or os.environ.get('VOLC_ATA_APP_ID') or self.config.get('credentials', 'appid', fallback=None)\n        self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)\n        self.api_base = api_base or os.environ.get('VOLC_ATA_API_BASE') or self.config.get('api', 'base_url', fallback='https://openspeech.bytedance.com')",
+      "evidence": "Reads sensitive env var: VOLC_ATA_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "volc_ata.py",
+      "line": 46,
+      "code_snippet": "self.app_id = app_id or os.environ.get('VOLC_ATA_APP_ID') or self.config.get('credentials', 'appid', fallback=None)\n        self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)\n        self.api_base = api_base or os.environ.get('VOLC_ATA_API_BASE') or self.config.get('api', 'base_url', fallback='https://openspeech.bytedance.com')",
+      "evidence": "Hardcoded URL: credentials",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "volc_ata.py",
+      "line": 47,
+      "code_snippet": "self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)\n        self.api_base = api_base or os.environ.get('VOLC_ATA_API_BASE') or self.config.get('api', 'base_url', fallback='https://openspeech.bytedance.com')",
+      "evidence": "Hardcoded URL: VOLC_ATA_API_BASE",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: VOLC_ATA_API_BASE",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "volc_ata.py",
+      "line": 47,
+      "code_snippet": "self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)\n        self.api_base = api_base or os.environ.get('VOLC_ATA_API_BASE') or self.config.get('api', 'base_url', fallback='https://openspeech.bytedance.com')",
+      "evidence": "Reads env var: VOLC_ATA_API_BASE",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.config.get()",
+      "file_path": "volc_ata.py",
+      "line": 47,
+      "code_snippet": "self.token = token or os.environ.get('VOLC_ATA_TOKEN') or self.config.get('credentials', 'access_token', fallback=None)\n        self.api_base = api_base or os.environ.get('VOLC_ATA_API_BASE') or self.config.get('api', 'base_url', fallback='https://openspeech.bytedance.com')",
+      "evidence": "Hardcoded URL: api",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "volc_ata.py",
+      "line": 126,
+      "code_snippet": "# Download subtitle\n        if result.get('status') == 'completed' and result.get('subtitle'):\n            print(f\"\\n📥 Saving subtitle to: {output_file}\")",
+      "evidence": "Hardcoded URL: subtitle",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "volc_ata.py",
+      "line": 126,
+      "code_snippet": "# Download subtitle\n        if result.get('status') == 'completed' and result.get('subtitle'):\n            print(f\"\\n📥 Saving subtitle to: {output_file}\")",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "volc_ata.py",
+      "line": 141,
+      "code_snippet": "\"task_id\": task_id,\n                \"error\": result.get('error')\n            }",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "volc_ata.py",
+      "line": 187,
+      "code_snippet": "result = self._query_task(task_id)\n                status = result.get('status')",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "volc_ata.py",
+      "line": 137,
+      "code_snippet": "else:\n            print(f\"\\n❌ Failed: {result.get('error', 'Unknown error')}\")\n            return {",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via result.get()",
+      "file_path": "volc_ata.py",
+      "line": 197,
+      "code_snippet": "\"status\": \"failed\",\n                        \"error\": result.get('error', 'Unknown error')\n                    }",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "volc_ata.py",
+      "line": 45,
+      "code_snippet": "self.app_id = app_id or os.environ.get('VOLC_ATA_APP_ID') or self.config.get('credentials', 'appid', fallback=None)",
+      "evidence": "Signature MAL-010 matched (SHA256: f05c8129dd9bb373...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for formatter skill: network",
+      "description": "A 'formatter' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a formatter skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 18,
+  "_scan_meta": {
+    "author": "blackeight4752",
+    "skill": "doubao-ata-subtitle",
+    "author_skill": "blackeight4752/doubao-ata-subtitle",
+    "scan_time_s": 0.1
+  }
+}

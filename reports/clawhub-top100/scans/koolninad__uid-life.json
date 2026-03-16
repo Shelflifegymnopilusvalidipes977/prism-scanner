@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/koolninad/uid-life",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 20,
+  "_scan_meta": {
+    "author": "koolninad",
+    "skill": "uid-life",
+    "author_skill": "koolninad/uid-life",
+    "scan_time_s": 0.1
+  }
+}

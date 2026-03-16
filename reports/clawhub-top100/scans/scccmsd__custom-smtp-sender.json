@@ -1,0 +1,45 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/scccmsd/custom-smtp-sender",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "email_sender.py",
+      "line": 21,
+      "code_snippet": "# Set up email server\n    server = smtplib.SMTP_SSL(config['server'], config['port']) if config.get('useTLS') else smtplib.SMTP(config['server'], config['port'])\n    server.login(config['username'], config['password'])",
+      "evidence": "Hardcoded URL: useTLS",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 10,
+  "_scan_meta": {
+    "author": "scccmsd",
+    "skill": "custom-smtp-sender",
+    "author_skill": "scccmsd/custom-smtp-sender",
+    "scan_time_s": 0.1
+  }
+}

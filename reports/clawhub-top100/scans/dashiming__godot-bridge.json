@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/dashiming/godot-bridge",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 13,
+  "_scan_meta": {
+    "author": "dashiming",
+    "skill": "godot-bridge",
+    "author_skill": "dashiming/godot-bridge",
+    "scan_time_s": 0.1
+  }
+}

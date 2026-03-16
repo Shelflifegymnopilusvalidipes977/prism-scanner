@@ -1,0 +1,46 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/chyher/team-discuss",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: Shell command execution (S1)"
+  ],
+  "behavior_tags": [
+    "executes_shell"
+  ],
+  "findings": [
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls asyncio.run() which can execute arbitrary system commands",
+      "file_path": "teamDiscuss.py",
+      "line": 158,
+      "code_snippet": "if __name__ == \"__main__\":\n    asyncio.run(quick_start())",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 12,
+  "_scan_meta": {
+    "author": "chyher",
+    "skill": "team-discuss",
+    "author_skill": "chyher/team-discuss",
+    "scan_time_s": 0.1
+  }
+}

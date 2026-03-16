@@ -1,0 +1,105 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/homeofe/openclaw-ispconfig",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Unexpected capability for code_runner skill: network (M1)",
+    "MEDIUM: Hardcoded public IP: 1.2.3.4 (P4)"
+  ],
+  "behavior_tags": [],
+  "findings": [
+    {
+      "rule_id": "P4",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Hardcoded public IP: 1.2.3.4",
+      "description": "Public IP address found in source code",
+      "file_path": "tests/unit.test.ts",
+      "line": 38,
+      "code_snippet": "defaultServerIp: \"1.2.3.4\",",
+      "evidence": null,
+      "tags": [
+        "network",
+        "hardcoded_ip"
+      ],
+      "remediation": "Use domain names with verified ownership instead of bare IPs.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P4",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Hardcoded public IP: 1.2.3.4",
+      "description": "Public IP address found in source code",
+      "file_path": "tests/unit.test.ts",
+      "line": 121,
+      "code_snippet": "const params = { type, zone: 10, name: \"test.\", data: \"1.2.3.4\" };",
+      "evidence": null,
+      "tags": [
+        "network",
+        "hardcoded_ip"
+      ],
+      "remediation": "Use domain names with verified ownership instead of bare IPs.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P4",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Hardcoded public IP: 1.2.3.4",
+      "description": "Public IP address found in source code",
+      "file_path": "tests/unit.test.ts",
+      "line": 434,
+      "code_snippet": "expect(mockCall.mock.calls[3][1]).toMatchObject({ params: { data: \"1.2.3.4\" } });",
+      "evidence": null,
+      "tags": [
+        "network",
+        "hardcoded_ip"
+      ],
+      "remediation": "Use domain names with verified ownership instead of bare IPs.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for code_runner skill: network",
+      "description": "A 'code_runner' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write, shell",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a code_runner skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 64,
+  "_scan_meta": {
+    "author": "homeofe",
+    "skill": "openclaw-ispconfig",
+    "author_skill": "homeofe/openclaw-ispconfig",
+    "scan_time_s": 0.1
+  }
+}

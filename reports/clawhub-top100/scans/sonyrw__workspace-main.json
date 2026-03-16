@@ -1,0 +1,62 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/sonyrw/workspace-main",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "C",
+  "risk_level": "caution",
+  "key_risks": [
+    "MEDIUM: High-entropy string (entropy=4.9) (P7)"
+  ],
+  "behavior_tags": [],
+  "findings": [
+    {
+      "rule_id": "P7",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.6,
+      "title": "High-entropy string (entropy=4.9)",
+      "description": "String has high randomness, possibly a secret or encoded payload",
+      "file_path": "test/sanitize.test.js",
+      "line": 23,
+      "code_snippet": "assert.ok(redactString('github_pat_abcdefghijklmnopqrstuvwxyz123456').includes(REDACTED),",
+      "evidence": "String length=43, entropy=4.94 (threshold=4.5)",
+      "tags": [
+        "entropy",
+        "possible_secret"
+      ],
+      "remediation": "If this is a secret, move to environment variable or secrets manager.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P7",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.6,
+      "title": "High-entropy string (entropy=5.2)",
+      "description": "String has high randomness, possibly a secret or encoded payload",
+      "file_path": "test/sanitize.test.js",
+      "line": 41,
+      "code_snippet": "assert.ok(redactString('npm_abcdefghijklmnopqrstuvwxyz1234567890').includes(REDACTED),",
+      "evidence": "String length=40, entropy=5.17 (threshold=4.5)",
+      "tags": [
+        "entropy",
+        "possible_secret"
+      ],
+      "remediation": "If this is a secret, move to environment variable or secrets manager.",
+      "references": [],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 640,
+  "_scan_meta": {
+    "author": "sonyrw",
+    "skill": "workspace-main",
+    "author_skill": "sonyrw/workspace-main",
+    "scan_time_s": 0.7
+  }
+}

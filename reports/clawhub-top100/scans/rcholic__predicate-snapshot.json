@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/rcholic/predicate-snapshot",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 64,
+  "_scan_meta": {
+    "author": "rcholic",
+    "skill": "predicate-snapshot",
+    "author_skill": "rcholic/predicate-snapshot",
+    "scan_time_s": 0.1
+  }
+}

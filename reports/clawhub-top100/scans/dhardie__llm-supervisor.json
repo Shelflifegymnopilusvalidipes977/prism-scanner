@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/dhardie/llm-supervisor",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 13,
+  "_scan_meta": {
+    "author": "dhardie",
+    "skill": "llm-supervisor",
+    "author_skill": "dhardie/llm-supervisor",
+    "scan_time_s": 0.1
+  }
+}

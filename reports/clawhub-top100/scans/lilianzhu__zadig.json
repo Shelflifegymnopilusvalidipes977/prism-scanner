@@ -1,0 +1,68 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/lilianzhu/zadig",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Malicious signature: DNS exfiltration (P5)",
+    "HIGH: Unexpected capability for code_runner skill: network (M1)"
+  ],
+  "behavior_tags": [],
+  "findings": [
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.9,
+      "title": "Malicious signature: DNS exfiltration",
+      "description": "Matched known malicious signature MAL-050: DNS exfiltration",
+      "file_path": "index.js",
+      "line": 2,
+      "code_snippet": "* Zadig DevOps Platform API Client",
+      "evidence": "Signature MAL-050 matched (SHA256: 3d0673b0a95e9deb...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "dns"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1048.003"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for code_runner skill: network",
+      "description": "A 'code_runner' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write, shell",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a code_runner skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 35,
+  "_scan_meta": {
+    "author": "lilianzhu",
+    "skill": "zadig",
+    "author_skill": "lilianzhu/zadig",
+    "scan_time_s": 0.1
+  }
+}

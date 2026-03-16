@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/maverick-software/safe-update-merge",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 56,
+  "_scan_meta": {
+    "author": "maverick-software",
+    "skill": "safe-update-merge",
+    "author_skill": "maverick-software/safe-update-merge",
+    "scan_time_s": 0.1
+  }
+}

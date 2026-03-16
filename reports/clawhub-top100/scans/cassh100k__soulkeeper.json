@@ -1,0 +1,620 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/cassh100k/soulkeeper",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Persistence mechanism reference (S13)",
+    "HIGH: Unexpected capability for formatter skill: shell (M1)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Dynamic code execution via re.compile() (S6)",
+    "LOW: Reads environment variable: OPENCLAW_WORKSPACE (S5)"
+  ],
+  "behavior_tags": [
+    "dynamic_execution",
+    "installs_persistence",
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "audit.py",
+      "line": 440,
+      "code_snippet": "\"--workspace\", \"-w\",\n        default=os.environ.get(\"OPENCLAW_WORKSPACE\", os.getcwd()),\n        help=\"Path to agent workspace (default: $OPENCLAW_WORKSPACE or cwd)\",",
+      "evidence": "Hardcoded URL: OPENCLAW_WORKSPACE",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENCLAW_WORKSPACE",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "audit.py",
+      "line": 440,
+      "code_snippet": "\"--workspace\", \"-w\",\n        default=os.environ.get(\"OPENCLAW_WORKSPACE\", os.getcwd()),\n        help=\"Path to agent workspace (default: $OPENCLAW_WORKSPACE or cwd)\",",
+      "evidence": "Reads env var: OPENCLAW_WORKSPACE",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via raw.get()",
+      "file_path": "audit.py",
+      "line": 380,
+      "code_snippet": "\"text\": raw[\"raw\"],\n            \"section\": raw.get(\"section\", \"\"),\n            \"extraction_method\": raw[\"extraction_method\"],",
+      "evidence": "Hardcoded URL: section",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via sev_order.get()",
+      "file_path": "audit.py",
+      "line": 393,
+      "code_snippet": "sev_order = {s: i for i, s in enumerate(SEVERITY_LEVELS)}\n    structured_rules.sort(key=lambda r: sev_order.get(r[\"severity\"], 99))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via file_hashes.get()",
+      "file_path": "audit.py",
+      "line": 413,
+      "code_snippet": "\"exists\": name not in missing,\n                \"hash\": file_hashes.get(name, None),\n            }",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via CATEGORIES.get()",
+      "file_path": "audit.py",
+      "line": 483,
+      "code_snippet": "if count > 0:\n                print(f\"  {CATEGORIES.get(cat, cat):35s}: {count}\")\n        print()",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via rules_json.get()",
+      "file_path": "drift.py",
+      "line": 213,
+      "code_snippet": "violations = []\n    for rule in rules_json.get(\"rules\", []):\n        pats = rule.get(\"violation_patterns\", [])",
+      "evidence": "Hardcoded URL: rules",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "drift.py",
+      "line": 296,
+      "code_snippet": "raw_lines = text.split(\"\\n\")\n    agent_prefixes = re.compile(\n        r\"^(?:assistant|agent|ai|bot|claude|gpt|you)\\s*[:\\>]\\s*\",",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via rule.get()",
+      "file_path": "drift.py",
+      "line": 214,
+      "code_snippet": "for rule in rules_json.get(\"rules\", []):\n        pats = rule.get(\"violation_patterns\", [])\n        if not pats:",
+      "evidence": "Hardcoded URL: violation_patterns",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via line_match_best.get()",
+      "file_path": "drift.py",
+      "line": 370,
+      "code_snippet": "match_key = f\"{v['line_number']}:{v['matched_text'][:25].lower()}\"\n        existing = line_match_best.get(match_key)\n        if not existing or sev_order[v[\"severity\"]] < sev_order[existing[\"severity\"]]:",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via line_cat_best.get()",
+      "file_path": "drift.py",
+      "line": 378,
+      "code_snippet": "cat_key = f\"{v['line_number']}:{v['category']}\"\n        existing = line_cat_best.get(cat_key)\n        if not existing or sev_order[v[\"severity\"]] < sev_order[existing[\"severity\"]]:",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via SEV_WEIGHTS.get()",
+      "file_path": "drift.py",
+      "line": 246,
+      "code_snippet": "raw_score = sum(SEV_WEIGHTS.get(v[\"severity\"], 5) for v in violations)\n    # Normalize: 100 = 4 critical violations",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via viol_id_count.get()",
+      "file_path": "drift.py",
+      "line": 387,
+      "code_snippet": "vid = v[\"violation_id\"]\n        viol_id_count[vid] = viol_id_count.get(vid, 0) + 1\n        if viol_id_count[vid] <= 2:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via by_category.get()",
+      "file_path": "drift.py",
+      "line": 401,
+      "code_snippet": "sev = v[\"severity\"]\n        by_category[cat] = by_category.get(cat, 0) + 1\n        by_severity[sev] = by_severity.get(sev, 0) + 1",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via by_severity.get()",
+      "file_path": "drift.py",
+      "line": 402,
+      "code_snippet": "by_category[cat] = by_category.get(cat, 0) + 1\n        by_severity[sev] = by_severity.get(sev, 0) + 1",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via sev_order.get()",
+      "file_path": "drift.py",
+      "line": 426,
+      "code_snippet": "sev_order = {\"critical\": 0, \"high\": 1, \"medium\": 2, \"low\": 3}\n    top = sorted(violations, key=lambda v: sev_order.get(v[\"severity\"], 99))",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "drift.py",
+      "line": 280,
+      "code_snippet": "if isinstance(item, dict):\n                    speaker = item.get(\"role\", item.get(\"speaker\", \"agent\"))\n                    content = item.get(\"content\", item.get(\"text\", str(item)))",
+      "evidence": "Hardcoded URL: role",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "drift.py",
+      "line": 281,
+      "code_snippet": "speaker = item.get(\"role\", item.get(\"speaker\", \"agent\"))\n                    content = item.get(\"content\", item.get(\"text\", str(item)))\n                elif isinstance(item, str):",
+      "evidence": "Hardcoded URL: content",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "drift.py",
+      "line": 280,
+      "code_snippet": "if isinstance(item, dict):\n                    speaker = item.get(\"role\", item.get(\"speaker\", \"agent\"))\n                    content = item.get(\"content\", item.get(\"text\", str(item)))",
+      "evidence": "Hardcoded URL: speaker",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "drift.py",
+      "line": 281,
+      "code_snippet": "speaker = item.get(\"role\", item.get(\"speaker\", \"agent\"))\n                    content = item.get(\"content\", item.get(\"text\", str(item)))\n                elif isinstance(item, str):",
+      "evidence": "Hardcoded URL: text",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via rules_json.get()",
+      "file_path": "drift.py",
+      "line": 536,
+      "code_snippet": "if args.verbose:\n                print(f\"[drift] Loaded {len(rules_json.get('rules', []))} custom rules from {args.rules}\", file=sys.stderr)\n        except (json.JSONDecodeError, OSError) as e:",
+      "evidence": "Hardcoded URL: rules",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via rules_json.get()",
+      "file_path": "remind.py",
+      "line": 228,
+      "code_snippet": "for rule in rules_json.get(\"rules\", []):\n            if rule[\"severity\"] in (\"critical\", \"high\"):",
+      "evidence": "Hardcoded URL: rules",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via rules_json.get()",
+      "file_path": "remind.py",
+      "line": 326,
+      "code_snippet": "lines.append(\"TOOLS YOU HAVE (do not claim otherwise):\")\n        for rule in rules_json.get(\"rules\", []):\n            if rule.get(\"extraction_method\") == \"tools_inventory\":",
+      "evidence": "Hardcoded URL: rules",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via rule.get()",
+      "file_path": "remind.py",
+      "line": 232,
+      "code_snippet": "context_lower = context_text.lower()\n                keywords = rule.get(\"keywords\", [])\n                if not any(kw in context_lower for kw in keywords if len(kw) > 4):",
+      "evidence": "Hardcoded URL: keywords",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via rule.get()",
+      "file_path": "remind.py",
+      "line": 327,
+      "code_snippet": "for rule in rules_json.get(\"rules\", []):\n            if rule.get(\"extraction_method\") == \"tools_inventory\":\n                tool_name = rule[\"raw\"].replace(\"Tool: \", \"\")",
+      "evidence": "Hardcoded URL: extraction_method",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S13",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.75,
+      "title": "Persistence mechanism reference",
+      "description": "Code references persistence path: \\b(?:nginx|apache|systemd|cron|env|dotenv|\\.env)\\b",
+      "file_path": "remind.py",
+      "line": 157,
+      "code_snippet": "r\"\\b(?:edit|modify|change|update) (?:the )?(?:config|configuration|settings)\\b\",\n            r\"\\b(?:nginx|apache|systemd|cron|env|dotenv|\\.env)\\b\",\n        ],",
+      "evidence": "String contains persistence indicator: systemd",
+      "tags": [
+        "persistence"
+      ],
+      "remediation": "Skills should not install system services or modify startup configuration.",
+      "references": [
+        "MITRE T1543.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for formatter skill: shell",
+      "description": "A 'formatter' skill would not normally require 'shell' capability. Allowed capabilities for this category: file_read, file_write",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a formatter skill needs shell access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for formatter skill: network",
+      "description": "A 'formatter' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a formatter skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 53,
+  "_scan_meta": {
+    "author": "cassh100k",
+    "skill": "soulkeeper",
+    "author_skill": "cassh100k/soulkeeper",
+    "scan_time_s": 0.1
+  }
+}

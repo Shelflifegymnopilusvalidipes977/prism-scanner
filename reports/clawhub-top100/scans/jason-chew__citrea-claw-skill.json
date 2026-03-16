@@ -1,0 +1,400 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/jason-chew/citrea-claw-skill",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: URL with suspicious TLD: .xyz (P8)"
+  ],
+  "behavior_tags": [],
+  "findings": [
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/arb.js",
+      "line": 20,
+      "code_snippet": "rpcUrls: { default: { http: ['https://rpc.mainnet.citrea.xyz'] } },",
+      "evidence": "URL: https://rpc.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/arb.js",
+      "line": 24,
+      "code_snippet": "url: 'https://explorer.mainnet.citrea.xyz'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/balance.js",
+      "line": 10,
+      "code_snippet": "rpcUrls: { default: { http: ['https://rpc.mainnet.citrea.xyz'] } },",
+      "evidence": "URL: https://rpc.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/balance.js",
+      "line": 14,
+      "code_snippet": "url: 'https://explorer.mainnet.citrea.xyz'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/balance.js",
+      "line": 151,
+      "code_snippet": "console.log(`   Explorer:     https://explorer.mainnet.citrea.xyz/address/${address}`)",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz/address/${address}`",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/liquidity.js",
+      "line": 10,
+      "code_snippet": "rpcUrls: { default: { http: ['https://rpc.mainnet.citrea.xyz'] } },",
+      "evidence": "URL: https://rpc.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/liquidity.js",
+      "line": 14,
+      "code_snippet": "url: 'https://explorer.mainnet.citrea.xyz'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/liquidity.js",
+      "line": 22,
+      "code_snippet": "const EXPLORER_ADDR     = 'https://explorer.mainnet.citrea.xyz/address'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz/address",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/pools.js",
+      "line": 10,
+      "code_snippet": "rpcUrls: { default: { http: ['https://rpc.mainnet.citrea.xyz'] } },",
+      "evidence": "URL: https://rpc.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/pools.js",
+      "line": 14,
+      "code_snippet": "url: 'https://explorer.mainnet.citrea.xyz'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/pools.js",
+      "line": 67,
+      "code_snippet": "const EXPLORER_TX   = 'https://explorer.mainnet.citrea.xyz/tx'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz/tx",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/pools.js",
+      "line": 68,
+      "code_snippet": "const EXPLORER_ADDR = 'https://explorer.mainnet.citrea.xyz/address'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz/address",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/prices-cli.js",
+      "line": 9,
+      "code_snippet": "rpcUrls: { default: { http: ['https://rpc.mainnet.citrea.xyz'] } },",
+      "evidence": "URL: https://rpc.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/txns.js",
+      "line": 8,
+      "code_snippet": "rpcUrls: { default: { http: ['https://rpc.mainnet.citrea.xyz'] } },",
+      "evidence": "URL: https://rpc.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/txns.js",
+      "line": 12,
+      "code_snippet": "url: 'https://explorer.mainnet.citrea.xyz'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/commands/txns.js",
+      "line": 165,
+      "code_snippet": "console.log(`   Explorer: https://explorer.mainnet.citrea.xyz/tx/${hash}`)",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz/tx/${hash}`",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/lib/prices.js",
+      "line": 8,
+      "code_snippet": "rpcUrls: { default: { http: ['https://rpc.mainnet.citrea.xyz'] } },",
+      "evidence": "URL: https://rpc.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P8",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "URL with suspicious TLD: .xyz",
+      "description": "URL uses TLD '.xyz' frequently associated with malicious activity",
+      "file_path": "src/lib/prices.js",
+      "line": 12,
+      "code_snippet": "url: 'https://explorer.mainnet.citrea.xyz'",
+      "evidence": "URL: https://explorer.mainnet.citrea.xyz",
+      "tags": [
+        "ioc",
+        "network",
+        "suspicious_tld"
+      ],
+      "remediation": "Verify this domain is legitimate.",
+      "references": [],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 48,
+  "_scan_meta": {
+    "author": "jason-chew",
+    "skill": "citrea-claw-skill",
+    "author_skill": "jason-chew/citrea-claw-skill",
+    "scan_time_s": 0.1
+  }
+}

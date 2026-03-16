@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/viktorbjorn/clawhub-search-verify",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 10,
+  "_scan_meta": {
+    "author": "viktorbjorn",
+    "skill": "clawhub-search-verify",
+    "author_skill": "viktorbjorn/clawhub-search-verify",
+    "scan_time_s": 0.1
+  }
+}

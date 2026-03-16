@@ -1,0 +1,150 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/jrojas537/flight-pricer",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "flight_pricer.py",
+      "line": 148,
+      "code_snippet": "try:\n        response = requests.post(API_BASE_URL, headers=headers, json=payload)\n        response.raise_for_status()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via config.get()",
+      "file_path": "flight_pricer.py",
+      "line": 18,
+      "code_snippet": "config = yaml.safe_load(f)\n            return config.get('api_key')\n    except (FileNotFoundError, yaml.YAMLError):",
+      "evidence": "Hardcoded URL: api_key",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via slice_info.get()",
+      "file_path": "flight_pricer.py",
+      "line": 57,
+      "code_snippet": "slice_info = offer['slices'][0]\n            duration = format_duration(slice_info.get('duration'))\n            if slice_info['segments']:",
+      "evidence": "Hardcoded URL: duration",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via response_data.get()",
+      "file_path": "flight_pricer.py",
+      "line": 152,
+      "code_snippet": "response_data = response.json()\n        offers = response_data.get('data', {}).get('offers', [])\n        display_offers(offers)",
+      "evidence": "Hardcoded URL: data",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via segment.get()",
+      "file_path": "flight_pricer.py",
+      "line": 61,
+      "code_snippet": "flight_no = f\"{segment['marketing_carrier']['iata_code']}{segment['marketing_carrier_flight_number']}\"\n                depart = format_datetime(segment.get('departing_at'))\n                arrive = format_datetime(segment.get('arriving_at'))",
+      "evidence": "Hardcoded URL: departing_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via segment.get()",
+      "file_path": "flight_pricer.py",
+      "line": 62,
+      "code_snippet": "depart = format_datetime(segment.get('departing_at'))\n                arrive = format_datetime(segment.get('arriving_at'))\n            else:",
+      "evidence": "Hardcoded URL: arriving_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 15,
+  "_scan_meta": {
+    "author": "jrojas537",
+    "skill": "flight-pricer",
+    "author_skill": "jrojas537/flight-pricer",
+    "scan_time_s": 0.1
+  }
+}

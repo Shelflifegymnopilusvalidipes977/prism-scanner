@@ -1,0 +1,89 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/idanmann10/startclaw-optimizer",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: Unexpected capability for code_runner skill: network (M1)",
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.state.get()",
+      "file_path": "scripts/dashboard.py",
+      "line": 37,
+      "code_snippet": "'current_spend': round(self.state.get('current_spend', 0.0), 2),\n            'tasks_executed': self.state.get('tasks_executed', 0),\n            'model_distribution': {",
+      "evidence": "Hardcoded URL: tasks_executed",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.state.get()",
+      "file_path": "scripts/dashboard.py",
+      "line": 36,
+      "code_snippet": "'daily_budget': 10.00,\n            'current_spend': round(self.state.get('current_spend', 0.0), 2),\n            'tasks_executed': self.state.get('tasks_executed', 0),",
+      "evidence": "Hardcoded URL: current_spend",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for code_runner skill: network",
+      "description": "A 'code_runner' skill would not normally require 'network' capability. Allowed capabilities for this category: file_read, file_write, shell",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a code_runner skill needs network access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 17,
+  "_scan_meta": {
+    "author": "idanmann10",
+    "skill": "startclaw-optimizer",
+    "author_skill": "idanmann10/startclaw-optimizer",
+    "scan_time_s": 0.1
+  }
+}

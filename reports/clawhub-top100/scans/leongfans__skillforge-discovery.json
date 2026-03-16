@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/leongfans/skillforge-discovery",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 19,
+  "_scan_meta": {
+    "author": "leongfans",
+    "skill": "skillforge-discovery",
+    "author_skill": "leongfans/skillforge-discovery",
+    "scan_time_s": 0.1
+  }
+}

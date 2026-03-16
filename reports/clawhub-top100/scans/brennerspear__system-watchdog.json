@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/brennerspear/system-watchdog",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 10,
+  "_scan_meta": {
+    "author": "brennerspear",
+    "skill": "system-watchdog",
+    "author_skill": "brennerspear/system-watchdog",
+    "scan_time_s": 0.1
+  }
+}

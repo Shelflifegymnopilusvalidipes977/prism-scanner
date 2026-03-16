@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/jerryops2026-del/xhs-auto-publish",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 13,
+  "_scan_meta": {
+    "author": "jerryops2026-del",
+    "skill": "xhs-auto-publish",
+    "author_skill": "jerryops2026-del/xhs-auto-publish",
+    "scan_time_s": 0.1
+  }
+}

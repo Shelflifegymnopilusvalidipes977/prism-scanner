@@ -1,0 +1,725 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/logesh2496/spaces",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "HIGH: SSRF: Request URL controlled by external input (S9)",
+    "HIGH: Unexpected capability for search skill: shell (M1)",
+    "MEDIUM: Reads environment variable: MOLTSPACES_API_KEY (S5)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Shell command execution (S1)"
+  ],
+  "behavior_tags": [
+    "executes_shell",
+    "network_outbound",
+    "reads_env_vars",
+    "ssrf_risk"
+  ],
+  "findings": [
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: MOLTSPACES_API_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 67,
+      "code_snippet": "# Moltspaces API configuration\nMOLTSPACES_API_URL = os.getenv(\"MOLTSPACES_API_URL\", \"https://moltspaces-api-547962548252.us-central1.run.app\")",
+      "evidence": "Reads env var: MOLTSPACES_API_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: MOLT_AGENT_ID",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 297,
+      "code_snippet": "# Load MOLT_AGENT_ID from environment\n    agent_name = os.getenv(\"MOLT_AGENT_ID\", \"Moltspaces Agent\")\n    logger.info(f\"🤖 Bot will join as: {agent_name}\")",
+      "evidence": "Reads env var: MOLT_AGENT_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: MOLTSPACES_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 85,
+      "code_snippet": "try:\n        api_key = os.getenv(\"MOLTSPACES_API_KEY\", \"\")\n        headers = {\"x-api-key\": api_key}",
+      "evidence": "Reads sensitive env var: MOLTSPACES_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: MOLTSPACES_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 123,
+      "code_snippet": "try:\n        api_key = os.getenv(\"MOLTSPACES_API_KEY\", \"\")\n        headers = {\"x-api-key\": api_key}",
+      "evidence": "Reads sensitive env var: MOLTSPACES_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: MOLTSPACES_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 162,
+      "code_snippet": "try:\n        api_key = os.getenv(\"MOLTSPACES_API_KEY\", \"\")\n        headers = {",
+      "evidence": "Reads sensitive env var: MOLTSPACES_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via participant.get()",
+      "file_path": "bot.py",
+      "line": 268,
+      "code_snippet": "# Safely get participant name with fallback\n        participant_info = participant.get(\"info\", {})\n        participant_name = participant_info.get(\"userName\") or participant_info.get(\"name\") or \"Guest\"",
+      "evidence": "Hardcoded URL: info",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls runner.run() which can execute arbitrary system commands",
+      "file_path": "bot.py",
+      "line": 283,
+      "code_snippet": "await runner.run(task)",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls asyncio.run() which can execute arbitrary system commands",
+      "file_path": "bot.py",
+      "line": 400,
+      "code_snippet": "# Direct connection\n        asyncio.run(main(room_url=config.url, token=config.token))\n    elif config.room:",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ELEVENLABS_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 197,
+      "code_snippet": "stt = ElevenLabsRealtimeSTTService(api_key=os.getenv(\"ELEVENLABS_API_KEY\"))",
+      "evidence": "Reads sensitive env var: ELEVENLABS_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ELEVENLABS_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 200,
+      "code_snippet": "tts = ElevenLabsTTSService(\n        api_key=os.getenv(\"ELEVENLABS_API_KEY\", \"\"),\n        voice_id=\"4tRn1lSkEn13EVTuqb0g\",  # Zaal",
+      "evidence": "Reads sensitive env var: ELEVENLABS_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: OPENAI_API_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "bot.py",
+      "line": 204,
+      "code_snippet": "llm = OpenAILLMService(api_key=os.getenv(\"OPENAI_API_KEY\"))",
+      "evidence": "Reads sensitive env var: OPENAI_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via participant_info.get()",
+      "file_path": "bot.py",
+      "line": 269,
+      "code_snippet": "participant_info = participant.get(\"info\", {})\n        participant_name = participant_info.get(\"userName\") or participant_info.get(\"name\") or \"Guest\"\n        logger.info(f\"Participant joined: {participant_name}\")",
+      "evidence": "Hardcoded URL: userName",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via participant_info.get()",
+      "file_path": "bot.py",
+      "line": 269,
+      "code_snippet": "participant_info = participant.get(\"info\", {})\n        participant_name = participant_info.get(\"userName\") or participant_info.get(\"name\") or \"Guest\"\n        logger.info(f\"Participant joined: {participant_name}\")",
+      "evidence": "Hardcoded URL: name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls asyncio.run() which can execute arbitrary system commands",
+      "file_path": "bot.py",
+      "line": 403,
+      "code_snippet": "# Join specific room\n        asyncio.run(main(room_name=config.room))\n    elif config.topic:",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "bot.py",
+      "line": 89,
+      "code_snippet": "async with aiohttp.ClientSession() as session:\n            async with session.get(url, headers=headers, timeout=aiohttp.ClientTimeout(total=10)) as response:\n                if response.status == 200:",
+      "evidence": "URL from os.getenv() → session.get()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "bot.py",
+      "line": 127,
+      "code_snippet": "async with aiohttp.ClientSession() as session:\n            async with session.post(url, headers=headers, timeout=aiohttp.ClientTimeout(total=10)) as response:\n                if response.status == 200:",
+      "evidence": "URL from os.getenv() → session.post()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "bot.py",
+      "line": 169,
+      "code_snippet": "async with aiohttp.ClientSession() as session:\n            async with session.post(\n                url,",
+      "evidence": "URL from os.getenv() → session.post()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls asyncio.run() which can execute arbitrary system commands",
+      "file_path": "bot.py",
+      "line": 406,
+      "code_snippet": "# Topic-based discovery\n        asyncio.run(main(topic=config.topic))\n    else:",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 92,
+      "code_snippet": "data = await response.json()\n                    rooms = data.get(\"rooms\", [])\n                    logger.info(f\"✅ Found {len(rooms)} room(s)\")",
+      "evidence": "Hardcoded URL: rooms",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 133,
+      "code_snippet": "\"room_url\": data.get(\"room_url\") or data.get(\"roomUrl\"),\n                        \"token\": data.get(\"token\")\n                    }",
+      "evidence": "Hardcoded URL: token",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 180,
+      "code_snippet": "\"room_url\": data.get(\"room_url\") or data.get(\"roomUrl\"),\n                        \"token\": data.get(\"token\"),\n                        \"room_name\": data.get(\"room_name\") or data.get(\"roomName\")",
+      "evidence": "Hardcoded URL: token",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via chosen_room.get()",
+      "file_path": "bot.py",
+      "line": 324,
+      "code_snippet": "chosen_room = rooms[0]\n            room_name = chosen_room.get(\"room_name\") or chosen_room.get(\"roomName\") or chosen_room.get(\"name\")\n            logger.info(f\"✅ Found room: {room_name}\")",
+      "evidence": "Hardcoded URL: room_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via chosen_room.get()",
+      "file_path": "bot.py",
+      "line": 324,
+      "code_snippet": "chosen_room = rooms[0]\n            room_name = chosen_room.get(\"room_name\") or chosen_room.get(\"roomName\") or chosen_room.get(\"name\")\n            logger.info(f\"✅ Found room: {room_name}\")",
+      "evidence": "Hardcoded URL: roomName",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via chosen_room.get()",
+      "file_path": "bot.py",
+      "line": 324,
+      "code_snippet": "chosen_room = rooms[0]\n            room_name = chosen_room.get(\"room_name\") or chosen_room.get(\"roomName\") or chosen_room.get(\"name\")\n            logger.info(f\"✅ Found room: {room_name}\")",
+      "evidence": "Hardcoded URL: name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 132,
+      "code_snippet": "return {\n                        \"room_url\": data.get(\"room_url\") or data.get(\"roomUrl\"),\n                        \"token\": data.get(\"token\")",
+      "evidence": "Hardcoded URL: room_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 132,
+      "code_snippet": "return {\n                        \"room_url\": data.get(\"room_url\") or data.get(\"roomUrl\"),\n                        \"token\": data.get(\"token\")",
+      "evidence": "Hardcoded URL: roomUrl",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 179,
+      "code_snippet": "return {\n                        \"room_url\": data.get(\"room_url\") or data.get(\"roomUrl\"),\n                        \"token\": data.get(\"token\"),",
+      "evidence": "Hardcoded URL: room_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 179,
+      "code_snippet": "return {\n                        \"room_url\": data.get(\"room_url\") or data.get(\"roomUrl\"),\n                        \"token\": data.get(\"token\"),",
+      "evidence": "Hardcoded URL: roomUrl",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 181,
+      "code_snippet": "\"token\": data.get(\"token\"),\n                        \"room_name\": data.get(\"room_name\") or data.get(\"roomName\")\n                    }",
+      "evidence": "Hardcoded URL: room_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 181,
+      "code_snippet": "\"token\": data.get(\"token\"),\n                        \"room_name\": data.get(\"room_name\") or data.get(\"roomName\")\n                    }",
+      "evidence": "Hardcoded URL: roomName",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 177,
+      "code_snippet": "data = await response.json()\n                    logger.info(f\"✅ Room created: {data.get('room_name') or data.get('roomName')}\")\n                    return {",
+      "evidence": "Hardcoded URL: room_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "bot.py",
+      "line": 177,
+      "code_snippet": "data = await response.json()\n                    logger.info(f\"✅ Room created: {data.get('room_name') or data.get('roomName')}\")\n                    return {",
+      "evidence": "Hardcoded URL: roomName",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for search skill: shell",
+      "description": "A 'search' skill would not normally require 'shell' capability. Allowed capabilities for this category: network_outbound",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a search skill needs shell access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 23,
+  "_scan_meta": {
+    "author": "logesh2496",
+    "skill": "spaces",
+    "author_skill": "logesh2496/spaces",
+    "scan_time_s": 0.1
+  }
+}

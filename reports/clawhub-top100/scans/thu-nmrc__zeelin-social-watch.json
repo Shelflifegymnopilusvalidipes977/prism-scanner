@@ -1,0 +1,362 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/thu-nmrc/zeelin-social-watch",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "HIGH: SSRF: Request URL controlled by external input (S9)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: GSDATA_APP_KEY (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars",
+    "ssrf_risk"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 187,
+      "code_snippet": "method_by_path: Dict[str, str] = {}\n    for tool_item in payload.get(\"tools\", []):\n        tool = tool_item[\"tool\"]",
+      "evidence": "Hardcoded URL: tools",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via file_creds.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 734,
+      "code_snippet": "file_creds = _load_creds_file(args.creds_file)\n    file_key = file_creds.get(\"app_key\", \"\")\n    file_secret = file_creds.get(\"app_secret\", \"\")",
+      "evidence": "Hardcoded URL: app_key",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via file_creds.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 735,
+      "code_snippet": "file_key = file_creds.get(\"app_key\", \"\")\n    file_secret = file_creds.get(\"app_secret\", \"\")\n    if file_key and file_secret:",
+      "evidence": "Hardcoded URL: app_secret",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via tool_item.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 189,
+      "code_snippet": "tool = tool_item[\"tool\"]\n        for ep in tool_item.get(\"endpoints\", []):\n            endpoint = Endpoint(",
+      "evidence": "Hardcoded URL: endpoints",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 460,
+      "code_snippet": ")\n        return requests.get(self.base_url, params=params, headers=headers, timeout=30)",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via CONTENT_SEARCH_SORTS.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 496,
+      "code_snippet": "def _resolve_content_search_route(platform: str, sort: str) -> str:\n        mapping = CONTENT_SEARCH_SORTS.get(platform)\n        if not mapping:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 713,
+      "code_snippet": "return {}\n    app_key = payload.get(\"app_key\") or payload.get(\"GSDATA_APP_KEY\") or \"\"\n    app_secret = payload.get(\"app_secret\") or payload.get(\"GSDATA_APP_SECRET\") or \"\"",
+      "evidence": "Hardcoded URL: app_key",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 713,
+      "code_snippet": "return {}\n    app_key = payload.get(\"app_key\") or payload.get(\"GSDATA_APP_KEY\") or \"\"\n    app_secret = payload.get(\"app_secret\") or payload.get(\"GSDATA_APP_SECRET\") or \"\"",
+      "evidence": "Hardcoded URL: GSDATA_APP_KEY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 714,
+      "code_snippet": "app_key = payload.get(\"app_key\") or payload.get(\"GSDATA_APP_KEY\") or \"\"\n    app_secret = payload.get(\"app_secret\") or payload.get(\"GSDATA_APP_SECRET\") or \"\"\n    return {",
+      "evidence": "Hardcoded URL: app_secret",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payload.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 714,
+      "code_snippet": "app_key = payload.get(\"app_key\") or payload.get(\"GSDATA_APP_KEY\") or \"\"\n    app_secret = payload.get(\"app_secret\") or payload.get(\"GSDATA_APP_SECRET\") or \"\"\n    return {",
+      "evidence": "Hardcoded URL: GSDATA_APP_SECRET",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via NLP_ACTION_TO_PATH.get()",
+      "file_path": "gsdata_adapter.py",
+      "line": 368,
+      "code_snippet": "if tool == \"gsdata_nlp\":\n            route = NLP_ACTION_TO_PATH.get(action)\n            if not route:",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (NLP_ACTION_TO_PATH.get())",
+      "file_path": "gsdata_adapter.py",
+      "line": 393,
+      "code_snippet": "method = (\n            (explicit_method or \"\").upper().strip() or self.method_by_path.get(route, \"GET\")\n        )",
+      "evidence": "URL from NLP_ACTION_TO_PATH.get() → self.method_by_path.get()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.post()",
+      "file_path": "gsdata_adapter.py",
+      "line": 457,
+      "code_snippet": "if method == \"POST\":\n            return requests.post(\n                self.base_url, data=params, headers=headers, timeout=30",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GSDATA_BASE_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "gsdata_adapter.py",
+      "line": 643,
+      "code_snippet": "\"--base-url\",\n        default=os.getenv(\"GSDATA_BASE_URL\", DEFAULT_BASE_URL),\n        help=\"GSData gateway base URL\",",
+      "evidence": "Reads env var: GSDATA_BASE_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GSDATA_APP_KEY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "gsdata_adapter.py",
+      "line": 728,
+      "code_snippet": "env_key = (os.getenv(\"GSDATA_APP_KEY\") or \"\").strip()\n    env_secret = (os.getenv(\"GSDATA_APP_SECRET\") or \"\").strip()",
+      "evidence": "Reads sensitive env var: GSDATA_APP_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GSDATA_APP_SECRET",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "gsdata_adapter.py",
+      "line": 729,
+      "code_snippet": "env_key = (os.getenv(\"GSDATA_APP_KEY\") or \"\").strip()\n    env_secret = (os.getenv(\"GSDATA_APP_SECRET\") or \"\").strip()\n    if env_key and env_secret:",
+      "evidence": "Reads sensitive env var: GSDATA_APP_SECRET",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 36,
+  "_scan_meta": {
+    "author": "thu-nmrc",
+    "skill": "zeelin-social-watch",
+    "author_skill": "thu-nmrc/zeelin-social-watch",
+    "scan_time_s": 0.1
+  }
+}

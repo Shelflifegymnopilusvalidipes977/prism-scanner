@@ -1,0 +1,337 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/shaharsha/google-search-grounding",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Malicious signature: Environment variable exfiltration (P5)",
+    "MEDIUM: Outbound network request (S4)",
+    "MEDIUM: Reads environment variable: GOOGLE_API_KEY (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 31,
+      "code_snippet": "API_KEY: str = os.environ.get(\"GOOGLE_API_KEY\", \"\")\nCSE_CX: str = os.environ.get(\"GOOGLE_CSE_CX\", \"\")",
+      "evidence": "Hardcoded URL: GOOGLE_API_KEY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GOOGLE_API_KEY",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 31,
+      "code_snippet": "API_KEY: str = os.environ.get(\"GOOGLE_API_KEY\", \"\")\nCSE_CX: str = os.environ.get(\"GOOGLE_CSE_CX\", \"\")",
+      "evidence": "Reads sensitive env var: GOOGLE_API_KEY",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 32,
+      "code_snippet": "API_KEY: str = os.environ.get(\"GOOGLE_API_KEY\", \"\")\nCSE_CX: str = os.environ.get(\"GOOGLE_CSE_CX\", \"\")\nDEFAULT_LANG: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_LANG\", \"he\")",
+      "evidence": "Hardcoded URL: GOOGLE_CSE_CX",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GOOGLE_CSE_CX",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 32,
+      "code_snippet": "API_KEY: str = os.environ.get(\"GOOGLE_API_KEY\", \"\")\nCSE_CX: str = os.environ.get(\"GOOGLE_CSE_CX\", \"\")\nDEFAULT_LANG: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_LANG\", \"he\")",
+      "evidence": "Reads env var: GOOGLE_CSE_CX",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 33,
+      "code_snippet": "CSE_CX: str = os.environ.get(\"GOOGLE_CSE_CX\", \"\")\nDEFAULT_LANG: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_LANG\", \"he\")\nDEFAULT_COUNTRY: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_COUNTRY\", \"IL\")",
+      "evidence": "Hardcoded URL: GOOGLE_SEARCH_LANG",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GOOGLE_SEARCH_LANG",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 33,
+      "code_snippet": "CSE_CX: str = os.environ.get(\"GOOGLE_CSE_CX\", \"\")\nDEFAULT_LANG: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_LANG\", \"he\")\nDEFAULT_COUNTRY: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_COUNTRY\", \"IL\")",
+      "evidence": "Reads env var: GOOGLE_SEARCH_LANG",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 34,
+      "code_snippet": "DEFAULT_LANG: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_LANG\", \"he\")\nDEFAULT_COUNTRY: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_COUNTRY\", \"IL\")\nGEMINI_MODEL: str = \"gemini-2.5-flash\"  # Stable GA model. Alternatives: \"gemini-2.0-flash\", \"gemini-3-flash-preview\"",
+      "evidence": "Hardcoded URL: GOOGLE_SEARCH_COUNTRY",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GOOGLE_SEARCH_COUNTRY",
+      "description": "Code reads environment variable via os.environ.get()",
+      "file_path": "lib/google_search.py",
+      "line": 34,
+      "code_snippet": "DEFAULT_LANG: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_LANG\", \"he\")\nDEFAULT_COUNTRY: Optional[str] = os.environ.get(\"GOOGLE_SEARCH_COUNTRY\", \"IL\")\nGEMINI_MODEL: str = \"gemini-2.5-flash\"  # Stable GA model. Alternatives: \"gemini-2.0-flash\", \"gemini-3-flash-preview\"",
+      "evidence": "Reads env var: GOOGLE_SEARCH_COUNTRY",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "lib/google_search.py",
+      "line": 255,
+      "code_snippet": "data = _cse_request(params)\n    items = data.get(\"items\", [])",
+      "evidence": "Hardcoded URL: items",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "lib/google_search.py",
+      "line": 307,
+      "code_snippet": "data = _cse_request(params)\n    items = data.get(\"items\", [])",
+      "evidence": "Hardcoded URL: items",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "lib/google_search.py",
+      "line": 271,
+      "code_snippet": "lines.append(f\"   {item['link']}\")\n        if item.get(\"snippet\"):\n            lines.append(f\"   {item['snippet'].strip()}\")",
+      "evidence": "Hardcoded URL: snippet",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via urllib.request.urlopen()",
+      "file_path": "lib/google_search.py",
+      "line": 78,
+      "code_snippet": "try:\n        with urllib.request.urlopen(req, timeout=REQUEST_TIMEOUT) as resp:\n            return json.loads(resp.read())",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via i.get()",
+      "file_path": "lib/google_search.py",
+      "line": 259,
+      "code_snippet": "results = [\n            {\"title\": i[\"title\"], \"link\": i[\"link\"], \"snippet\": i.get(\"snippet\", \"\")}\n            for i in items",
+      "evidence": "Hardcoded URL: snippet",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via i.get()",
+      "file_path": "lib/google_search.py",
+      "line": 314,
+      "code_snippet": "\"link\": i[\"link\"],\n                \"thumbnail\": i.get(\"image\", {}).get(\"thumbnailLink\", \"\"),\n            }",
+      "evidence": "Hardcoded URL: image",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "P5",
+      "engine": "pattern",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Malicious signature: Environment variable exfiltration",
+      "description": "Matched known malicious signature MAL-010: Environment variable exfiltration",
+      "file_path": "lib/google_search.py",
+      "line": 31,
+      "code_snippet": "API_KEY: str = os.environ.get(\"GOOGLE_API_KEY\", \"\")",
+      "evidence": "Signature MAL-010 matched (SHA256: ffaca63ea029575a...)",
+      "tags": [
+        "malicious_signature",
+        "exfiltration",
+        "credential_theft"
+      ],
+      "remediation": "This file matches a known malicious pattern. Do not install or execute.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 20,
+  "_scan_meta": {
+    "author": "shaharsha",
+    "skill": "google-search-grounding",
+    "author_skill": "shaharsha/google-search-grounding",
+    "scan_time_s": 0.1
+  }
+}

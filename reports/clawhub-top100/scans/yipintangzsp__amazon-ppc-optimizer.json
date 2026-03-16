@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/yipintangzsp/amazon-ppc-optimizer",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 9,
+  "_scan_meta": {
+    "author": "yipintangzsp",
+    "skill": "amazon-ppc-optimizer",
+    "author_skill": "yipintangzsp/amazon-ppc-optimizer",
+    "scan_time_s": 0.1
+  }
+}

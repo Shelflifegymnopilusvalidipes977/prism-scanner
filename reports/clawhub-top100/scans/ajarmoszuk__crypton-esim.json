@@ -1,0 +1,1116 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/ajarmoszuk/crypton-esim",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: Outbound network request (S4)"
+  ],
+  "behavior_tags": [
+    "network_outbound"
+  ],
+  "findings": [
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.session.get()",
+      "file_path": "crypton_esim.py",
+      "line": 35,
+      "code_snippet": "\"\"\"Get list of available countries with eSIM plans.\"\"\"\n        response = self.session.get(f\"{self.api_base_url}/countries\")\n        return response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.session.get()",
+      "file_path": "crypton_esim.py",
+      "line": 43,
+      "code_snippet": "params['country_code'] = country_code.upper()\n        response = self.session.get(f\"{self.api_base_url}/plans\", params=params)\n        return response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.session.post()",
+      "file_path": "crypton_esim.py",
+      "line": 60,
+      "code_snippet": "response = self.session.post(\n            f\"{self.api_base_url}/checkout\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.session.get()",
+      "file_path": "crypton_esim.py",
+      "line": 68,
+      "code_snippet": "\"\"\"Check the status of an order.\"\"\"\n        response = self.session.get(f\"{self.api_base_url}/order/{order_uuid}\")\n        return response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via self.session.post()",
+      "file_path": "crypton_esim.py",
+      "line": 73,
+      "code_snippet": "\"\"\"Refresh usage data for an eSIM.\"\"\"\n        response = self.session.post(f\"{self.api_base_url}/refresh/{esim_uuid}\")\n        return response.json()",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 191,
+      "code_snippet": "plans = data.get('plans', [])\n        if not plans:",
+      "evidence": "Hardcoded URL: plans",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 231,
+      "code_snippet": "order = data.get('order', {})\n        payment = data.get('payment', {})",
+      "evidence": "Hardcoded URL: order",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 232,
+      "code_snippet": "order = data.get('order', {})\n        payment = data.get('payment', {})",
+      "evidence": "Hardcoded URL: payment",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 279,
+      "code_snippet": "status = data.get('status', 'unknown')\n        order_type = data.get('type', 'unknown')",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 280,
+      "code_snippet": "status = data.get('status', 'unknown')\n        order_type = data.get('type', 'unknown')",
+      "evidence": "Hardcoded URL: type",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 167,
+      "code_snippet": "if not data.get('success'):\n            return f\"Error: {data.get('message', 'Failed to fetch countries')}\"",
+      "evidence": "Hardcoded URL: success",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 170,
+      "code_snippet": "countries = data.get('countries', [])[:20]  # Top 20",
+      "evidence": "Hardcoded URL: countries",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 188,
+      "code_snippet": "if not data.get('success'):\n            return f\"Error: {data.get('message', 'Failed to fetch plans')}\"",
+      "evidence": "Hardcoded URL: success",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 218,
+      "code_snippet": "if not data.get('success'):\n            error = data.get('error', 'unknown')",
+      "evidence": "Hardcoded URL: success",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 219,
+      "code_snippet": "if not data.get('success'):\n            error = data.get('error', 'unknown')\n            message = data.get('message', 'Checkout failed')",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 220,
+      "code_snippet": "error = data.get('error', 'unknown')\n            message = data.get('message', 'Checkout failed')",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 273,
+      "code_snippet": "if not data.get('success'):\n            error = data.get('error', 'unknown')",
+      "evidence": "Hardcoded URL: success",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 274,
+      "code_snippet": "if not data.get('success'):\n            error = data.get('error', 'unknown')\n            if error == 'not_found':",
+      "evidence": "Hardcoded URL: error",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 284,
+      "code_snippet": "if status in ['new', 'pending', 'awaiting_payment']:\n            payment = data.get('payment', {})\n            lines = [",
+      "evidence": "Hardcoded URL: payment",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 290,
+      "code_snippet": "if payment.get('address'):\n                lines.extend([",
+      "evidence": "Hardcoded URL: address",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 297,
+      "code_snippet": "if payment.get('expires_at'):\n                lines.append(f\"**Expires:** {payment.get('expires_at')}\")",
+      "evidence": "Hardcoded URL: expires_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 308,
+      "code_snippet": "if order_type == 'esim_order' and 'esim' in data:\n            esim = data.get('esim', {})\n            order_info = data.get('order', {})",
+      "evidence": "Hardcoded URL: esim",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 309,
+      "code_snippet": "esim = data.get('esim', {})\n            order_info = data.get('order', {})",
+      "evidence": "Hardcoded URL: order",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 325,
+      "code_snippet": "# Generic status\n        return f\"**Order Status:** {status.title()}\\n\\n{data.get('message', '')}\"",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 168,
+      "code_snippet": "if not data.get('success'):\n            return f\"Error: {data.get('message', 'Failed to fetch countries')}\"",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 179,
+      "code_snippet": "lines.append(f\"\\n_Showing 20 of {data.get('count', 0)} countries_\")\n        lines.append(\"\\nSay `esim [country]` to see plans.\")",
+      "evidence": "Hardcoded URL: count",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 189,
+      "code_snippet": "if not data.get('success'):\n            return f\"Error: {data.get('message', 'Failed to fetch plans')}\"",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via order.get()",
+      "file_path": "crypton_esim.py",
+      "line": 236,
+      "code_snippet": "f\"**Order Created**\\n\",\n            f\"**Plan:** {order.get('plan_name')}\",\n            f\"**Data:** {order.get('data_amount')}\",",
+      "evidence": "Hardcoded URL: plan_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via order.get()",
+      "file_path": "crypton_esim.py",
+      "line": 237,
+      "code_snippet": "f\"**Plan:** {order.get('plan_name')}\",\n            f\"**Data:** {order.get('data_amount')}\",\n            f\"**Validity:** {order.get('validity_days')} days\",",
+      "evidence": "Hardcoded URL: data_amount",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via order.get()",
+      "file_path": "crypton_esim.py",
+      "line": 238,
+      "code_snippet": "f\"**Data:** {order.get('data_amount')}\",\n            f\"**Validity:** {order.get('validity_days')} days\",\n            f\"**Price:** €{order.get('price_eur', 0):.2f}\\n\",",
+      "evidence": "Hardcoded URL: validity_days",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via order.get()",
+      "file_path": "crypton_esim.py",
+      "line": 239,
+      "code_snippet": "f\"**Validity:** {order.get('validity_days')} days\",\n            f\"**Price:** €{order.get('price_eur', 0):.2f}\\n\",\n        ]",
+      "evidence": "Hardcoded URL: price_eur",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 277,
+      "code_snippet": "return f\"Order `{order_uuid}` not found.\"\n            return f\"Error: {data.get('message', 'Failed to fetch status')}\"",
+      "evidence": "Hardcoded URL: message",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 265,
+      "code_snippet": "lines.append(f\"\\nCheck status: `status {data.get('order_uuid') or data.get('session_uuid')}`\")",
+      "evidence": "Hardcoded URL: order_uuid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 265,
+      "code_snippet": "lines.append(f\"\\nCheck status: `status {data.get('order_uuid') or data.get('session_uuid')}`\")",
+      "evidence": "Hardcoded URL: session_uuid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via order_info.get()",
+      "file_path": "crypton_esim.py",
+      "line": 313,
+      "code_snippet": "f\"**Order Status:** ✅ Complete\\n\",\n                f\"**Plan:** {order_info.get('plan_name')}\",\n                f\"**Data:** {order_info.get('data_remaining_mb', 0)} MB remaining\",",
+      "evidence": "Hardcoded URL: plan_name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via order_info.get()",
+      "file_path": "crypton_esim.py",
+      "line": 314,
+      "code_snippet": "f\"**Plan:** {order_info.get('plan_name')}\",\n                f\"**Data:** {order_info.get('data_remaining_mb', 0)} MB remaining\",\n                f\"**Status:** {status.title()}\\n\",",
+      "evidence": "Hardcoded URL: data_remaining_mb",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via esim.get()",
+      "file_path": "crypton_esim.py",
+      "line": 316,
+      "code_snippet": "f\"**Status:** {status.title()}\\n\",\n                f\"**ICCID:** `{esim.get('iccid')}`\\n\",\n                f\"**Activation Code:**\",",
+      "evidence": "Hardcoded URL: iccid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via esim.get()",
+      "file_path": "crypton_esim.py",
+      "line": 318,
+      "code_snippet": "f\"**Activation Code:**\",\n                f\"```\\n{esim.get('activation_code')}\\n```\",\n                \"\\nScan the QR code or enter the activation code in your phone's eSIM settings.\",",
+      "evidence": "Hardcoded URL: activation_code",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 245,
+      "code_snippet": "\"**Payment Method:** Card (Stripe)\\n\",\n                f\"**Payment Link:**\\n{payment.get('payment_url')}\\n\",\n                f\"**Order ID:** `{data.get('session_uuid')}`\",",
+      "evidence": "Hardcoded URL: payment_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 246,
+      "code_snippet": "f\"**Payment Link:**\\n{payment.get('payment_url')}\\n\",\n                f\"**Order ID:** `{data.get('session_uuid')}`\",\n            ])",
+      "evidence": "Hardcoded URL: session_uuid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 298,
+      "code_snippet": "if payment.get('expires_at'):\n                lines.append(f\"**Expires:** {payment.get('expires_at')}\")",
+      "evidence": "Hardcoded URL: expires_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 251,
+      "code_snippet": "\"**Payment Method:** Bitcoin\\n\",\n                f\"**Amount:** `{payment.get('amount_btc')} BTC`\",\n                f\"**Address:**\\n`{payment.get('address')}`\\n\",",
+      "evidence": "Hardcoded URL: amount_btc",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 252,
+      "code_snippet": "f\"**Amount:** `{payment.get('amount_btc')} BTC`\",\n                f\"**Address:**\\n`{payment.get('address')}`\\n\",\n                f\"**Order ID:** `{data.get('order_uuid')}`\",",
+      "evidence": "Hardcoded URL: address",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 253,
+      "code_snippet": "f\"**Address:**\\n`{payment.get('address')}`\\n\",\n                f\"**Order ID:** `{data.get('order_uuid')}`\",\n                f\"**Expires:** {payment.get('expires_at')}\",",
+      "evidence": "Hardcoded URL: order_uuid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 254,
+      "code_snippet": "f\"**Order ID:** `{data.get('order_uuid')}`\",\n                f\"**Expires:** {payment.get('expires_at')}\",\n            ])",
+      "evidence": "Hardcoded URL: expires_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 293,
+      "code_snippet": "f\"\\n**Send payment to:**\",\n                    f\"`{payment.get('address')}`\",\n                    f\"**Amount:** `{payment.get('amount_btc') or payment.get('amount_xmr')}`\",",
+      "evidence": "Hardcoded URL: address",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 259,
+      "code_snippet": "\"**Payment Method:** Monero\\n\",\n                f\"**Amount:** `{payment.get('amount_xmr'):.12f} XMR`\",\n                f\"**Address:**\\n`{payment.get('address')}`\\n\",",
+      "evidence": "Hardcoded URL: amount_xmr",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 260,
+      "code_snippet": "f\"**Amount:** `{payment.get('amount_xmr'):.12f} XMR`\",\n                f\"**Address:**\\n`{payment.get('address')}`\\n\",\n                f\"**Order ID:** `{data.get('order_uuid')}`\",",
+      "evidence": "Hardcoded URL: address",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "crypton_esim.py",
+      "line": 261,
+      "code_snippet": "f\"**Address:**\\n`{payment.get('address')}`\\n\",\n                f\"**Order ID:** `{data.get('order_uuid')}`\",\n                f\"**Expires:** {payment.get('expires_at')}\",",
+      "evidence": "Hardcoded URL: order_uuid",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 262,
+      "code_snippet": "f\"**Order ID:** `{data.get('order_uuid')}`\",\n                f\"**Expires:** {payment.get('expires_at')}\",\n            ])",
+      "evidence": "Hardcoded URL: expires_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 294,
+      "code_snippet": "f\"`{payment.get('address')}`\",\n                    f\"**Amount:** `{payment.get('amount_btc') or payment.get('amount_xmr')}`\",\n                ])",
+      "evidence": "Hardcoded URL: amount_btc",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via payment.get()",
+      "file_path": "crypton_esim.py",
+      "line": 294,
+      "code_snippet": "f\"`{payment.get('address')}`\",\n                    f\"**Amount:** `{payment.get('amount_btc') or payment.get('amount_xmr')}`\",\n                ])",
+      "evidence": "Hardcoded URL: amount_xmr",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 23,
+  "_scan_meta": {
+    "author": "ajarmoszuk",
+    "skill": "crypton-esim",
+    "author_skill": "ajarmoszuk/crypton-esim",
+    "scan_time_s": 0.1
+  }
+}

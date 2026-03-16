@@ -1,0 +1,264 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/dagangtj/ai-economic-tracker",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "D",
+  "risk_level": "danger",
+  "key_risks": [
+    "MEDIUM: Outbound network request (S4)",
+    "LOW: Reads environment variable: ECONOMIC_TRACKER_DATA_DIR (S5)"
+  ],
+  "behavior_tags": [
+    "network_outbound",
+    "reads_env_vars"
+  ],
+  "findings": [
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ECONOMIC_TRACKER_DATA_DIR",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tracker.py",
+      "line": 16,
+      "code_snippet": "# Configurable via environment variables\nDATA_DIR = Path(os.getenv(\"ECONOMIC_TRACKER_DATA_DIR\", \n                          str(Path.home() / \".openclaw\" / \"workspace\" / \"data\" / \"economics\")))",
+      "evidence": "Reads env var: ECONOMIC_TRACKER_DATA_DIR",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ECONOMIC_TRACKER_ELECTRICITY_DAILY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tracker.py",
+      "line": 24,
+      "code_snippet": "COSTS = {\n    \"electricity_daily\": float(os.getenv(\"ECONOMIC_TRACKER_ELECTRICITY_DAILY\", \"0.50\")),\n    \"internet_daily\": float(os.getenv(\"ECONOMIC_TRACKER_INTERNET_DAILY\", \"1.50\")),",
+      "evidence": "Reads env var: ECONOMIC_TRACKER_ELECTRICITY_DAILY",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ECONOMIC_TRACKER_INTERNET_DAILY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tracker.py",
+      "line": 25,
+      "code_snippet": "\"electricity_daily\": float(os.getenv(\"ECONOMIC_TRACKER_ELECTRICITY_DAILY\", \"0.50\")),\n    \"internet_daily\": float(os.getenv(\"ECONOMIC_TRACKER_INTERNET_DAILY\", \"1.50\")),\n}",
+      "evidence": "Reads env var: ECONOMIC_TRACKER_INTERNET_DAILY",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ECONOMIC_TRACKER_THRIVING",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tracker.py",
+      "line": 44,
+      "code_snippet": "SURVIVAL_THRESHOLDS = {\n    \"thriving\": float(os.getenv(\"ECONOMIC_TRACKER_THRIVING\", \"5000\")),\n    \"stable\": float(os.getenv(\"ECONOMIC_TRACKER_STABLE\", \"1500\")),",
+      "evidence": "Reads env var: ECONOMIC_TRACKER_THRIVING",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ECONOMIC_TRACKER_STABLE",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tracker.py",
+      "line": 45,
+      "code_snippet": "\"thriving\": float(os.getenv(\"ECONOMIC_TRACKER_THRIVING\", \"5000\")),\n    \"stable\": float(os.getenv(\"ECONOMIC_TRACKER_STABLE\", \"1500\")),\n    \"struggling\": float(os.getenv(\"ECONOMIC_TRACKER_STRUGGLING\", \"500\")),",
+      "evidence": "Reads env var: ECONOMIC_TRACKER_STABLE",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ECONOMIC_TRACKER_STRUGGLING",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tracker.py",
+      "line": 46,
+      "code_snippet": "\"stable\": float(os.getenv(\"ECONOMIC_TRACKER_STABLE\", \"1500\")),\n    \"struggling\": float(os.getenv(\"ECONOMIC_TRACKER_STRUGGLING\", \"500\")),\n    \"critical\": float(os.getenv(\"ECONOMIC_TRACKER_CRITICAL\", \"0\")),",
+      "evidence": "Reads env var: ECONOMIC_TRACKER_STRUGGLING",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: ECONOMIC_TRACKER_CRITICAL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "tracker.py",
+      "line": 47,
+      "code_snippet": "\"struggling\": float(os.getenv(\"ECONOMIC_TRACKER_STRUGGLING\", \"500\")),\n    \"critical\": float(os.getenv(\"ECONOMIC_TRACKER_CRITICAL\", \"0\")),\n}",
+      "evidence": "Reads env var: ECONOMIC_TRACKER_CRITICAL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via BLS_WAGES.get()",
+      "file_path": "tracker.py",
+      "line": 164,
+      "code_snippet": "\"\"\"Estimate service value using BLS wage data\"\"\"\n        wage = BLS_WAGES.get(task_type, BLS_WAGES[\"general_operations\"])\n        value = wage * hours",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via last.get()",
+      "file_path": "tracker.py",
+      "line": 69,
+      "code_snippet": "last = json.loads(lines[-1])\n                self.balance = last.get(\"balance\", 0.0)\n                self.total_income = last.get(\"total_income\", 0.0)",
+      "evidence": "Hardcoded URL: balance",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via last.get()",
+      "file_path": "tracker.py",
+      "line": 70,
+      "code_snippet": "self.balance = last.get(\"balance\", 0.0)\n                self.total_income = last.get(\"total_income\", 0.0)\n                self.total_cost = last.get(\"total_cost\", 0.0)",
+      "evidence": "Hardcoded URL: total_income",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via last.get()",
+      "file_path": "tracker.py",
+      "line": 71,
+      "code_snippet": "self.total_income = last.get(\"total_income\", 0.0)\n                self.total_cost = last.get(\"total_cost\", 0.0)",
+      "evidence": "Hardcoded URL: total_cost",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via emoji.get()",
+      "file_path": "tracker.py",
+      "line": 157,
+      "code_snippet": "⏳ Runway: {s['runway_days']} days\n{emoji.get(s['status'], '❓')} Status: {s['status'].upper()}\n{'='*40}\"\"\"",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 18,
+  "_scan_meta": {
+    "author": "dagangtj",
+    "skill": "ai-economic-tracker",
+    "author_skill": "dagangtj/ai-economic-tracker",
+    "scan_time_s": 0.1
+  }
+}

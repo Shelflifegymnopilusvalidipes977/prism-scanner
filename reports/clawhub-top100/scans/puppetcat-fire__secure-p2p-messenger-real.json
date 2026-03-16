@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/puppetcat-fire/secure-p2p-messenger-real",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 14,
+  "_scan_meta": {
+    "author": "puppetcat-fire",
+    "skill": "secure-p2p-messenger-real",
+    "author_skill": "puppetcat-fire/secure-p2p-messenger-real",
+    "scan_time_s": 0.1
+  }
+}

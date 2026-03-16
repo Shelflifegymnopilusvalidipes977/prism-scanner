@@ -1,0 +1,2436 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/larryfang/em-intel",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "F",
+  "risk_level": "critical",
+  "key_risks": [
+    "CRITICAL: Sensitive data exfiltration detected (S8)",
+    "HIGH: Unsafe deserialization via webbrowser.open() (S12)",
+    "HIGH: SSRF: Request URL controlled by external input (S9)",
+    "HIGH: Unexpected capability for git skill: credential_read (M1)",
+    "MEDIUM: Reads environment variable: GITHUB_TOKEN (S5)"
+  ],
+  "behavior_tags": [
+    "dynamic_execution",
+    "executes_shell",
+    "exfiltrates_data",
+    "network_outbound",
+    "reads_env_vars",
+    "ssrf_risk",
+    "unsafe_deserialization"
+  ],
+  "findings": [
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_REPOS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 26,
+      "code_snippet": "self.org = org or os.getenv(\"GITHUB_ORG\", \"\")\n        repos_env = os.getenv(\"GITHUB_REPOS\", \"\")\n        self.repos = repos or [r.strip() for r in repos_env.split(\",\") if r.strip()]",
+      "evidence": "Reads env var: GITHUB_REPOS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 24,
+      "code_snippet": "):\n        self.token = token or os.getenv(\"GITHUB_TOKEN\", \"\")\n        self.org = org or os.getenv(\"GITHUB_ORG\", \"\")",
+      "evidence": "Reads sensitive env var: GITHUB_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_ORG",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 25,
+      "code_snippet": "self.token = token or os.getenv(\"GITHUB_TOKEN\", \"\")\n        self.org = org or os.getenv(\"GITHUB_ORG\", \"\")\n        repos_env = os.getenv(\"GITHUB_REPOS\", \"\")",
+      "evidence": "Reads env var: GITHUB_ORG",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 43,
+      "code_snippet": "try:\n                resp = requests.get(\n                    f\"{self.base}{path}\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 71,
+      "code_snippet": "for item in raw:\n                updated = item.get(\"updated_at\", \"\")\n                if updated and updated < since:",
+      "evidence": "Hardcoded URL: updated_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 76,
+      "code_snippet": "merged_at = None\n                if item.get(\"merged_at\"):\n                    merged_at = datetime.fromisoformat(",
+      "evidence": "Hardcoded URL: merged_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via commit_data.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 122,
+      "code_snippet": "commit_info = commit_data.get(\"commit\", {})\n                date_str = commit_info.get(\"committer\", {}).get(\"date\", \"\")",
+      "evidence": "Hardcoded URL: commit",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 81,
+      "code_snippet": "state = \"merged\" if merged_at else item.get(\"state\", \"open\")\n                mrs.append(",
+      "evidence": "Hardcoded URL: state",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 111,
+      "code_snippet": "try:\n                    resp = requests.get(\n                        f\"{self.base}/repos/{self.org}/{repo}/commits/{sha}\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 106,
+      "code_snippet": "for item in raw:\n                sha = item.get(\"commit\", {}).get(\"sha\", \"\")\n                if not sha:",
+      "evidence": "Hardcoded URL: commit",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via commit_info.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 123,
+      "code_snippet": "commit_info = commit_data.get(\"commit\", {})\n                date_str = commit_info.get(\"committer\", {}).get(\"date\", \"\")\n                if not date_str:",
+      "evidence": "Hardcoded URL: committer",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 85,
+      "code_snippet": "id=str(item[\"number\"]),\n                        title=item.get(\"title\", \"\"),\n                        author=item.get(\"user\", {}).get(\"login\", \"unknown\"),",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 93,
+      "code_snippet": "merged_at=merged_at,\n                        url=item.get(\"html_url\", \"\"),\n                    )",
+      "evidence": "Hardcoded URL: html_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via commit_data.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 133,
+      "code_snippet": "author = (\n                    commit_data.get(\"author\", {}).get(\"login\")\n                    or commit_info.get(\"author\", {}).get(\"name\", \"unknown\")",
+      "evidence": "Hardcoded URL: author",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via commit_info.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 134,
+      "code_snippet": "commit_data.get(\"author\", {}).get(\"login\")\n                    or commit_info.get(\"author\", {}).get(\"name\", \"unknown\")\n                )",
+      "evidence": "Hardcoded URL: author",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 86,
+      "code_snippet": "title=item.get(\"title\", \"\"),\n                        author=item.get(\"user\", {}).get(\"login\", \"unknown\"),\n                        source_branch=item.get(\"head\", {}).get(\"ref\", \"\"),",
+      "evidence": "Hardcoded URL: user",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_adapter.py",
+      "line": 87,
+      "code_snippet": "author=item.get(\"user\", {}).get(\"login\", \"unknown\"),\n                        source_branch=item.get(\"head\", {}).get(\"ref\", \"\"),\n                        state=state,",
+      "evidence": "Hardcoded URL: head",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_REPOS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 26,
+      "code_snippet": "self.org = org or os.getenv(\"GITHUB_ORG\", \"\")\n        repos_env = os.getenv(\"GITHUB_REPOS\", \"\")\n        self.repos = repos or [r.strip() for r in repos_env.split(\",\") if r.strip()]",
+      "evidence": "Reads env var: GITHUB_REPOS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 24,
+      "code_snippet": "):\n        self.token = token or os.getenv(\"GITHUB_TOKEN\", \"\")\n        self.org = org or os.getenv(\"GITHUB_ORG\", \"\")",
+      "evidence": "Reads sensitive env var: GITHUB_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_ORG",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 25,
+      "code_snippet": "self.token = token or os.getenv(\"GITHUB_TOKEN\", \"\")\n        self.org = org or os.getenv(\"GITHUB_ORG\", \"\")\n        repos_env = os.getenv(\"GITHUB_REPOS\", \"\")",
+      "evidence": "Reads env var: GITHUB_ORG",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_LOOKBACK_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 62,
+      "code_snippet": "\"\"\"Fetch open issues from configured repos. project_keys are ignored (repos from env).\"\"\"\n        lookback = int(os.getenv(\"EM_LOOKBACK_DAYS\", \"30\"))\n        since = (datetime.now(timezone.utc) - timedelta(days=lookback)).isoformat()",
+      "evidence": "Reads env var: EM_LOOKBACK_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 43,
+      "code_snippet": "try:\n                resp = requests.get(\n                    f\"{self.base}{path}\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 73,
+      "code_snippet": "# Skip pull requests (GitHub returns them in issues endpoint)\n                if item.get(\"pull_request\"):\n                    continue",
+      "evidence": "Hardcoded URL: pull_request",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 75,
+      "code_snippet": "continue\n                assignee = item.get(\"assignee\")\n                milestone = item.get(\"milestone\")",
+      "evidence": "Hardcoded URL: assignee",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 76,
+      "code_snippet": "assignee = item.get(\"assignee\")\n                milestone = item.get(\"milestone\")\n                labels = [lb.get(\"name\", \"\") for lb in item.get(\"labels\", [])]",
+      "evidence": "Hardcoded URL: milestone",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 79,
+      "code_snippet": "priority = \"High\" if \"priority:high\" in labels else \"Medium\"\n                updated_str = item.get(\"updated_at\", \"\")\n                updated_at = datetime.now(timezone.utc)",
+      "evidence": "Hardcoded URL: updated_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 112,
+      "code_snippet": "for item in raw:\n                updated_str = item.get(\"updated_at\", \"\")\n                updated_at = now",
+      "evidence": "Hardcoded URL: updated_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via lb.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 77,
+      "code_snippet": "milestone = item.get(\"milestone\")\n                labels = [lb.get(\"name\", \"\") for lb in item.get(\"labels\", [])]\n                priority = \"High\" if \"priority:high\" in labels else \"Medium\"",
+      "evidence": "Hardcoded URL: name",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 77,
+      "code_snippet": "milestone = item.get(\"milestone\")\n                labels = [lb.get(\"name\", \"\") for lb in item.get(\"labels\", [])]\n                priority = \"High\" if \"priority:high\" in labels else \"Medium\"",
+      "evidence": "Hardcoded URL: labels",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 88,
+      "code_snippet": "key=f\"{repo}#{item['number']}\",\n                        title=item.get(\"title\", \"\"),\n                        status=\"Open\",",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 90,
+      "code_snippet": "status=\"Open\",\n                        url=item.get(\"html_url\", \"\"),\n                        assignee=assignee.get(\"login\") if assignee else None,",
+      "evidence": "Hardcoded URL: html_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 122,
+      "code_snippet": "key=f\"{repo}#M{item['number']}\",\n                        title=item.get(\"title\", \"\"),\n                        status=\"Open\",",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 124,
+      "code_snippet": "status=\"Open\",\n                        url=item.get(\"html_url\", \"\"),\n                        updated_at=updated_at,",
+      "evidence": "Hardcoded URL: html_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 127,
+      "code_snippet": "days_since_update=days_since,\n                        child_count=item.get(\"open_issues\", 0),\n                    )",
+      "evidence": "Hardcoded URL: open_issues",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via assignee.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 91,
+      "code_snippet": "url=item.get(\"html_url\", \"\"),\n                        assignee=assignee.get(\"login\") if assignee else None,\n                        epic_key=str(milestone[\"number\"]) if milestone else None,",
+      "evidence": "Hardcoded URL: login",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via milestone.get()",
+      "file_path": "adapters/github_issues_adapter.py",
+      "line": 93,
+      "code_snippet": "epic_key=str(milestone[\"number\"]) if milestone else None,\n                        epic_title=milestone.get(\"title\") if milestone else None,\n                        ticket_type=\"Issue\",",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITLAB_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 26,
+      "code_snippet": "self.url = (url or os.getenv(\"GITLAB_URL\", \"https://gitlab.com\")).rstrip(\"/\")\n        self.token = token or os.getenv(\"GITLAB_TOKEN\", \"\")\n        self.group = group or os.getenv(\"GITLAB_GROUP\", \"\")",
+      "evidence": "Reads sensitive env var: GITLAB_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITLAB_GROUP",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 27,
+      "code_snippet": "self.token = token or os.getenv(\"GITLAB_TOKEN\", \"\")\n        self.group = group or os.getenv(\"GITLAB_GROUP\", \"\")\n        self.headers = {\"PRIVATE-TOKEN\": self.token}",
+      "evidence": "Reads env var: GITLAB_GROUP",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 39,
+      "code_snippet": "try:\n                resp = requests.get(\n                    f\"{self.url}/api/v4{path}\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 69,
+      "code_snippet": "merged_at = None\n                if item.get(\"merged_at\"):\n                    merged_at = datetime.fromisoformat(",
+      "evidence": "Hardcoded URL: merged_at",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITLAB_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 25,
+      "code_snippet": "):\n        self.url = (url or os.getenv(\"GITLAB_URL\", \"https://gitlab.com\")).rstrip(\"/\")\n        self.token = token or os.getenv(\"GITLAB_TOKEN\", \"\")",
+      "evidence": "Reads env var: GITLAB_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 76,
+      "code_snippet": "id=str(item[\"iid\"]),\n                        title=item.get(\"title\", \"\"),\n                        author=item.get(\"author\", {}).get(\"username\", \"unknown\"),",
+      "evidence": "Hardcoded URL: title",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 78,
+      "code_snippet": "author=item.get(\"author\", {}).get(\"username\", \"unknown\"),\n                        source_branch=item.get(\"source_branch\", \"\"),\n                        state=item.get(\"state\", state),",
+      "evidence": "Hardcoded URL: source_branch",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 79,
+      "code_snippet": "source_branch=item.get(\"source_branch\", \"\"),\n                        state=item.get(\"state\", state),\n                        created_at=datetime.fromisoformat(",
+      "evidence": "Hardcoded URL: state",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 84,
+      "code_snippet": "merged_at=merged_at,\n                        url=item.get(\"web_url\", \"\"),\n                    )",
+      "evidence": "Hardcoded URL: web_url",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via item.get()",
+      "file_path": "adapters/gitlab_adapter.py",
+      "line": 77,
+      "code_snippet": "title=item.get(\"title\", \"\"),\n                        author=item.get(\"author\", {}).get(\"username\", \"unknown\"),\n                        source_branch=item.get(\"source_branch\", \"\"),",
+      "evidence": "Hardcoded URL: author",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_EMAIL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 26,
+      "code_snippet": "self.url = (url or os.getenv(\"JIRA_URL\", \"\")).rstrip(\"/\")\n        self.email = email or os.getenv(\"JIRA_EMAIL\", \"\")\n        self.token = token or os.getenv(\"JIRA_TOKEN\", \"\")",
+      "evidence": "Reads env var: JIRA_EMAIL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 27,
+      "code_snippet": "self.email = email or os.getenv(\"JIRA_EMAIL\", \"\")\n        self.token = token or os.getenv(\"JIRA_TOKEN\", \"\")\n        creds = b64encode(f\"{self.email}:{self.token}\".encode()).decode()",
+      "evidence": "Reads sensitive env var: JIRA_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 56,
+      "code_snippet": "data = resp.json()\n            issues = data.get(\"issues\", [])\n            if not issues:",
+      "evidence": "Hardcoded URL: issues",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_LOOKBACK_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 68,
+      "code_snippet": "keys = \", \".join(project_keys)\n        lookback = int(os.getenv(\"EM_LOOKBACK_DAYS\", \"30\"))\n        jql = (",
+      "evidence": "Reads env var: EM_LOOKBACK_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via issue.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 80,
+      "code_snippet": "for issue in raw:\n            f = issue.get(\"fields\", {})\n            assignee = f.get(\"assignee\")",
+      "evidence": "Hardcoded URL: fields",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 81,
+      "code_snippet": "f = issue.get(\"fields\", {})\n            assignee = f.get(\"assignee\")\n            parent = f.get(\"parent\", {}) or {}",
+      "evidence": "Hardcoded URL: assignee",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 83,
+      "code_snippet": "parent = f.get(\"parent\", {}) or {}\n            updated_str = f.get(\"updated\", \"\")\n            updated_at = datetime.now(timezone.utc)",
+      "evidence": "Hardcoded URL: updated",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via issue.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 122,
+      "code_snippet": "for issue in raw:\n            f = issue.get(\"fields\", {})\n            assignee = f.get(\"assignee\")",
+      "evidence": "Hardcoded URL: fields",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 123,
+      "code_snippet": "f = issue.get(\"fields\", {})\n            assignee = f.get(\"assignee\")\n            updated_str = f.get(\"updated\", \"\")",
+      "evidence": "Hardcoded URL: assignee",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 124,
+      "code_snippet": "assignee = f.get(\"assignee\")\n            updated_str = f.get(\"updated\", \"\")\n            updated_at = now",
+      "evidence": "Hardcoded URL: updated",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 40,
+      "code_snippet": "try:\n                resp = requests.get(\n                    f\"{self.url}/rest/api/3/search/jql\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 82,
+      "code_snippet": "assignee = f.get(\"assignee\")\n            parent = f.get(\"parent\", {}) or {}\n            updated_str = f.get(\"updated\", \"\")",
+      "evidence": "Hardcoded URL: parent",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 25,
+      "code_snippet": "):\n        self.url = (url or os.getenv(\"JIRA_URL\", \"\")).rstrip(\"/\")\n        self.email = email or os.getenv(\"JIRA_EMAIL\", \"\")",
+      "evidence": "Reads env var: JIRA_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via data.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 60,
+      "code_snippet": "results.extend(issues)\n            if len(results) >= data.get(\"total\", 0) or len(results) >= max_results:\n                break",
+      "evidence": "Hardcoded URL: total",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 92,
+      "code_snippet": "key=issue[\"key\"],\n                    title=f.get(\"summary\", \"\"),\n                    status=f.get(\"status\", {}).get(\"name\", \"Unknown\"),",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parent.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 96,
+      "code_snippet": "assignee=assignee.get(\"displayName\") if assignee else None,\n                    epic_key=parent.get(\"key\"),\n                    epic_title=parent.get(\"fields\", {}).get(\"summary\")",
+      "evidence": "Hardcoded URL: key",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 135,
+      "code_snippet": "key=issue[\"key\"],\n                    title=f.get(\"summary\", \"\"),\n                    status=f.get(\"status\", {}).get(\"name\", \"Unknown\"),",
+      "evidence": "Hardcoded URL: summary",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via assignee.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 95,
+      "code_snippet": "url=f\"{self.url}/browse/{issue['key']}\",\n                    assignee=assignee.get(\"displayName\") if assignee else None,\n                    epic_key=parent.get(\"key\"),",
+      "evidence": "Hardcoded URL: displayName",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parent.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 98,
+      "code_snippet": "epic_title=parent.get(\"fields\", {}).get(\"summary\")\n                    if parent.get(\"fields\")\n                    else None,",
+      "evidence": "Hardcoded URL: fields",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via assignee.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 138,
+      "code_snippet": "url=f\"{self.url}/browse/{issue['key']}\",\n                    assignee=assignee.get(\"displayName\") if assignee else None,\n                    updated_at=updated_at,",
+      "evidence": "Hardcoded URL: displayName",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 93,
+      "code_snippet": "title=f.get(\"summary\", \"\"),\n                    status=f.get(\"status\", {}).get(\"name\", \"Unknown\"),\n                    url=f\"{self.url}/browse/{issue['key']}\",",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 100,
+      "code_snippet": "else None,\n                    ticket_type=f.get(\"issuetype\", {}).get(\"name\", \"Story\"),\n                    priority=f.get(\"priority\", {}).get(\"name\", \"Medium\"),",
+      "evidence": "Hardcoded URL: issuetype",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 101,
+      "code_snippet": "ticket_type=f.get(\"issuetype\", {}).get(\"name\", \"Story\"),\n                    priority=f.get(\"priority\", {}).get(\"name\", \"Medium\"),\n                    updated_at=updated_at,",
+      "evidence": "Hardcoded URL: priority",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via f.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 136,
+      "code_snippet": "title=f.get(\"summary\", \"\"),\n                    status=f.get(\"status\", {}).get(\"name\", \"Unknown\"),\n                    url=f\"{self.url}/browse/{issue['key']}\",",
+      "evidence": "Hardcoded URL: status",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via parent.get()",
+      "file_path": "adapters/jira_adapter.py",
+      "line": 97,
+      "code_snippet": "epic_key=parent.get(\"key\"),\n                    epic_title=parent.get(\"fields\", {}).get(\"summary\")\n                    if parent.get(\"fields\")",
+      "evidence": "Hardcoded URL: fields",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_STALE_EPIC_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "commands/eod_review.py",
+      "line": 27,
+      "code_snippet": "\"\"\"\n    stale_days = int(os.getenv(\"EM_STALE_EPIC_DAYS\", \"14\"))\n    mrs = code_adapter.get_merge_requests(days=14)",
+      "evidence": "Reads env var: EM_STALE_EPIC_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_QUIET_ENGINEER_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "commands/morning_brief.py",
+      "line": 28,
+      "code_snippet": "\"\"\"\n    quiet_days = int(os.getenv(\"EM_QUIET_ENGINEER_DAYS\", \"7\"))\n    stale_days = int(os.getenv(\"EM_STALE_EPIC_DAYS\", \"14\"))",
+      "evidence": "Reads env var: EM_QUIET_ENGINEER_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_STALE_EPIC_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "commands/morning_brief.py",
+      "line": 29,
+      "code_snippet": "quiet_days = int(os.getenv(\"EM_QUIET_ENGINEER_DAYS\", \"7\"))\n    stale_days = int(os.getenv(\"EM_STALE_EPIC_DAYS\", \"14\"))",
+      "evidence": "Reads env var: EM_STALE_EPIC_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S1",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.7,
+      "title": "Shell command execution",
+      "description": "Code calls subprocess.run() which can execute arbitrary system commands",
+      "file_path": "commands/setup_wizard.py",
+      "line": 271,
+      "code_snippet": ")\n    result = subprocess.run(run_cmd, cwd=str(SKILL_DIR))",
+      "evidence": "Variable argument (origin: unknown)",
+      "tags": [
+        "execution",
+        "shell"
+      ],
+      "remediation": "Use subprocess.run() with explicit argument list. Avoid shell=True. Never pass untrusted input.",
+      "references": [
+        "MITRE T1059.004"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S12",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.9,
+      "title": "Unsafe deserialization via webbrowser.open()",
+      "description": "Code uses webbrowser.open() which can execute arbitrary code during deserialization",
+      "file_path": "commands/setup_wizard.py",
+      "line": 36,
+      "code_snippet": "try:\n            webbrowser.open(url)\n        except Exception:",
+      "evidence": "Data source taint: unknown",
+      "tags": [
+        "deserialization",
+        "execution"
+      ],
+      "remediation": "Replace pickle with JSON or MessagePack. Use yaml.safe_load() instead of yaml.load().",
+      "references": [
+        "MITRE T1059.006",
+        "CWE-502"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_QUIET_ENGINEER_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "commands/team_report.py",
+      "line": 29,
+      "code_snippet": "\"\"\"\n    quiet_days = int(os.getenv(\"EM_QUIET_ENGINEER_DAYS\", \"10\"))\n    stale_days = int(os.getenv(\"EM_STALE_EPIC_DAYS\", \"14\"))",
+      "evidence": "Reads env var: EM_QUIET_ENGINEER_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_STALE_EPIC_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "commands/team_report.py",
+      "line": 30,
+      "code_snippet": "quiet_days = int(os.getenv(\"EM_QUIET_ENGINEER_DAYS\", \"10\"))\n    stale_days = int(os.getenv(\"EM_STALE_EPIC_DAYS\", \"14\"))",
+      "evidence": "Reads env var: EM_STALE_EPIC_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S6",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.9,
+      "title": "Dynamic code execution via re.compile()",
+      "description": "Code uses re.compile() to execute dynamically constructed code",
+      "file_path": "core/branch_mapper.py",
+      "line": 15,
+      "code_snippet": "TICKET_PATTERN = re.compile(r\"([A-Z]+-\\d+)\")",
+      "evidence": "Constant argument (not recommended but predictable)",
+      "tags": [
+        "execution",
+        "dynamic"
+      ],
+      "remediation": "Use ast.literal_eval() for safe evaluation. Avoid re.compile() with untrusted input.",
+      "references": [
+        "MITRE T1059.006"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via ticket_lookup.get()",
+      "file_path": "core/branch_mapper.py",
+      "line": 60,
+      "code_snippet": "ticket = ticket_lookup.get(ticket_id)\n        start = branch.created_at or branch.last_commit_at",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: TELEGRAM_BOT_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 37,
+      "code_snippet": "\"\"\"Send via Telegram Bot API.\"\"\"\n    token = os.getenv(\"TELEGRAM_BOT_TOKEN\", \"\")\n    chat_id = os.getenv(\"TELEGRAM_CHAT_ID\", \"\")",
+      "evidence": "Reads sensitive env var: TELEGRAM_BOT_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: TELEGRAM_CHAT_ID",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 38,
+      "code_snippet": "token = os.getenv(\"TELEGRAM_BOT_TOKEN\", \"\")\n    chat_id = os.getenv(\"TELEGRAM_CHAT_ID\", \"\")\n    if not token or not chat_id:",
+      "evidence": "Reads env var: TELEGRAM_CHAT_ID",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SLACK_WEBHOOK_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 68,
+      "code_snippet": "\"\"\"Send via Slack incoming webhook.\"\"\"\n    webhook_url = os.getenv(\"SLACK_WEBHOOK_URL\", \"\")\n    if not webhook_url:",
+      "evidence": "Reads env var: SLACK_WEBHOOK_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SMTP_HOST",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 125,
+      "code_snippet": "\"\"\"Send via SMTP as multipart/alternative (HTML + plain text fallback).\"\"\"\n    host = os.getenv(\"SMTP_HOST\", \"smtp.gmail.com\")\n    port = int(os.getenv(\"SMTP_PORT\", \"587\"))",
+      "evidence": "Reads env var: SMTP_HOST",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SMTP_USER",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 127,
+      "code_snippet": "port = int(os.getenv(\"SMTP_PORT\", \"587\"))\n    user = os.getenv(\"SMTP_USER\", \"\")\n    password = os.getenv(\"SMTP_PASSWORD\", \"\")",
+      "evidence": "Reads env var: SMTP_USER",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SMTP_PASSWORD",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 128,
+      "code_snippet": "user = os.getenv(\"SMTP_USER\", \"\")\n    password = os.getenv(\"SMTP_PASSWORD\", \"\")\n    to_addr = os.getenv(\"SMTP_TO\", \"\")",
+      "evidence": "Reads sensitive env var: SMTP_PASSWORD",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SMTP_TO",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 129,
+      "code_snippet": "password = os.getenv(\"SMTP_PASSWORD\", \"\")\n    to_addr = os.getenv(\"SMTP_TO\", \"\")",
+      "evidence": "Reads env var: SMTP_TO",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "core/delivery.py",
+      "line": 49,
+      "code_snippet": "try:\n        resp = requests.post(\n            f\"https://api.telegram.org/bot{token}/sendMessage\",",
+      "evidence": "URL from os.getenv() → requests.post()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "core/delivery.py",
+      "line": 74,
+      "code_snippet": "try:\n        resp = requests.post(\n            webhook_url,",
+      "evidence": "URL from os.getenv() → requests.post()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SMTP_PORT",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 126,
+      "code_snippet": "host = os.getenv(\"SMTP_HOST\", \"smtp.gmail.com\")\n    port = int(os.getenv(\"SMTP_PORT\", \"587\"))\n    user = os.getenv(\"SMTP_USER\", \"\")",
+      "evidence": "Reads env var: SMTP_PORT",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_DELIVERY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "core/delivery.py",
+      "line": 23,
+      "code_snippet": "\"\"\"\n    channel = os.getenv(\"EM_DELIVERY\", \"print\").lower()",
+      "evidence": "Reads env var: EM_DELIVERY",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S8",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "critical",
+      "confidence": 0.9,
+      "title": "Sensitive data exfiltration detected",
+      "description": "Sensitive data from os.getenv() sent via requests.post()",
+      "file_path": "core/delivery.py",
+      "line": 49,
+      "code_snippet": "try:\n        resp = requests.post(\n            f\"https://api.telegram.org/bot{token}/sendMessage\",",
+      "evidence": "os.getenv() → json= → requests.post()",
+      "tags": [
+        "exfiltration",
+        "network",
+        "credential_access"
+      ],
+      "remediation": "Remove data exfiltration code. Report this skill as malicious.",
+      "references": [
+        "MITRE T1041"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via author_counts.get()",
+      "file_path": "core/newsletter.py",
+      "line": 89,
+      "code_snippet": "for mr in merged:\n        author_counts[mr.author] = author_counts.get(mr.author, 0) + 1\n    top = sorted(author_counts.items(), key=lambda x: x[1], reverse=True)[:10]",
+      "evidence": "Variable URL (taint: unknown)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_PROJECTS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 87,
+      "code_snippet": "\"\"\"Get project keys from env.\"\"\"\n    keys = os.getenv(\"JIRA_PROJECTS\", \"\")\n    return [k.strip() for k in keys.split(\",\") if k.strip()]",
+      "evidence": "Reads env var: JIRA_PROJECTS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_QUIET_ENGINEER_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 359,
+      "code_snippet": "code = _get_code_adapter(dry_run)\n    days = int(os.getenv(\"EM_QUIET_ENGINEER_DAYS\", \"10\"))\n    mrs = code.get_merge_requests(days=30)",
+      "evidence": "Reads env var: EM_QUIET_ENGINEER_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_STALE_EPIC_DAYS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 387,
+      "code_snippet": "stale_days = int(os.getenv(\"EM_STALE_EPIC_DAYS\", \"14\"))\n    stale = get_stale_epics(epics, days=stale_days)",
+      "evidence": "Reads env var: EM_STALE_EPIC_DAYS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_CODE_PROVIDER",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 57,
+      "code_snippet": "return MockCodeAdapter()\n    provider = os.getenv(\"EM_CODE_PROVIDER\", \"gitlab\").lower()\n    if provider == \"github\":",
+      "evidence": "Reads env var: EM_CODE_PROVIDER",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_TICKET_PROVIDER",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 74,
+      "code_snippet": "return MockTicketAdapter()\n    provider = os.getenv(\"EM_TICKET_PROVIDER\", \"jira\").lower()\n    if provider == \"github_issues\":",
+      "evidence": "Reads env var: EM_TICKET_PROVIDER",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_CODE_PROVIDER",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 115,
+      "code_snippet": "console.print(\"[bold]Code Platform[/bold]\")\n    provider = os.getenv(\"EM_CODE_PROVIDER\", \"gitlab\").lower()\n    console.print(f\"  Provider: {provider}\")",
+      "evidence": "Reads env var: EM_CODE_PROVIDER",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITLAB_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 120,
+      "code_snippet": "env_checks = {\n            \"GITLAB_URL\": os.getenv(\"GITLAB_URL\", \"\"),\n            \"GITLAB_TOKEN\": os.getenv(\"GITLAB_TOKEN\", \"\"),",
+      "evidence": "Reads env var: GITLAB_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITLAB_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 121,
+      "code_snippet": "\"GITLAB_URL\": os.getenv(\"GITLAB_URL\", \"\"),\n            \"GITLAB_TOKEN\": os.getenv(\"GITLAB_TOKEN\", \"\"),\n            \"GITLAB_GROUP\": os.getenv(\"GITLAB_GROUP\", \"\"),",
+      "evidence": "Reads sensitive env var: GITLAB_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITLAB_GROUP",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 122,
+      "code_snippet": "\"GITLAB_TOKEN\": os.getenv(\"GITLAB_TOKEN\", \"\"),\n            \"GITLAB_GROUP\": os.getenv(\"GITLAB_GROUP\", \"\"),\n        }",
+      "evidence": "Reads env var: GITLAB_GROUP",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_TICKET_PROVIDER",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 182,
+      "code_snippet": "console.print(\"\\n[bold]Ticket System[/bold]\")\n    ticket_provider = os.getenv(\"EM_TICKET_PROVIDER\", \"jira\").lower()\n    console.print(f\"  Provider: {ticket_provider}\")",
+      "evidence": "Reads env var: EM_TICKET_PROVIDER",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 187,
+      "code_snippet": "env_checks_t = {\n            \"JIRA_URL\": os.getenv(\"JIRA_URL\", \"\"),\n            \"JIRA_EMAIL\": os.getenv(\"JIRA_EMAIL\", \"\"),",
+      "evidence": "Reads env var: JIRA_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_EMAIL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 188,
+      "code_snippet": "\"JIRA_URL\": os.getenv(\"JIRA_URL\", \"\"),\n            \"JIRA_EMAIL\": os.getenv(\"JIRA_EMAIL\", \"\"),\n            \"JIRA_TOKEN\": os.getenv(\"JIRA_TOKEN\", \"\"),",
+      "evidence": "Reads env var: JIRA_EMAIL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 189,
+      "code_snippet": "\"JIRA_EMAIL\": os.getenv(\"JIRA_EMAIL\", \"\"),\n            \"JIRA_TOKEN\": os.getenv(\"JIRA_TOKEN\", \"\"),\n            \"JIRA_PROJECTS\": os.getenv(\"JIRA_PROJECTS\", \"\"),",
+      "evidence": "Reads sensitive env var: JIRA_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: JIRA_PROJECTS",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 190,
+      "code_snippet": "\"JIRA_TOKEN\": os.getenv(\"JIRA_TOKEN\", \"\"),\n            \"JIRA_PROJECTS\": os.getenv(\"JIRA_PROJECTS\", \"\"),\n        }",
+      "evidence": "Reads env var: JIRA_PROJECTS",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: EM_DELIVERY",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 230,
+      "code_snippet": "console.print(\"\\n[bold]Delivery[/bold]\")\n    delivery = os.getenv(\"EM_DELIVERY\", \"print\").lower()\n    console.print(f\"  Channel: {delivery}\")",
+      "evidence": "Reads env var: EM_DELIVERY",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "em_intel.py",
+      "line": 137,
+      "code_snippet": "try:\n                resp = requests.get(\n                    f\"{url}/api/v4/groups/{group}/merge_requests\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_TOKEN",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 151,
+      "code_snippet": "env_checks = {\n            \"GITHUB_TOKEN\": os.getenv(\"GITHUB_TOKEN\", \"\"),\n            \"GITHUB_ORG\": os.getenv(\"GITHUB_ORG\", \"\"),",
+      "evidence": "Reads sensitive env var: GITHUB_TOKEN",
+      "tags": [
+        "env_var",
+        "credential_access"
+      ],
+      "remediation": "Ensure this variable is used only for its intended purpose.",
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_ORG",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 152,
+      "code_snippet": "\"GITHUB_TOKEN\": os.getenv(\"GITHUB_TOKEN\", \"\"),\n            \"GITHUB_ORG\": os.getenv(\"GITHUB_ORG\", \"\"),\n            \"GITHUB_REPO\": os.getenv(\"GITHUB_REPO\", \"\"),",
+      "evidence": "Reads env var: GITHUB_ORG",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: GITHUB_REPO",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 153,
+      "code_snippet": "\"GITHUB_ORG\": os.getenv(\"GITHUB_ORG\", \"\"),\n            \"GITHUB_REPO\": os.getenv(\"GITHUB_REPO\", \"\"),\n        }",
+      "evidence": "Reads env var: GITHUB_REPO",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S4",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "medium",
+      "confidence": 0.8,
+      "title": "Outbound network request",
+      "description": "Code makes outbound network request via requests.get()",
+      "file_path": "em_intel.py",
+      "line": 207,
+      "code_snippet": "try:\n                resp = requests.get(\n                    f\"{jira_url}/rest/api/3/search/jql\",",
+      "evidence": "Variable URL (taint: literal)",
+      "tags": [
+        "network"
+      ],
+      "remediation": "Verify the request target is expected and trusted.",
+      "references": [
+        "MITRE T1071.001"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 235,
+      "code_snippet": "for var in (\"TELEGRAM_BOT_TOKEN\", \"TELEGRAM_CHAT_ID\"):\n            ok = bool(os.getenv(var, \"\"))\n            checks.append(ok)",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable: SLACK_WEBHOOK_URL",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 240,
+      "code_snippet": "elif delivery == \"slack\":\n        ok = bool(os.getenv(\"SLACK_WEBHOOK_URL\", \"\"))\n        checks.append(ok)",
+      "evidence": "Reads env var: SLACK_WEBHOOK_URL",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S9",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "high",
+      "confidence": 0.85,
+      "title": "SSRF: Request URL controlled by external input",
+      "description": "Network request URL comes from external source (os.getenv())",
+      "file_path": "em_intel.py",
+      "line": 165,
+      "code_snippet": "try:\n                resp = requests.get(\n                    f\"https://api.github.com/repos/{org}/{repo}\",",
+      "evidence": "URL from os.getenv() → requests.get()",
+      "tags": [
+        "network",
+        "ssrf"
+      ],
+      "remediation": "Validate and allowlist URLs before making requests.",
+      "references": [
+        "MITRE T1552.005",
+        "CWE-918"
+      ],
+      "suppressed": false
+    },
+    {
+      "rule_id": "S5",
+      "engine": "ast",
+      "layer": "behavior",
+      "severity": "low",
+      "confidence": 0.8,
+      "title": "Reads environment variable",
+      "description": "Code reads environment variable via os.getenv()",
+      "file_path": "em_intel.py",
+      "line": 246,
+      "code_snippet": "for var in (\"SMTP_HOST\", \"SMTP_USER\", \"SMTP_PASSWORD\", \"SMTP_TO\"):\n            ok = bool(os.getenv(var, \"\"))\n            checks.append(ok)",
+      "evidence": "Reads env var: ",
+      "tags": [
+        "env_var"
+      ],
+      "remediation": null,
+      "references": [],
+      "suppressed": false
+    },
+    {
+      "rule_id": "M1",
+      "engine": "manifest",
+      "layer": "metadata",
+      "severity": "high",
+      "confidence": 0.75,
+      "title": "Unexpected capability for git skill: credential_read",
+      "description": "A 'git' skill would not normally require 'credential_read' capability. Allowed capabilities for this category: file_read, file_write, shell_git",
+      "file_path": null,
+      "line": null,
+      "code_snippet": null,
+      "evidence": null,
+      "tags": [
+        "capability_mismatch",
+        "suspicious"
+      ],
+      "remediation": "Review why a git skill needs credential_read access.",
+      "references": [
+        "CWE-250"
+      ],
+      "suppressed": false
+    }
+  ],
+  "scan_duration_ms": 96,
+  "_scan_meta": {
+    "author": "larryfang",
+    "skill": "em-intel",
+    "author_skill": "larryfang/em-intel",
+    "scan_time_s": 0.1
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "target": {
+    "path": "/private/tmp/openclaw-skills/skills/mookim-eth/xclaw-skill",
+    "platform": "clawhub",
+    "url": null
+  },
+  "grade": "A",
+  "risk_level": "safe",
+  "key_risks": [],
+  "behavior_tags": [],
+  "findings": [],
+  "scan_duration_ms": 17,
+  "_scan_meta": {
+    "author": "mookim-eth",
+    "skill": "xclaw-skill",
+    "author_skill": "mookim-eth/xclaw-skill",
+    "scan_time_s": 0.1
+  }
+}

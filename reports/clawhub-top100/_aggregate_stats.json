@@ -1,0 +1,1570 @@
+{
+  "total_scanned": 99,
+  "scan_date": "2026-03-16",
+  "grades": {
+    "A": 48,
+    "D": 23,
+    "F": 19,
+    "C": 9
+  },
+  "severity_counts": {
+    "CRITICAL": 34,
+    "HIGH": 47,
+    "MEDIUM": 1292,
+    "LOW": 101,
+    "INFO": 0
+  },
+  "rule_hits": {
+    "S4": 1152,
+    "S5": 148,
+    "S12": 34,
+    "P5": 27,
+    "M1": 22,
+    "S1": 19,
+    "P8": 19,
+    "S6": 15,
+    "S9": 11,
+    "P7": 7,
+    "S13": 5,
+    "P4": 4,
+    "P6": 2,
+    "P9": 2,
+    "S10": 2,
+    "M4": 1,
+    "S8": 1,
+    "S7": 1,
+    "S3": 1,
+    "P1": 1
+  },
+  "rule_severity_map": {
+    "S4": {
+      "MEDIUM": 1152
+    },
+    "S5": {
+      "LOW": 101,
+      "MEDIUM": 47
+    },
+    "P5": {
+      "CRITICAL": 24,
+      "HIGH": 3
+    },
+    "P6": {
+      "HIGH": 2
+    },
+    "P7": {
+      "MEDIUM": 7
+    },
+    "S9": {
+      "HIGH": 11
+    },
+    "M1": {
+      "HIGH": 22
+    },
+    "S6": {
+      "MEDIUM": 12,
+      "HIGH": 3
+    },
+    "S13": {
+      "CRITICAL": 5
+    },
+    "P9": {
+      "MEDIUM": 2
+    },
+    "S1": {
+      "MEDIUM": 18,
+      "HIGH": 1
+    },
+    "M4": {
+      "CRITICAL": 1
+    },
+    "S10": {
+      "CRITICAL": 2
+    },
+    "P4": {
+      "MEDIUM": 4
+    },
+    "P8": {
+      "MEDIUM": 19
+    },
+    "S12": {
+      "HIGH": 2,
+      "MEDIUM": 31,
+      "CRITICAL": 1
+    },
+    "S8": {
+      "CRITICAL": 1
+    },
+    "S7": {
+      "HIGH": 1
+    },
+    "S3": {
+      "HIGH": 1
+    },
+    "P1": {
+      "HIGH": 1
+    }
+  },
+  "top_risky": [
+    {
+      "name": "henrino3/heimdall",
+      "grade": "F",
+      "total": 25,
+      "critical": 12,
+      "high": 5,
+      "medium": 8,
+      "low": 0
+    },
+    {
+      "name": "haiyangchenbj/invassistant",
+      "grade": "F",
+      "total": 179,
+      "critical": 4,
+      "high": 1,
+      "medium": 170,
+      "low": 4
+    },
+    {
+      "name": "pitertxus/openclaw-memory-pensieve-algorand",
+      "grade": "F",
+      "total": 211,
+      "critical": 1,
+      "high": 2,
+      "medium": 199,
+      "low": 9
+    },
+    {
+      "name": "johnjerry8749/weather-py",
+      "grade": "F",
+      "total": 85,
+      "critical": 2,
+      "high": 1,
+      "medium": 80,
+      "low": 2
+    },
+    {
+      "name": "adlai88/polymarket-elon-tweets",
+      "grade": "F",
+      "total": 84,
+      "critical": 2,
+      "high": 0,
+      "medium": 78,
+      "low": 4
+    },
+    {
+      "name": "xqw1377-prog/musk-insider-pro",
+      "grade": "F",
+      "total": 17,
+      "critical": 2,
+      "high": 2,
+      "medium": 9,
+      "low": 4
+    },
+    {
+      "name": "larryfang/em-intel",
+      "grade": "F",
+      "total": 118,
+      "critical": 1,
+      "high": 5,
+      "medium": 72,
+      "low": 40
+    },
+    {
+      "name": "cassh100k/soulkeeper",
+      "grade": "F",
+      "total": 28,
+      "critical": 1,
+      "high": 2,
+      "medium": 24,
+      "low": 1
+    },
+    {
+      "name": "griffithkk3-del/lark-wiki-writer",
+      "grade": "F",
+      "total": 28,
+      "critical": 1,
+      "high": 1,
+      "medium": 22,
+      "low": 4
+    },
+    {
+      "name": "jachian-lee/feishu-doc-reviewer",
+      "grade": "D",
+      "total": 122,
+      "critical": 0,
+      "high": 1,
+      "medium": 119,
+      "low": 2
+    }
+  ],
+  "top_safe": [
+    {
+      "name": "0xartex/token-research",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "aadipapp/mac-power-tools",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "alti-systems/kling",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "anmolnagpal/terraform-ai-skills",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "autogame-17/feishu-broadcast",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "brennerspear/system-watchdog",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "c-drew/telegram-usage",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "claudiodrusus/skill-4",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "dashiming/godot-bridge",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "dhardie/llm-supervisor",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "dongsheng123132/mac-ai-optimizer",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "duyeng/intercom-conversations",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "franky0617/etf-assistant",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "georges91560/security-sentinel-skill",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "hubertsing/conan-weekly-report",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "irideas/bobo-context-cleanup",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "jerryops2026-del/xhs-auto-publish",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "keylimesoda/tommy-monitoring-dashboard",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "koolninad/uid-life",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "leongfans/skillforge-discovery",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "machunlin/video-merger",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "maverick-software/safe-update-merge",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mig6671/phoenix-shield",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mookim-eth/xclaw-skill",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mosonchan2023/docker-compose-manager",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mosonchan2023/polymarket-copy-trade-bot",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mosonchan2023/stock-screener",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "muguozi1/evolver-1-17-1",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "neal-collab/auto-whisper-safe",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "night556/feishu-doc-exporter",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "numba1ne/nft-skill",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "puppetcat-fire/secure-p2p-messenger-real",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "rcholic/predicate-snapshot",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "riffvibe/vibemate",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "rsquaredsolutions2026/payrail402",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "shiiyyo/github-manager",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "sinabs/ifind-data",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "sunjian/weryai-video",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "supere989/vectorguard-nano",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "thesethrose/apple-docs",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "tyzzt/wsl-powershell-full",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "viktorbjorn/clawhub-search-verify",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "wangwu-30/neo-market",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "xuzhiwei0217-doctor/automation-workflow",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "yipintangzsp/amazon-ppc-optimizer",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "yipintangzsp/weibo-trending-bot",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "zedit42/arena-system",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "zhaog100/hacker-news-surfer",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  ],
+  "findings_per_skill": [
+    {
+      "name": "henrino3/heimdall",
+      "grade": "F",
+      "total": 25,
+      "critical": 12,
+      "high": 5,
+      "medium": 8,
+      "low": 0
+    },
+    {
+      "name": "haiyangchenbj/invassistant",
+      "grade": "F",
+      "total": 179,
+      "critical": 4,
+      "high": 1,
+      "medium": 170,
+      "low": 4
+    },
+    {
+      "name": "pitertxus/openclaw-memory-pensieve-algorand",
+      "grade": "F",
+      "total": 211,
+      "critical": 1,
+      "high": 2,
+      "medium": 199,
+      "low": 9
+    },
+    {
+      "name": "johnjerry8749/weather-py",
+      "grade": "F",
+      "total": 85,
+      "critical": 2,
+      "high": 1,
+      "medium": 80,
+      "low": 2
+    },
+    {
+      "name": "adlai88/polymarket-elon-tweets",
+      "grade": "F",
+      "total": 84,
+      "critical": 2,
+      "high": 0,
+      "medium": 78,
+      "low": 4
+    },
+    {
+      "name": "xqw1377-prog/musk-insider-pro",
+      "grade": "F",
+      "total": 17,
+      "critical": 2,
+      "high": 2,
+      "medium": 9,
+      "low": 4
+    },
+    {
+      "name": "larryfang/em-intel",
+      "grade": "F",
+      "total": 118,
+      "critical": 1,
+      "high": 5,
+      "medium": 72,
+      "low": 40
+    },
+    {
+      "name": "cassh100k/soulkeeper",
+      "grade": "F",
+      "total": 28,
+      "critical": 1,
+      "high": 2,
+      "medium": 24,
+      "low": 1
+    },
+    {
+      "name": "griffithkk3-del/lark-wiki-writer",
+      "grade": "F",
+      "total": 28,
+      "critical": 1,
+      "high": 1,
+      "medium": 22,
+      "low": 4
+    },
+    {
+      "name": "jachian-lee/feishu-doc-reviewer",
+      "grade": "D",
+      "total": 122,
+      "critical": 0,
+      "high": 1,
+      "medium": 119,
+      "low": 2
+    },
+    {
+      "name": "blackeight4752/doubao-ata-subtitle",
+      "grade": "F",
+      "total": 22,
+      "critical": 1,
+      "high": 1,
+      "medium": 18,
+      "low": 2
+    },
+    {
+      "name": "uxbryan/spotplay",
+      "grade": "F",
+      "total": 16,
+      "critical": 1,
+      "high": 1,
+      "medium": 12,
+      "low": 2
+    },
+    {
+      "name": "eisimo/agentic-letters",
+      "grade": "F",
+      "total": 15,
+      "critical": 1,
+      "high": 0,
+      "medium": 13,
+      "low": 1
+    },
+    {
+      "name": "shaharsha/google-search-grounding",
+      "grade": "F",
+      "total": 15,
+      "critical": 1,
+      "high": 0,
+      "medium": 11,
+      "low": 3
+    },
+    {
+      "name": "xaiohuangningde/doc-handler",
+      "grade": "F",
+      "total": 2,
+      "critical": 1,
+      "high": 1,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "cp7553479/seedream-image-generation",
+      "grade": "F",
+      "total": 6,
+      "critical": 1,
+      "high": 0,
+      "medium": 5,
+      "low": 0
+    },
+    {
+      "name": "paulpreibisch/agentvibes-clawbot-tts",
+      "grade": "F",
+      "total": 2,
+      "critical": 1,
+      "high": 0,
+      "medium": 1,
+      "low": 0
+    },
+    {
+      "name": "ethersuite/moltmail-ethermail",
+      "grade": "F",
+      "total": 1,
+      "critical": 1,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "logesh2496/spaces",
+      "grade": "F",
+      "total": 33,
+      "critical": 0,
+      "high": 4,
+      "medium": 27,
+      "low": 2
+    },
+    {
+      "name": "otman-ai/tikto-automation",
+      "grade": "F",
+      "total": 14,
+      "critical": 0,
+      "high": 5,
+      "medium": 8,
+      "low": 1
+    },
+    {
+      "name": "arthuronai/ai-layoff-radar",
+      "grade": "D",
+      "total": 58,
+      "critical": 0,
+      "high": 0,
+      "medium": 56,
+      "low": 2
+    },
+    {
+      "name": "youpele52/stock-fundamentals",
+      "grade": "D",
+      "total": 45,
+      "critical": 0,
+      "high": 1,
+      "medium": 44,
+      "low": 0
+    },
+    {
+      "name": "ajarmoszuk/crypton-esim",
+      "grade": "D",
+      "total": 52,
+      "critical": 0,
+      "high": 0,
+      "medium": 52,
+      "low": 0
+    },
+    {
+      "name": "qqliaoxin/comfyui-api",
+      "grade": "D",
+      "total": 43,
+      "critical": 0,
+      "high": 1,
+      "medium": 42,
+      "low": 0
+    },
+    {
+      "name": "stj001/sensitive-data-masker",
+      "grade": "D",
+      "total": 33,
+      "critical": 0,
+      "high": 2,
+      "medium": 31,
+      "low": 0
+    },
+    {
+      "name": "beee003/q-kdb-code-review",
+      "grade": "D",
+      "total": 18,
+      "critical": 0,
+      "high": 2,
+      "medium": 13,
+      "low": 3
+    },
+    {
+      "name": "manuelcorpas/equity-scorer",
+      "grade": "D",
+      "total": 19,
+      "critical": 0,
+      "high": 1,
+      "medium": 18,
+      "low": 0
+    },
+    {
+      "name": "awsome-o/grafana-lens",
+      "grade": "D",
+      "total": 7,
+      "critical": 0,
+      "high": 2,
+      "medium": 5,
+      "low": 0
+    },
+    {
+      "name": "tariqsumatri82/a2a-market-1-1-0",
+      "grade": "D",
+      "total": 28,
+      "critical": 0,
+      "high": 0,
+      "medium": 25,
+      "low": 3
+    },
+    {
+      "name": "jisuapi/exchange",
+      "grade": "D",
+      "total": 24,
+      "critical": 0,
+      "high": 0,
+      "medium": 24,
+      "low": 0
+    },
+    {
+      "name": "thu-nmrc/zeelin-social-watch",
+      "grade": "D",
+      "total": 16,
+      "critical": 0,
+      "high": 1,
+      "medium": 14,
+      "low": 1
+    },
+    {
+      "name": "lilianzhu/zadig",
+      "grade": "D",
+      "total": 2,
+      "critical": 0,
+      "high": 2,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "jason-chew/citrea-claw-skill",
+      "grade": "D",
+      "total": 18,
+      "critical": 0,
+      "high": 0,
+      "medium": 18,
+      "low": 0
+    },
+    {
+      "name": "homeofe/openclaw-ispconfig",
+      "grade": "D",
+      "total": 4,
+      "critical": 0,
+      "high": 1,
+      "medium": 3,
+      "low": 0
+    },
+    {
+      "name": "wen-si/croskill",
+      "grade": "D",
+      "total": 4,
+      "critical": 0,
+      "high": 1,
+      "medium": 3,
+      "low": 0
+    },
+    {
+      "name": "idanmann10/startclaw-optimizer",
+      "grade": "D",
+      "total": 3,
+      "critical": 0,
+      "high": 1,
+      "medium": 2,
+      "low": 0
+    },
+    {
+      "name": "jisuapi/stockhistory",
+      "grade": "D",
+      "total": 11,
+      "critical": 0,
+      "high": 0,
+      "medium": 11,
+      "low": 0
+    },
+    {
+      "name": "lucaszh7/auto-authenticator-local",
+      "grade": "D",
+      "total": 9,
+      "critical": 0,
+      "high": 0,
+      "medium": 9,
+      "low": 0
+    },
+    {
+      "name": "omaression/advanced-dispatcher-skill",
+      "grade": "D",
+      "total": 9,
+      "critical": 0,
+      "high": 0,
+      "medium": 9,
+      "low": 0
+    },
+    {
+      "name": "2233admin/api-monitor",
+      "grade": "D",
+      "total": 12,
+      "critical": 0,
+      "high": 0,
+      "medium": 8,
+      "low": 4
+    },
+    {
+      "name": "jrojas537/flight-pricer",
+      "grade": "D",
+      "total": 6,
+      "critical": 0,
+      "high": 0,
+      "medium": 6,
+      "low": 0
+    },
+    {
+      "name": "dagangtj/ai-economic-tracker",
+      "grade": "D",
+      "total": 12,
+      "critical": 0,
+      "high": 0,
+      "medium": 5,
+      "low": 7
+    },
+    {
+      "name": "feiyang2007/360-search",
+      "grade": "C",
+      "total": 4,
+      "critical": 0,
+      "high": 0,
+      "medium": 4,
+      "low": 0
+    },
+    {
+      "name": "harrierdb/cmc-kline-data-collector",
+      "grade": "C",
+      "total": 3,
+      "critical": 0,
+      "high": 0,
+      "medium": 3,
+      "low": 0
+    },
+    {
+      "name": "chaunceyliu/trade-with-aiusd",
+      "grade": "C",
+      "total": 2,
+      "critical": 0,
+      "high": 0,
+      "medium": 2,
+      "low": 0
+    },
+    {
+      "name": "sakurako-irs/clawreceipt",
+      "grade": "C",
+      "total": 2,
+      "critical": 0,
+      "high": 0,
+      "medium": 2,
+      "low": 0
+    },
+    {
+      "name": "sonyrw/workspace-main",
+      "grade": "C",
+      "total": 2,
+      "critical": 0,
+      "high": 0,
+      "medium": 2,
+      "low": 0
+    },
+    {
+      "name": "windy-001-crypto/data-harvester-v2",
+      "grade": "C",
+      "total": 2,
+      "critical": 0,
+      "high": 0,
+      "medium": 2,
+      "low": 0
+    },
+    {
+      "name": "chyher/team-discuss",
+      "grade": "C",
+      "total": 1,
+      "critical": 0,
+      "high": 0,
+      "medium": 1,
+      "low": 0
+    },
+    {
+      "name": "kapishdima/dtek-light",
+      "grade": "C",
+      "total": 1,
+      "critical": 0,
+      "high": 0,
+      "medium": 1,
+      "low": 0
+    },
+    {
+      "name": "scccmsd/custom-smtp-sender",
+      "grade": "C",
+      "total": 1,
+      "critical": 0,
+      "high": 0,
+      "medium": 1,
+      "low": 0
+    },
+    {
+      "name": "0xartex/token-research",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "aadipapp/mac-power-tools",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "alti-systems/kling",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "anmolnagpal/terraform-ai-skills",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "autogame-17/feishu-broadcast",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "brennerspear/system-watchdog",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "c-drew/telegram-usage",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "claudiodrusus/skill-4",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "dashiming/godot-bridge",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "dhardie/llm-supervisor",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "dongsheng123132/mac-ai-optimizer",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "duyeng/intercom-conversations",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "franky0617/etf-assistant",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "georges91560/security-sentinel-skill",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "hubertsing/conan-weekly-report",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "irideas/bobo-context-cleanup",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "jerryops2026-del/xhs-auto-publish",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "keylimesoda/tommy-monitoring-dashboard",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "koolninad/uid-life",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "leongfans/skillforge-discovery",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "machunlin/video-merger",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "maverick-software/safe-update-merge",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mig6671/phoenix-shield",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mookim-eth/xclaw-skill",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mosonchan2023/docker-compose-manager",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mosonchan2023/polymarket-copy-trade-bot",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "mosonchan2023/stock-screener",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "muguozi1/evolver-1-17-1",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "neal-collab/auto-whisper-safe",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "night556/feishu-doc-exporter",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "numba1ne/nft-skill",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "puppetcat-fire/secure-p2p-messenger-real",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "rcholic/predicate-snapshot",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "riffvibe/vibemate",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "rsquaredsolutions2026/payrail402",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "shiiyyo/github-manager",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "sinabs/ifind-data",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "sunjian/weryai-video",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "supere989/vectorguard-nano",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "thesethrose/apple-docs",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "tyzzt/wsl-powershell-full",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "viktorbjorn/clawhub-search-verify",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "wangwu-30/neo-market",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "xuzhiwei0217-doctor/automation-workflow",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "yipintangzsp/amazon-ppc-optimizer",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "yipintangzsp/weibo-trending-bot",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "zedit42/arena-system",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    },
+    {
+      "name": "zhaog100/hacker-news-surfer",
+      "grade": "A",
+      "total": 0,
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0
+    }
+  ],
+  "platform_dist": {
+    "clawhub": 99
+  },
+  "behavior_tags": {
+    "network_outbound": 38,
+    "reads_env_vars": 25,
+    "ssrf_risk": 5,
+    "dynamic_execution": 6,
+    "installs_persistence": 2,
+    "uses_obfuscation": 1,
+    "executes_shell": 9,
+    "downloads_and_executes": 1,
+    "exfiltrates_data": 1,
+    "unsafe_deserialization": 4,
+    "writes_system_files": 1
+  },
+  "avg_scan_time": 0.1,
+  "total_findings": 1474,
+  "skills_with_critical": [
+    "adlai88/polymarket-elon-tweets",
+    "blackeight4752/doubao-ata-subtitle",
+    "cassh100k/soulkeeper",
+    "cp7553479/seedream-image-generation",
+    "eisimo/agentic-letters",
+    "ethersuite/moltmail-ethermail",
+    "griffithkk3-del/lark-wiki-writer",
+    "haiyangchenbj/invassistant",
+    "henrino3/heimdall",
+    "johnjerry8749/weather-py",
+    "larryfang/em-intel",
+    "paulpreibisch/agentvibes-clawbot-tts",
+    "pitertxus/openclaw-memory-pensieve-algorand",
+    "shaharsha/google-search-grounding",
+    "uxbryan/spotplay",
+    "xaiohuangningde/doc-handler",
+    "xqw1377-prog/musk-insider-pro"
+  ],
+  "skills_with_exfiltration": [
+    "larryfang/em-intel"
+  ],
+  "skills_with_persistence": [
+    "cassh100k/soulkeeper",
+    "henrino3/heimdall"
+  ]
+}
