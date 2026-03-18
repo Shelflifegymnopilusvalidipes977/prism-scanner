@@ -279,18 +279,19 @@ def _to_sarif(result: ScanResult) -> dict:
                 "defaultConfiguration": {"level": "error" if f.severity in (Severity.CRITICAL, Severity.HIGH) else "warning"},
             }
 
+        # GitHub Code Scanning requires at least one location per result
+        uri = f.file_path if f.file_path else "."
         sarif_result = {
             "ruleId": f.rule_id,
             "level": "error" if f.severity in (Severity.CRITICAL, Severity.HIGH) else "warning",
             "message": {"text": f.description},
-        }
-        if f.file_path:
-            sarif_result["locations"] = [{
+            "locations": [{
                 "physicalLocation": {
-                    "artifactLocation": {"uri": f.file_path},
+                    "artifactLocation": {"uri": uri},
                     "region": {"startLine": f.line or 1},
                 }
-            }]
+            }],
+        }
         results_list.append(sarif_result)
 
     return {
