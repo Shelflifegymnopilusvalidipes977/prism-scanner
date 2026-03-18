@@ -26,6 +26,9 @@ classifiers = [
 ]
 dependencies = ["pyyaml>=6.0", "rich>=13.0"]
 
+[project.optional-dependencies]
+mcp = ["mcp>=1.0.0"]
+
 [project.urls]
 Homepage = "https://github.com/aidongise-cell/prism-scanner"
 Repository = "https://github.com/aidongise-cell/prism-scanner"
@@ -34,6 +37,7 @@ Changelog = "https://github.com/aidongise-cell/prism-scanner/blob/main/CHANGELOG
 
 [project.scripts]
 prism = "prism.cli:main"
+prism-mcp = "prism.mcp_server:main"
 
 [build-system]
 requires = ["setuptools>=68.0"]

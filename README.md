@@ -61,6 +61,34 @@ brew install prism-scanner
 npx prism-scanner scan https://github.com/user/skill-repo
 ```
 
+### MCP Server (Claude Desktop / Cursor / VS Code)
+
+Prism Scanner can run as an MCP server, giving AI assistants direct access to security scanning tools.
+
+```bash
+pip install "prism-scanner[mcp]"
+```
+
+Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "prism-scanner": {
+      "command": "prism-mcp"
+    }
+  }
+}
+```
+
+Or for Claude Code:
+
+```bash
+claude mcp add prism-scanner prism-mcp
+```
+
+This exposes 4 tools: `prism_scan`, `prism_grade`, `prism_clean_scan`, `prism_clean_plan`.
+
 ### Docker
 
 ```bash
