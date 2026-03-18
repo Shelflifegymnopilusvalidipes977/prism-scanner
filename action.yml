@@ -66,27 +66,25 @@ runs:
       id: scan
       shell: bash
       run: |
-        ARGS="scan ${{ inputs.path }}"
-        ARGS="$ARGS --format ${{ inputs.format }}"
-
-        if [ -n "${{ inputs.output-file }}" ]; then
-          ARGS="$ARGS -o ${{ inputs.output-file }}"
-        fi
+        PLATFORM_ARG=""
+        FAILON_ARG=""
 
         if [ -n "${{ inputs.platform }}" ]; then
-          ARGS="$ARGS --platform ${{ inputs.platform }}"
+          PLATFORM_ARG="--platform ${{ inputs.platform }}"
         fi
 
         if [ -n "${{ inputs.fail-on }}" ]; then
-          ARGS="$ARGS --fail-on ${{ inputs.fail-on }}"
+          FAILON_ARG="--fail-on ${{ inputs.fail-on }}"
         fi
 
-        # Run scan and capture grade from JSON sidecar
-        prism $ARGS --summary 2>&1 | tee /tmp/prism-output.txt || SCAN_EXIT=$?
+        # First: get JSON output to extract grade
+        JSON_OUT=$(prism scan ${{ inputs.path }} --format json $PLATFORM_ARG 2>/dev/null || true)
+        GRADE=$(echo "$JSON_OUT" | python3 -c "import sys,json; print(json.load(sys.stdin).get('grade','?'))" 2>/dev/null || echo "?")
+        COUNT=$(echo "$JSON_OUT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(len([f for f in d.get('findings',[]) if not f.get('suppressed')]))" 2>/dev/null || echo "0")
 
-        # Extract grade from output
-        GRADE=$(grep -oP 'Grade: \K[A-F]' /tmp/prism-output.txt || echo "?")
-        COUNT=$(grep -oP '\d+ findings' /tmp/prism-output.txt | grep -oP '\d+' || echo "0")
+        # Then: generate the requested output format
+        SCAN_EXIT=0
+        prism scan ${{ inputs.path }} --format ${{ inputs.format }} -o ${{ inputs.output-file }} $PLATFORM_ARG $FAILON_ARG || SCAN_EXIT=$?
 
         # Map grade to badge color
         case "$GRADE" in
@@ -112,7 +110,7 @@ runs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "**Grade: $GRADE** | **Findings: $COUNT**" >> $GITHUB_STEP_SUMMARY
 
-        exit ${SCAN_EXIT:-0}
+        exit $SCAN_EXIT
 
     - name: Upload SARIF to GitHub Code Scanning
       if: inputs.upload-sarif == 'true' && inputs.format == 'sarif' && always()
