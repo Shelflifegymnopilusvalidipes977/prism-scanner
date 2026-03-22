@@ -245,6 +245,9 @@ def _print_cli_report(result: ScanResult, show_trace: bool = False,
     if not show_trace:
         print("  Use --show-trace for data flow evidence")
     print("  Use --format json for machine-readable output")
+    print()
+    print("  \u2b50 Found Prism useful? Star us on GitHub:")
+    print("     https://github.com/aidongise-cell/prism-scanner")
     print("\u2501" * 50)
     print()
 
